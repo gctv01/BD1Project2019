@@ -1,0 +1,14 @@
+<div class="row mx-auto">
+    {{#each empleado}}
+    <div class="card bg-light mb-3 mx-auto" style="max-width: 18rem;">
+        <div class="card-header">{{nombre}} {{apellido}}</div>
+        <div class="card-body">
+            <label for="">{{di}}</label>
+            <label for="">{{fecha_nacimiento}}</label>
+            <label for="">{{genero}}</label>
+            <label for="">{{tipo_sangre}}</label>
+        
+        </div>
+    </div>
+    {{/each}}
+</div>

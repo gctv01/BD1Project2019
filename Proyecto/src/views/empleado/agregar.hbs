@@ -1,0 +1,85 @@
+<div class="row mx-auto">
+  <div class="card mx-auto mt-2" style="width: 40rem;">
+    <div class="card-body">
+
+      <form action="/empleado/agregar" method="POST">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Nombre</label>
+            <input type="text" name="nombre" class="form-control" placeholder="Nombre">
+          </div>
+          <div class="form-group col-md-6">
+            <label>Apellido</label>
+            <input type="text" name="apellido" class="form-control" placeholder="Apellido">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>DI</label>
+          <input type="number" name="di" class="form-control" placeholder="DI">
+        </div>
+
+        <div class="form-group">
+          <label>Fecha de nacimiento</label>
+          <input type="date" name="fecha_nacimiento" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label>Genero</label>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="m" name="genero" class="custom-control-input" value="M">
+            <label class="custom-control-label" for="m">M</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="f" name="genero" class="custom-control-input" value="F">
+            <label class="custom-control-label" for="f">F</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="t" name="genero" class="custom-control-input" value="T">
+            <label class="custom-control-label" for="t">Otro</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Tipo de sangre</label>
+          <br>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="o+" name="tipo_sangre" class="custom-control-input" value="O+">
+            <label class="custom-control-label" for="o+">O+</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="a+" name="tipo_sangre" class="custom-control-input" value="A+">
+            <label class="custom-control-label" for="a+">A+</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="b+" name="tipo_sangre" class="custom-control-input" value="B+">
+            <label class="custom-control-label" for="b+">B+</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="ab+" name="tipo_sangre" class="custom-control-input" value="AB+">
+            <label class="custom-control-label" for="ab+">AB+</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="o-" name="tipo_sangre" class="custom-control-input" value="O-">
+            <label class="custom-control-label" for="o-">O-</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="a-" name="tipo_sangre" class="custom-control-input" value="A-">
+            <label class="custom-control-label" for="a-">A-</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="b-" name="tipo_sangre" class="custom-control-input" value="B-">
+            <label class="custom-control-label" for="b-">B-</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="ab-" name="tipo_sangre" class="custom-control-input" value="AB-">
+            <label class="custom-control-label" for="ab-">AB-</label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-block btn-primary">Registrar</button>
+      </form>
+
+    </div>
+  </div>
+</div>

@@ -11,12 +11,20 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+    {{!-- STYLES --}}
+    <link rel="stylesheet" href="/css/bg-page.css">
+    <link rel="stylesheet" href="/css/page.css">
+
 </head>
 
-<body>
-    <main class="container">
+<body class="mx-auto w-75">
+    {{>nav}}
+
+    <main class="py-5">
         {{{body}}}
     </main>
+
+    {{>footer}}
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

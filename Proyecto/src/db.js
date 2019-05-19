@@ -1,17 +1,21 @@
 const {Client} = require("pg");
-const client = new Client({
-    user: "postgres",
-    password: "agente86",
-    host: "localhost",
-    port: 5432,
-    database: "practica"
+
+const client = new Client(require("./keys.js"));
+
+client.connect((err) => {
+  if (err) {
+    console.error('connection error', err.stack);
+  } else {
+    console.log('db is connected');
+  }
 })
 
-client.connect()
-.then(() => console.log("Coneccion establesida con la base de datos"))
-.then(() => client.query("select * from usuario"))
-.then(results => console.table(results.rows))
-.catch(e => console.log("error en la coneccion con la base de datos"))
-.finally(() => client.end())
+client.query('SELECT NOW() as now', (err, res) => {
+  if (err) {
+    console.log(err.stack)
+  } else {
+    console.log(res.rows[0])
+  }
+})
 
 module.exports = client;
