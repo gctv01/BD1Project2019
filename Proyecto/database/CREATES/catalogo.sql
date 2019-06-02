@@ -68,7 +68,7 @@ CREATE TABLE public."Molde"
     volumen numeric,
     cant_pers numeric,
     CONSTRAINT "Molde_pkey" PRIMARY KEY (id),
-    CONSTRAINT "Check_TipoM" CHECK (tipo::text = ANY (ARRAY['Jarra'::character varying, 'Plata'::character varying, 'Tetera'::character varying, 'Azucarero'::character varying, 'Lechera'::character varying, 'Cazuela'::character varying]::text[])) NOT VALID,
+    CONSTRAINT "Check_TipoM" CHECK (tipo::text = ANY (ARRAY['Ensaladera'::character varying, 'Taza'::character varying, 'Bandeja'::character varying, 'Jarra'::character varying, 'Plata'::character varying, 'Tetera'::character varying, 'Azucarero'::character varying, 'Lechera'::character varying, 'Cazuela'::character varying]::text[])) NOT VALID,
     CONSTRAINT "Check_TipoPlato" CHECK (tipo_plato::text = ANY (ARRAY['Llano'::character varying, 'Hondo'::character varying, 'Postre'::character varying, 'Presenta'::character varying, 'TazaMoka'::character varying, 'Pasta'::character varying]::text[])) NOT VALID,
     CONSTRAINT "Check_Forma" CHECK (forma::text = ANY (ARRAY['Redondo'::character varying, 'Ovalado'::character varying, 'Cuadrado'::character varying, 'Rectangular'::character varying]::text[])) NOT VALID,
     CONSTRAINT "Check_TipoTaza" CHECK (tipo_taza::text = ANY (ARRAY['CafeSp'::character varying, 'CafeCP'::character varying, 'TeSp'::character varying, 'TeCp'::character varying, 'MpkaSp'::character varying, 'MokaCp'::character varying]::text[])) NOT VALID,
