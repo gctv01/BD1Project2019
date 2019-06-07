@@ -1,15 +1,4 @@
--- Database: ProyectoBases2019
 
--- DROP DATABASE "ProyectoBases2019";
-
-CREATE DATABASE "ProyectoBases2019"
-    WITH 
-    OWNER = postgres
-    ENCODING = 'UTF8'
-    LC_COLLATE = 'Spanish_Venezuela.1252'
-    LC_CTYPE = 'Spanish_Venezuela.1252'
-    TABLESPACE = pg_default
-    CONNECTION LIMIT = -1;
 -- Table: public."Juego"
 
 -- DROP TABLE public."Juego";
@@ -28,8 +17,6 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public."Juego"
-    OWNER to postgres;
 
 -- Table: public."Coleccion"
 
@@ -49,9 +36,6 @@ WITH (
     OIDS = FALSE
 )
 TABLESPACE pg_default;
-
-ALTER TABLE public."Coleccion"
-    OWNER to postgres;
 
 -- Table: public."Molde"
 
@@ -79,8 +63,6 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public."Molde"
-    OWNER to postgres;
 
 -- Table: public."Col_Mot"
 
@@ -100,8 +82,6 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public."Col_Mot"
-    OWNER to postgres;
 
 -- Table: public."Pieza"
 
@@ -133,8 +113,6 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public."Pieza"
-    OWNER to postgres;
 
 -- Index: fki_FKMotivo
 
@@ -188,9 +166,6 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public."J_P"
-    OWNER to postgres;
-
 -- Index: fki_FK_Juego
 
 -- DROP INDEX public."fki_FK_Juego";
@@ -233,9 +208,6 @@ WITH (
 )
 TABLESPACE pg_default;
 
-ALTER TABLE public."C_M"
-    OWNER to postgres;
-
 -- Index: fki_FK_Coleccion
 
 -- DROP INDEX public."fki_FK_Coleccion";
@@ -275,9 +247,6 @@ WITH (
     OIDS = FALSE
 )
 TABLESPACE pg_default;
-
-ALTER TABLE public."Hist_Pieza"
-    OWNER to postgres;
 
 -- Index: fki_FKPieza
 
