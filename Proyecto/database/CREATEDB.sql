@@ -1,1 +1,2 @@
-CREATE DATABASE appdb;
+drop database appdb 
+create database appdb
