@@ -1,6 +1,6 @@
 CREATE TABLE EMPLEADO(
     expediente NUMERIC(4) NOT NULL,
-    di NUMERIC(4) NOT NULL,
+    di NUMERIC(10) NOT NULL,
     nombre VARCHAR(20) NOT NULL,
     apellido VARCHAR(20) NOT NULL,
     apellido2 VARCHAR(20) NOT NULL,

@@ -1,0 +1,2 @@
+INSERT INTO EMPLEADO [di,nombre,apellido,apellido2,fecha_nacimiento,genero,tipo_sangre,titulo,fk_supervisor,nombre2]
+VALUES (27107288,'ezequiel','montero','pantano',"1998-29-05",'M','A-','B',null,'jose');
