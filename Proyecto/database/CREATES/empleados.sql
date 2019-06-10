@@ -1,6 +1,6 @@
 CREATE TABLE EMPLEADO(
     expediente SERIAL NOT NULL,
-    di NUMERIC(10) NOT NULL,
+    di NUMERIC(10) NOT NULL UNIQUE,
     nombre VARCHAR(20) NOT NULL,
     apellido VARCHAR(20) NOT NULL,
     apellido2 VARCHAR(20) NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE EMPLEADO(
     genero VARCHAR(1) NOT NULL CONSTRAINT check_genero check(genero in('M', 'F','T')),
     tipo_sangre VARCHAR(3) NOT NULL CONSTRAINT check_sangre check(tipo_sangre in('O+','A+','B+','AB+','O-','A-','B-','AB-')),
     titulo VARCHAR(1) NOT NULL CONSTRAINT check_titulo check(titulo in('B','Q','M','P','I','G')),
-    fk_supervisor SERIAL,
+    fk_supervisor INTEGER,
     nombre2 VARCHAR(20),
 
     PRIMARY KEY(expediente),
@@ -25,8 +25,8 @@ CREATE TABLE COND_SALUD(
 );
 
 CREATE TABLE E_C(
-    fk_empleado SERIAL NOT NULL,
-    fk_cond SERIAL NOT NULL,
+    fk_empleado INTEGER NOT NULL,
+    fk_cond INTEGER NOT NULL,
 
     PRIMARY KEY(fk_empleado,fk_cond),
     FOREIGN KEY(fk_empleado) REFERENCES EMPLEADO(expediente),
@@ -36,8 +36,8 @@ CREATE TABLE E_C(
 /*CREATE TABLE TELEFONO(
     cod NUMERIC(4) NOT NULL,
     num NUMERIC(4) NOT NULL,
-    fk_empleado SERIAL,
-    fk_cliente SERIAL,
+    fk_empleado INTEGER,
+    fk_cliente INTEGER,
 
     PRIMARY KEY(cod,num),
     FOREIGN KEY(fk_empleado) REFERENCES EMPLEADO(expediente),
@@ -48,7 +48,7 @@ CREATE TABLE DETALLE_EXP(
     id SERIAL NOT NULL,
     fecha DATE NOT NULL,
     motivo VARCHAR(2) NOT NULL CONSTRAINT check_motivo check(motivo in('IN','BM','BA','AM','RE','HE')),
-    fk_empleado SERIAL NOT NULL,
+    fk_empleado INTEGER NOT NULL,
     descripcion VARCHAR(30),
     monto_bono NUMERIC(4,2),
     horas_extras NUMERIC(4),
@@ -63,7 +63,7 @@ CREATE TABLE ORGANIGRAMA(
     nombre VARCHAR(20) NOT NULL,
     tipo VARCHAR(1) NOT NULL CONSTRAINT check_tipo check(tipo in('G','S','D','A')),
     nivel NUMERIC(1) NOT NULL CONSTRAINT check_nivel check(nivel in(1,2,3,4)),
-    fk_superior SERIAL,
+    fk_superior INTEGER,
     descripcion VARCHAR(30),
 
     PRIMARY KEY(id),
@@ -74,8 +74,8 @@ CREATE TABLE EMPLEO(
     fecha_inicio DATE NOT NULL,
     sueldo NUMERIC(4,2) NOT NULL,
     cargo VARCHAR(1) NOT NULL CONSTRAINT check_cargo check(cargo in('S','G','O','E','M','I')),
-    fk_empleado SERIAL NOT NULL,
-    fk_organigrama SERIAL NOT NULL,
+    fk_empleado INTEGER NOT NULL,
+    fk_organigrama INTEGER NOT NULL,
     fecha_fin DATE,
 
     PRIMARY KEY(fecha_inicio,fk_empleado),
@@ -87,7 +87,7 @@ CREATE TABLE TURNOS_HIST(
     fecha_inicio DATE NOT NULL,
     turno NUMERIC(1) NOT NULL CONSTRAINT check_turno check(turno in(1,2,3)),
     fk_empleo DATE NOT NULL,
-    fk_empleado SERIAL NOT NULL,
+    fk_empleado INTEGER NOT NULL,
     fecha_fin DATE,
 
     PRIMARY KEY(fecha_inicio,fk_empleo,fk_empleado),
@@ -98,7 +98,7 @@ CREATE TABLE REUNION(
     id SERIAL NOT NULL,
     fecha DATE NOT NULL,
     minuta VARCHAR(30) NOT NULL,
-    fk_supervisor SERIAL NOT NULL,
+    fk_supervisor INTEGER NOT NULL,
 
     PRIMARY KEY(id,fk_supervisor),
     FOREIGN KEY(fk_supervisor) REFERENCES EMPLEADO(expediente)
@@ -106,9 +106,9 @@ CREATE TABLE REUNION(
 
 CREATE TABLE INASISTENCIA(
     fk_empleo DATE NOT NULL,
-    fk_empleado SERIAL NOT NULL,
-    fk_reunion SERIAL NOT NULL,
-    fk_supervisor SERIAL NOT NULL,
+    fk_empleado INTEGER NOT NULL,
+    fk_reunion INTEGER NOT NULL,
+    fk_supervisor INTEGER NOT NULL,
 
     PRIMARY KEY(fk_empleo,fk_empleado,fk_reunion,fk_supervisor),
     FOREIGN KEY(fk_empleo,fk_empleado) REFERENCES EMPLEO(fecha_inicio,fk_empleado),

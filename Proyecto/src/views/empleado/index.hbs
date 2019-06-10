@@ -1,14 +1,21 @@
+<div class="display-4 mx-auto text-center">EMPLEADOS</div>
 <div class="row mx-auto">
     {{#each empleado}}
-    <div class="card bg-light mb-3 mx-auto" style="max-width: 18rem;">
-        <div class="card-header">{{nombre}} {{apellido}}</div>
-        <div class="card-body">
-            <label for="">{{di}}</label>
-            <label for="">{{fecha_nacimiento}}</label>
-            <label for="">{{genero}}</label>
-            <label for="">{{tipo_sangre}}</label>
-        
+    <div class="card bg-primary my-3 mx-auto" style="max-width: 18rem;">
+        <div class="card-header text_white">
+            {{nombre}} {{nombre2}} <br>
+            {{apellido}} {{apellido2}}
         </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">DI: {{di}}</li>
+            <li class="list-group-item">Fecha de nacimiento: <br>
+                {{fecha_nacimiento}}
+            </li>
+            <li class="list-group-item">Genero: {{genero}}</li>
+            <li class="list-group-item">Tipo de sangre: {{tipo_sangre}}</li>
+            <li class="list-group-item">Titulo: {{titulo}}</li>
+            <li class="list-group-item">DI Superior: {{di_supervisor}}</li>
+        </ul>
     </div>
     {{/each}}
 </div>
