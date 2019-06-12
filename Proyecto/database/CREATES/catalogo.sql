@@ -1,22 +1,28 @@
+-- Table: public."Molde"
 
--- Table: public."Juego"
+-- DROP TABLE public."Molde";
 
--- DROP TABLE public."Juego";
-
-CREATE TABLE public."Juego"
+CREATE TABLE public."Molde"
 (
     id numeric NOT NULL,
-    cant_personas numeric NOT NULL,
-    nombre character varying COLLATE pg_catalog."default" NOT NULL,
-    "desc" character varying COLLATE pg_catalog."default",
-    CONSTRAINT "Juego_pkey" PRIMARY KEY (id),
-    CONSTRAINT "Check_CantPers" CHECK (cant_personas = ANY (ARRAY[2::numeric, 4::numeric, 6::numeric])) NOT VALID
+    tipo character varying COLLATE pg_catalog."default" NOT NULL,
+    tipo_plato character varying COLLATE pg_catalog."default",
+    forma character varying COLLATE pg_catalog."default",
+    tipo_taza character varying COLLATE pg_catalog."default",
+    cant_pers numeric,
+    tamano character varying COLLATE pg_catalog."default",
+    volumen character varying COLLATE pg_catalog."default",
+    CONSTRAINT "Molde_pkey" PRIMARY KEY (id),
+    CONSTRAINT "Check_TipoPlato" CHECK (tipo_plato::text = ANY (ARRAY['Llano'::character varying::text, 'Hondo'::character varying::text, 'Postre'::character varying::text, 'Presenta'::character varying::text, 'TazaMoka'::character varying::text, 'Pasta'::character varying::text])),
+    CONSTRAINT "Check_Forma" CHECK (forma::text = ANY (ARRAY['Redondo'::character varying::text, 'Ovalado'::character varying::text, 'Cuadrado'::character varying::text, 'Rectangular'::character varying::text])),
+    CONSTRAINT "Check_TipoTaza" CHECK (tipo_taza::text = ANY (ARRAY['CafeSp'::character varying::text, 'CafeCP'::character varying::text, 'TeSp'::character varying::text, 'TeCp'::character varying::text, 'MpkaSp'::character varying::text, 'MokaCp'::character varying::text])),
+    CONSTRAINT "CheckCant_Pers" CHECK (cant_pers = ANY (ARRAY[2::numeric, 6::numeric])),
+    CONSTRAINT "Check_TipoM" CHECK (tipo::text = ANY (ARRAY['Jarra'::character varying, 'Taza'::character varying, 'Bandeja'::character varying, 'Ensaladera'::character varying, 'Plato'::character varying, 'Tetera'::character varying, 'Azucarero'::character varying, 'Lechera'::character varying, 'Cazuela'::character varying]::text[])) NOT VALID
 )
 WITH (
     OIDS = FALSE
 )
 TABLESPACE pg_default;
-
 
 -- Table: public."Coleccion"
 
@@ -37,33 +43,6 @@ WITH (
 )
 TABLESPACE pg_default;
 
--- Table: public."Molde"
-
--- DROP TABLE public."Molde";
-
-CREATE TABLE public."Molde"
-(
-    id numeric NOT NULL,
-    tipo character varying COLLATE pg_catalog."default" NOT NULL,
-    tipo_plato character varying COLLATE pg_catalog."default",
-    forma character varying COLLATE pg_catalog."default",
-    tamano numeric,
-    tipo_taza character varying COLLATE pg_catalog."default",
-    volumen numeric,
-    cant_pers numeric,
-    CONSTRAINT "Molde_pkey" PRIMARY KEY (id),
-    CONSTRAINT "Check_TipoM" CHECK (tipo::text = ANY (ARRAY['Ensaladera'::character varying, 'Taza'::character varying, 'Bandeja'::character varying, 'Jarra'::character varying, 'Plata'::character varying, 'Tetera'::character varying, 'Azucarero'::character varying, 'Lechera'::character varying, 'Cazuela'::character varying]::text[])) NOT VALID,
-    CONSTRAINT "Check_TipoPlato" CHECK (tipo_plato::text = ANY (ARRAY['Llano'::character varying, 'Hondo'::character varying, 'Postre'::character varying, 'Presenta'::character varying, 'TazaMoka'::character varying, 'Pasta'::character varying]::text[])) NOT VALID,
-    CONSTRAINT "Check_Forma" CHECK (forma::text = ANY (ARRAY['Redondo'::character varying, 'Ovalado'::character varying, 'Cuadrado'::character varying, 'Rectangular'::character varying]::text[])) NOT VALID,
-    CONSTRAINT "Check_TipoTaza" CHECK (tipo_taza::text = ANY (ARRAY['CafeSp'::character varying, 'CafeCP'::character varying, 'TeSp'::character varying, 'TeCp'::character varying, 'MpkaSp'::character varying, 'MokaCp'::character varying]::text[])) NOT VALID,
-    CONSTRAINT "CheckCant_Pers" CHECK (cant_pers = ANY (ARRAY[2::numeric, 6::numeric])) NOT VALID
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-
 -- Table: public."Col_Mot"
 
 -- DROP TABLE public."Col_Mot";
@@ -82,6 +61,23 @@ WITH (
 )
 TABLESPACE pg_default;
 
+-- Table: public."Juego"
+
+-- DROP TABLE public."Juego";
+
+CREATE TABLE public."Juego"
+(
+    id numeric NOT NULL,
+    cant_personas numeric NOT NULL,
+    nombre character varying COLLATE pg_catalog."default" NOT NULL,
+    "desc" character varying COLLATE pg_catalog."default",
+    CONSTRAINT "Juego_pkey" PRIMARY KEY (id),
+    CONSTRAINT "Check_CantPers" CHECK (cant_personas = ANY (ARRAY[2::numeric, 4::numeric, 6::numeric])) NOT VALID
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
 
 -- Table: public."Pieza"
 
@@ -91,16 +87,12 @@ CREATE TABLE public."Pieza"
 (
     id numeric NOT NULL,
     "id_Coleccion" numeric NOT NULL,
-    "id_Motivo" numeric NOT NULL,
+    "id_Col_Mot" numeric NOT NULL,
     "id_Molde" numeric NOT NULL,
     "desc" character varying COLLATE pg_catalog."default",
     CONSTRAINT "Pieza_pkey" PRIMARY KEY (id),
-    CONSTRAINT "FK_Col_Mot" FOREIGN KEY ("id_Motivo")
+    CONSTRAINT "FK_Col_Mot" FOREIGN KEY ("id_Col_Mot")
         REFERENCES public."Col_Mot" (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT "FK_Molde" FOREIGN KEY ("id_Molde")
-        REFERENCES public."Molde" (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
     CONSTRAINT "id_Coleccion" FOREIGN KEY ("id_Coleccion")
@@ -113,14 +105,13 @@ WITH (
 )
 TABLESPACE pg_default;
 
-
 -- Index: fki_FKMotivo
 
 -- DROP INDEX public."fki_FKMotivo";
 
 CREATE INDEX "fki_FKMotivo"
     ON public."Pieza" USING btree
-    ("id_Motivo")
+    ("id_Col_Mot")
     TABLESPACE pg_default;
 
 -- Index: fki_FK_Molde
@@ -181,8 +172,7 @@ CREATE INDEX "fki_FK_Juego"
 
 CREATE INDEX "fki_FK_Pieza"
     ON public."J_P" USING btree
-    ("id_Pieza")
-    TABLESPACE pg_default;
+    ("id_Pieza");
 
 -- Table: public."C_M"
 
@@ -191,14 +181,14 @@ CREATE INDEX "fki_FK_Pieza"
 CREATE TABLE public."C_M"
 (
     id numeric NOT NULL,
-    "id_Motivo" numeric NOT NULL,
+    "id_Col_Mot" numeric NOT NULL,
     "id_Coleccion" numeric NOT NULL,
-    CONSTRAINT "C_M_pkey" PRIMARY KEY (id, "id_Motivo", "id_Coleccion"),
+    CONSTRAINT "C_M_pkey" PRIMARY KEY (id, "id_Col_Mot", "id_Coleccion"),
     CONSTRAINT "FK_Coleccion" FOREIGN KEY ("id_Coleccion")
         REFERENCES public."Coleccion" (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT "FK_Motivo" FOREIGN KEY ("id_Motivo")
+    CONSTRAINT "FK_Motivo" FOREIGN KEY ("id_Col_Mot")
         REFERENCES public."Col_Mot" (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
@@ -223,7 +213,7 @@ CREATE INDEX "fki_FK_Coleccion"
 
 CREATE INDEX "fki_FK_Motivo"
     ON public."C_M" USING btree
-    ("id_Motivo")
+    ("id_Col_Mot")
     TABLESPACE pg_default;
 
 -- Table: public."Hist_Pieza"
