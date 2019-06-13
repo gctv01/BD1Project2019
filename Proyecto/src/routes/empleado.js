@@ -39,8 +39,11 @@ router.get("/", async (req, res) => {
   }
 })
 
-router.get("/agregar", (req, res) => {
-  res.render("empleado/agregar")
+router.get("/agregar", async (req, res) => {
+  const resp = await bd.query("select di from empleado WHERE fk_supervisor IS NULL")
+  const supers = resp.rows
+  console.log(supers)
+  res.render("empleado/agregar", {supers})
 })
 
 router.post("/agregar", async (req, res) => {
@@ -90,15 +93,13 @@ router.get("/modificar:di", async (req, res) => {
   try {
     const di = req.params.di
 
-    /*const resp = await bd.query("select nombre,apellido,apellido2,fecha_nacimiento,genero,tipo_sangre,titulo,nombre2,"
+    const resp = await bd.query("select nombre,apellido,apellido2,fecha_nacimiento,genero,tipo_sangre,titulo,nombre2,"
       + " (select emps.di from empleado as emps where emp.fk_supervisor = emps.expediente) di_supervisor"
       + " from empleado as emp WHERE emp.di = $1",[di])
     const { nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di_supervisor } = resp.rows[0]
-    const empleado = { di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di_supervisor }
-    
-    console.log(empleado)*/
 
-    res.render("empleado/modificar", {di})
+
+    res.render("empleado/modificar", {di,nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di_supervisor})
   } catch (err) {
     req.flash("error", "error")
     console.error(err.stack)

@@ -10,3 +10,14 @@ DROP TABLE IF EXISTS
     cond_salud,
     empleado
 CASCADE;
+
+DROP TABLE IF EXISTS 
+    "Juego",
+    "Hist_Pieza",
+    "Col_Mot",
+    "C_M", 
+    "J_P", 
+    "Coleccion", 
+    "Pieza",
+    "Molde"
+CASCADE;
