@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
           break
         case "F": emp.genero = "Femenino"
           break
-        case "T": emp.genero = "Trasgenero"
+        case "T": emp.genero = "Transgenero"
           break
       }
       switch (emp.titulo) {
@@ -45,7 +45,7 @@ router.get("/agregar", (req, res) => {
 
 router.post("/agregar", async (req, res) => {
   try {
-    let { di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, fk_supervisor } = req.body;
+    let { di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di_supervisor } = req.body;
     if (fk_supervisor == "")
       fk_supervisor = null;
     nombre = nombre.toUpperCase()
@@ -55,7 +55,7 @@ router.post("/agregar", async (req, res) => {
 
     const text = "INSERT INTO EMPLEADO (di,nombre,apellido,apellido2,fecha_nacimiento,genero,tipo_sangre,titulo,nombre2,fk_supervisor)"
       + "VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,(SELECT expediente FROM EMPLEADO WHERE di = $10));"
-    const values = [di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, fk_supervisor]
+    const values = [di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di_supervisor]
 
     await bd.query(text, values)
 
@@ -65,6 +65,41 @@ router.post("/agregar", async (req, res) => {
     console.error(err.stack)
   } finally {
     res.redirect("/empleado/agregar")
+  }
+})
+
+router.get("/eliminar:di", async (req, res) => {
+  try {
+    const di = req.params.di
+
+    console.log(di)
+
+    await bd.query("DELETE FROM EMPLEADO WHERE di = $1", [di])
+
+  } catch (err) {
+    req.flash("error", "No se pudo eliminar un supervisor, elimine todas los empleados asociados")
+    console.error(err.stack)
+  } finally {
+    res.redirect("/empleado")
+  }
+})
+
+router.get("/modificar:di", async (req, res) => {
+  try {
+    const di = req.params.di
+
+    const resp = await bd.query("select nombre,apellido,apellido2,fecha_nacimiento,genero,tipo_sangre,titulo,nombre2,"
+      + " (select emps.di from empleado as emps where emp.fk_supervisor = emps.expediente) di_supervisor"
+      + " from empleado as emp WHERE emp.di = $1",[di])
+    const { nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di_supervisor } = resp.rows
+    const empleado = { di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di_supervisor }
+    
+    console.log(resp.rows)
+
+    res.render("empleado/modificar", {empleado})
+  } catch (err) {
+    req.flash("error", "error")
+    console.error(err.stack)
   }
 })
 
