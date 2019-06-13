@@ -3,8 +3,8 @@
     <div class="card mx-auto mt-2" style="width: 40rem;">
         <div class="card-body">
 
-            {{#if empleado}}
-            <form action="/empleado/agregar" method="POST">
+            <h5 class="text-center">{{di}}</h5>
+            <form action="/empleado/modificar:di" method="POST">
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>Primer nombre</label>
@@ -23,11 +23,6 @@
                         <label>Segundo apellido</label>
                         <input type="text" name="apellido2" class="form-control" placeholder="Segundo apellido">
                     </div>
-                </div>
-
-                <div class="form-group">
-                    <label>DI</label>
-                    <input type="number" name="di" class="form-control" placeholder="DI">
                 </div>
 
                 <div class="form-group">
@@ -122,9 +117,9 @@
                     <input type="number" name="fk_supervisor" class="form-control" placeholder="DI Supervisor">
                 </div>
 
-                <button type="submit" class="btn btn-block btn-primary">Registrar</button>
+                <button type="submit" class="btn btn-block btn-primary">Modificar</button>
             </form>
-            {{/if}}
+            
         </div>
     </div>
 </div>
