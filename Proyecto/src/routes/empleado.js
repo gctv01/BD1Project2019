@@ -46,8 +46,10 @@ router.get("/agregar", (req, res) => {
 router.post("/agregar", async (req, res) => {
   try {
     let { di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di_supervisor } = req.body;
-    if (fk_supervisor == "")
-      fk_supervisor = null;
+    
+    if (di_supervisor == "")
+      di_supervisor = null
+      
     nombre = nombre.toUpperCase()
     apellido = apellido.toUpperCase()
     apellido2 = apellido2.toUpperCase()
