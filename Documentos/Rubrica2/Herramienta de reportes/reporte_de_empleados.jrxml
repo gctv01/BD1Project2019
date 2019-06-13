@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_de_empleados" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="974ad4cf-7eac-4d52-8ec3-138e29e107f5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[select di,nombre,apellido,apellido2,fecha_nacimiento,genero,tipo_sangre,titulo,nombre2,
+(select emps.di from empleado as emps where emp.fk_supervisor = emps.expediente) di_supervisor
+from empleado as emp;]]>
+	</queryString>
+	<field name="di" class="java.math.BigDecimal"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="apellido" class="java.lang.String"/>
+	<field name="apellido2" class="java.lang.String"/>
+	<field name="fecha_nacimiento" class="java.sql.Date"/>
+	<field name="genero" class="java.lang.String"/>
+	<field name="tipo_sangre" class="java.lang.String"/>
+	<field name="titulo" class="java.lang.String"/>
+	<field name="nombre2" class="java.lang.String"/>
+	<field name="di_supervisor" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="56" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="56" uuid="292a17e7-777b-4a74-be1c-ad708d1edd0a"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="36"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE EMPLEADOS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="73" height="20" uuid="567feccd-6d29-4584-9078-5442d943f0d3"/>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="73" y="0" width="75" height="20" uuid="ad2292de-3b0a-43a5-87de-83aec620a9f1"/>
+				<text><![CDATA[Apellido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="148" y="0" width="73" height="20" uuid="be4fbd14-c70a-4092-aaae-2cd28eeca4a8"/>
+				<text><![CDATA[DI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="221" y="0" width="77" height="20" uuid="9a051e94-3b44-4801-a901-06c1c150da78"/>
+				<text><![CDATA[Fecha de nacimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="298" y="0" width="46" height="20" uuid="124fff51-ef15-4596-aeb4-26acbbc77b8e"/>
+				<text><![CDATA[Genero]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="344" y="0" width="48" height="20" uuid="50723755-2932-4726-95b9-70036af32e04"/>
+				<text><![CDATA[Sangre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="392" y="0" width="44" height="20" uuid="b31424ab-abe9-4e1a-b87d-a9ce2176f796"/>
+				<text><![CDATA[Titulo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="436" y="0" width="100" height="20" uuid="f2c09e94-f0a7-4e8e-96bd-d1b8ca7a43a5"/>
+				<text><![CDATA[DI Supervisor]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="73" height="20" uuid="599d4179-8f33-4eeb-af42-317f62d8b052"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="73" y="0" width="75" height="20" uuid="aa5ad5c6-acdd-4236-8697-37c5413303e7"/>
+				<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="148" y="0" width="73" height="20" uuid="78e32671-d146-45d1-894c-4ef392ba18a6"/>
+				<textFieldExpression><![CDATA[$F{di}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="221" y="0" width="77" height="20" uuid="ad5d050c-49d3-44af-b029-d3b7af584387"/>
+				<textFieldExpression><![CDATA[$F{fecha_nacimiento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="298" y="0" width="46" height="20" uuid="7cd6a3ec-84e6-4184-8593-bb463ea43195"/>
+				<textFieldExpression><![CDATA[$F{genero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="344" y="0" width="48" height="20" uuid="e3f5d3fb-a2a6-4072-a051-1b31ebf2a49f"/>
+				<textFieldExpression><![CDATA[$F{tipo_sangre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="392" y="0" width="44" height="20" uuid="78912cab-0b1e-410f-a2cf-80e2ba7802e2"/>
+				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="436" y="0" width="100" height="20" uuid="c6fdaad6-fa4d-4aad-9145-3f3f5f234e82"/>
+				<textFieldExpression><![CDATA[$F{di_supervisor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
