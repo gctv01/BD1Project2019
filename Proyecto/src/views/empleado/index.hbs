@@ -13,6 +13,8 @@
                 <th>Tipo de sangre</th>
                 <th>Titulo</th>
                 <th>DI supervisor</th>
+                <th>Sueldo</th>
+                <th>Cargo</th>
             </tr>
         </thead>
         <tbody>
@@ -28,10 +30,12 @@
                 <td>{{tipo_sangre}}</td>
                 <td>{{titulo}}</td>
                 <td>{{di_supervisor}}</td>
+                <th>{{sueldo}}</th>
+                <th>{{cargo}}</th>
                 <form action="/empleado/eliminar{{di}}" method="GET">
                     <td><button class="btn btn-danger">eliminar</button></td>
                 </form>
-                <form action="/empleado/modificar{{di}}" method="GET">                   
+                <form action="/empleado/modificar{{di}}" method="GET">
                     <td><button class="btn btn-warning">modificar</button></td>
                 </form>
             </tr>
@@ -49,6 +53,8 @@
                 <th>Tipo de sangre</th>
                 <th>Titulo</th>
                 <th>DI supervisor</th>
+                <th>Sueldo</th>
+                <th>Cargo</th>
             </tr>
         </tfoot>
     </table>

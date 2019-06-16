@@ -59,12 +59,12 @@ CREATE TABLE DETALLE_EXP(
 );
 
 CREATE TABLE ORGANIGRAMA(
-    id SERIAL NOT NULL,
-    nombre VARCHAR(20) NOT NULL,
+    id INTEGER NOT NULL,
+    nombre VARCHAR(30) NOT NULL,
     tipo VARCHAR(1) NOT NULL CONSTRAINT check_tipo check(tipo in('G','S','D','A')),
     nivel NUMERIC(1) NOT NULL CONSTRAINT check_nivel check(nivel in(1,2,3,4)),
     fk_superior INTEGER,
-    descripcion VARCHAR(30),
+    descripcion VARCHAR(100),
 
     PRIMARY KEY(id),
     FOREIGN KEY(fk_superior) REFERENCES ORGANIGRAMA(id)

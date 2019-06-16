@@ -1,0 +1,76 @@
+<div class="label text-center my-2 display-1">ASIGNAR EMPLEO</div>
+<div class="row mx-auto">
+    <div class="card mx-auto mt-2" style="width: 40rem;">
+        <div class="card-body">
+            <h5 class="text-center">DATOS DEL EMPLEO</h5>
+            <hr>
+            <form action="/empleado/agregar/empleo{{di}}" method="POST">
+
+                <div class="form-group">
+                    <select class="custom-select" id="inlineFormCustomSelect" name="di">
+                        {{#each empleado}}
+                        <option>{{di}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Sueldo</label>
+                    <input type="number" name="sueldo" class="form-control" placeholder="9999.99">
+                </div>
+
+                <div class="form-group">
+                    <label>Cargo</label>
+                    <br>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="cs" name="cargo" class="custom-control-input" value="S">
+                        <label class="custom-control-label" for="cs">Secretaria</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="cg" name="cargo" class="custom-control-input" value="G">
+                        <label class="custom-control-label" for="cg">Gerente</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="co" name="cargo" class="custom-control-input" value="O">
+                        <label class="custom-control-label" for="co">Operario general</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="ce" name="cargo" class="custom-control-input" value="E">
+                        <label class="custom-control-label" for="ce">Electricista</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="cm" name="cargo" class="custom-control-input" value="M">
+                        <label class="custom-control-label" for="cm">Mecanico</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="ci" name="cargo" class="custom-control-input" value="I">
+                        <label class="custom-control-label" for="ci">Inspector</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <select class="custom-select" id="inlineFormCustomSelect" name="id_organigrama">
+                        <option selected></option>
+                        <option value=1>Gerencia general</option>
+                        <option value=2>Gerencia de planta</option>
+                        <option value=3>Gerencia tecnica</option>
+                        <hr>
+                        <option value=4>Almacen de insumos</option>
+                        <option value=5>Almacen producto terminado</option>
+                        <hr>
+                        <option value=6>Seccion control de calidad</option>
+                        <option value=7>Seccion de mantenimiento</option>
+                        <hr>
+                        <option value=8>Departamento de seleccion</option>
+                        <option value=9>Departamento de esmaltacion decoracion</option>
+                        <option value=10>Departamento de hornos</option>
+                        <option value=11>Departamento de colado refinado</option>
+                        <option value=12>Departamento de yeseria</option>
+                        <option value=13>Departamento de rotomoldeo</option>
+                        <option value=14>Departamento de preparacion pasta</option>
+                    </select>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</div>
