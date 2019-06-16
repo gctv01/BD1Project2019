@@ -37,7 +37,7 @@ app.use((req, res, next) => {
 })
 
 app.use(require("./routes/index"))
-app.use("/empleado",require("./routes/empleado"))
+app.use(require("./routes/empleado"))
 app.use(require("./routes/catalogo"))
 
 app.use(express.static(path.join(__dirname, 'public')));

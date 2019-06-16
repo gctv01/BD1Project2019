@@ -2,7 +2,7 @@
 <div class="row mx-auto">
   <div class="card mx-auto mt-2" style="width: 40rem;">
     <div class="card-body">
-
+      <h5 class="text-center">DATOS DEL EMPLEADO</h5>
       <form action="/empleado/agregar" method="POST">
         <div class="form-row">
           <div class="form-group col-md-6">
@@ -35,6 +35,7 @@
 
         <div class="form-group">
           <label>Genero</label>
+          <br>
           <div class="custom-control custom-radio custom-control-inline">
             <input type="radio" id="gm" name="genero" class="custom-control-input" value="M">
             <label class="custom-control-label" for="gm">M</label>
@@ -116,13 +117,49 @@
         </div>
 
         <div class="form-group">
-          <label for="exampleFormControlSelect1">DI Supervisor</label>
-          <select class="form-control" id="exampleFormControlSelect1">
-            {{#each supers}}
-            <option>{{di}}</option>
-            {{/each}}
-          </select>
+          <label>DI Supervisor</label>
+          <input type="number" name="di_supervisor" class="form-control" placeholder="DI Supervisor">
         </div>
+
+        <hr>
+        <h5 class="text-center">DATOS DEL EMPLEO</h5>
+
+        <div class="form-group">
+          <label>Sueldo</label>
+          <input type="number" name="sueldo" class="form-control" placeholder="9999.99">
+        </div>
+
+        <div class="form-group">
+          <label>Cargo</label>
+          <br>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="cs" name="cargo" class="custom-control-input" value="S">
+            <label class="custom-control-label" for="cs">Secretaria</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="cg" name="cargo" class="custom-control-input" value="G">
+            <label class="custom-control-label" for="cg">Gerente</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="co" name="cargo" class="custom-control-input" value="O">
+            <label class="custom-control-label" for="co">Opgen</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="ce" name="cargo" class="custom-control-input" value="E">
+            <label class="custom-control-label" for="ce">Electricista</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="cm" name="cargo" class="custom-control-input" value="M">
+            <label class="custom-control-label" for="cm">Mecanico</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="ci" name="cargo" class="custom-control-input" value="I">
+            <label class="custom-control-label" for="ci">Inspector</label>
+          </div>
+        </div>
+
+        <hr>
+        <h5 class="text-center">TURNO</h5>
 
         <button type="submit" class="btn btn-block btn-primary">Registrar</button>
       </form>

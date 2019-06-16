@@ -3,8 +3,9 @@
     <div class="card mx-auto mt-2" style="width: 40rem;">
         <div class="card-body">
 
-            <h5 class="text-center">{{di}}</h5>
-            <form action="/empleado/modificar:di" method="POST">
+            <h5 class="text-center">DI: {{di}}</h5>
+            <hr>
+            <form action="/empleado/modificar{{di}}" method="POST">
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>Primer nombre</label>
@@ -14,28 +15,28 @@
                     <div class="form-group col-md-6">
                         <label>Primer apellido</label>
                         <input type="text" name="apellido" class="form-control" placeholder="Primer apellido"
-                        value={{apellido}}>
+                            value={{apellido}}>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Segundo nombre</label>
                         <input type="text" name="nombre2" class="form-control" placeholder="Segundo nombre"
-                        value={{nombre2}}>
+                            value={{nombre2}}>
                     </div>
                     <div class="form-group col-md-6">
                         <label>Segundo apellido</label>
                         <input type="text" name="apellido2" class="form-control" placeholder="Segundo apellido"
-                        value={{apellido2}}>
+                            value={{apellido2}}>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Fecha de nacimiento</label>
-                    <input type="date" name="fecha_nacimiento" class="form-control"
-                    value={{fecha_nacimiento}}>
+                    <input type="date" name="fecha_nacimiento" class="form-control" value={{fecha_nacimiento}}>
                 </div>
 
                 <div class="form-group" value={{genero}}>
                     <label>Genero</label>
+                    <br>
                     <div class="custom-control custom-radio custom-control-inline">
                         <input type="radio" id="gm" name="genero" class="custom-control-input" value="M">
                         <label class="custom-control-label" for="gm">M</label>
@@ -87,8 +88,7 @@
                     </div>
                 </div>
 
-                <div class="form-group"
-                value={{titulo}}>
+                <div class="form-group" value={{titulo}}>
                     <label>Titulo</label>
                     <br>
                     <div class="custom-control custom-radio custom-control-inline">
@@ -117,14 +117,9 @@
                     </div>
                 </div>
 
-                <div class="form-group" value={{di_supervisor}}>
-                    <label>DI Supervisor</label>
-                    <input type="number" name="fk_supervisor" class="form-control" placeholder="DI Supervisor">
-                </div>
-
                 <button type="submit" class="btn btn-block btn-primary">Modificar</button>
             </form>
-            
+
         </div>
     </div>
 </div>

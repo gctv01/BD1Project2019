@@ -1,37 +1,23 @@
 const router = require("express").Router()
 const bd = require("../db.js")
 
-router.get("/", async (req, res) => {
+router.get("/empleado", async (req, res) => {
   try {
-    const resp = await bd.query("select di,nombre,apellido,apellido2,fecha_nacimiento,genero,tipo_sangre,titulo,nombre2,"
-      + " (select emps.di from empleado as emps where emp.fk_supervisor = emps.expediente) di_supervisor"
-      + " from empleado as emp")
+    const resp = await bd.query("select di,nombre,apellido,apellido2,"
+      + "TO_CHAR(fecha_nacimiento,'DD/MM/YYYY') fecha_nacimiento,genero,tipo_sangre,"
+      + "(CASE titulo"
+      + " WHEN 'B' THEN 'Bachiller'"
+      + " WHEN 'Q' THEN 'Ing.Quimico'"
+      + " WHEN 'M' THEN 'Ing.Mecanico'"
+      + " WHEN 'P' THEN 'Ing.Planta'"
+      + " WHEN 'G' THEN 'Geologo'"
+      + " WHEN 'I' THEN 'Ing.Industrial'"
+      + " END) titulo,nombre2,"
+      + "(select emps.di from empleado as emps where emp.fk_supervisor = emps.expediente) di_supervisor"
+      + " FROM empleado emp")
+
     const empleado = resp.rows
-    empleado.forEach(emp => {
-      emp.fecha_nacimiento = emp.fecha_nacimiento.toDateString()
-      switch (emp.genero) {
-        case "M": emp.genero = "Masculino"
-          break
-        case "F": emp.genero = "Femenino"
-          break
-        case "T": emp.genero = "Transgenero"
-          break
-      }
-      switch (emp.titulo) {
-        case "B": emp.titulo = "Bachiller"
-          break
-        case "Q": emp.titulo = "Ing.Quimico"
-          break
-        case "M": emp.titulo = "Ing.Mecanico"
-          break
-        case "P": emp.titulo = "Ing.Planta"
-          break
-        case "G": emp.titulo = "Geologo"
-          break
-        case "I": emp.titulo = "Ing.Industrial"
-          break
-      }
-    });
+
     res.render("empleado", { empleado })
   } catch (err) {
     console.error(err.stack)
@@ -39,27 +25,16 @@ router.get("/", async (req, res) => {
   }
 })
 
-router.get("/agregar", async (req, res) => {
-  const resp = await bd.query("select di from empleado WHERE fk_supervisor IS NULL")
-  const supers = resp.rows
-  console.log(supers)
-  res.render("empleado/agregar", {supers})
+router.get("/empleado/agregar", async (req, res) => {
+  res.render("empleado/agregar")
 })
 
-router.post("/agregar", async (req, res) => {
+router.post("/empleado/agregar", async (req, res) => {
   try {
     let { di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di_supervisor } = req.body;
-    
-    if (di_supervisor == "")
-      di_supervisor = null
-      
-    nombre = nombre.toUpperCase()
-    apellido = apellido.toUpperCase()
-    apellido2 = apellido2.toUpperCase()
-    nombre2 = nombre2.toUpperCase()
 
     const text = "INSERT INTO EMPLEADO (di,nombre,apellido,apellido2,fecha_nacimiento,genero,tipo_sangre,titulo,nombre2,fk_supervisor)"
-      + "VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,(SELECT expediente FROM EMPLEADO WHERE di = $10));"
+      + "VALUES ($1,UPPER($2),UPPER($3),UPPER($4),$5,$6,$7,$8,UPPER($9),(SELECT expediente FROM EMPLEADO WHERE di = $10));"
     const values = [di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di_supervisor]
 
     await bd.query(text, values)
@@ -73,11 +48,9 @@ router.post("/agregar", async (req, res) => {
   }
 })
 
-router.get("/eliminar:di", async (req, res) => {
+router.get("/empleado/eliminar:di", async (req, res) => {
   try {
     const di = req.params.di
-
-    console.log(di)
 
     await bd.query("DELETE FROM EMPLEADO WHERE di = $1", [di])
 
@@ -89,37 +62,42 @@ router.get("/eliminar:di", async (req, res) => {
   }
 })
 
-router.get("/modificar:di", async (req, res) => {
+router.get("/empleado/modificar:di", async (req, res) => {
   try {
     const di = req.params.di
 
-    const resp = await bd.query("select nombre,apellido,apellido2,fecha_nacimiento,genero,tipo_sangre,titulo,nombre2,"
-      + " (select emps.di from empleado as emps where emp.fk_supervisor = emps.expediente) di_supervisor"
-      + " from empleado as emp WHERE emp.di = $1",[di])
+    const resp = await bd.query("SELECT nombre,apellido,apellido2,fecha_nacimiento,genero,tipo_sangre,titulo,nombre2,"
+      + " (SELECT emps.di FROM empleado emps WHERE emp.fk_supervisor = emps.expediente) di_supervisor"
+      + " FROM empleado emp WHERE emp.di = $1", [di])
     const { nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di_supervisor } = resp.rows[0]
 
-
-    res.render("empleado/modificar", {di,nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di_supervisor})
+    res.render("empleado/modificar", { di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di_supervisor })
   } catch (err) {
-    req.flash("error", "error")
     console.error(err.stack)
+    res.redirect("/empleado")
+  }finally{
+    
   }
 })
 
-router.post("/modificar:di", async (req,res) => {
-  try{
-  const di = req.params.di
-  const {nombre,apellido,apellido2,fecha_nacimiento,genero,tipo_sangre,titulo,nombre2,di_supervisor} = req.body
+router.post("/empleado/modificar:di", async (req, res) => {
+  try {
+    const di = req.params.di
+    const { nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2 } = req.body
 
-  const resp = await bd.query("UPDATE empleado SET nombre = $1,apellido = $2,apellido2 = $3,fecha_nacimiento = $4,genero = $5,tipo_sangre = $6,titulo = $7,nombre2 = $8"
-      + " WHERE di = $9",[nombre,apellido,apellido2,fecha_nacimiento,genero,tipo_sangre,titulo,nombre2,di])
-  }catch(err){
-    req.flash("error", "Se deben llenar los campos necesarios")
+    const resp = await bd.query("UPDATE empleado SET nombre = UPPER($1),apellido = UPPER($2),apellido2 = UPPER($3),fecha_nacimiento = $4,genero = $5,tipo_sangre = $6,titulo = $7,nombre2 = UPPER($8)"
+      + " WHERE di = $9", [nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di])
+
+    req.flash("exito", "Empleado modificado con exito")
+    
+  } catch (err) {
+
+    req.flash("error", "No se pudo modificar el empleado")
     console.error(err.stack)
-  }finally{
+
+  } finally {
     res.redirect("/empleado")
   }
-
 })
 
 module.exports = router
