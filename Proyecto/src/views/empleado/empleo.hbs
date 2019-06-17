@@ -4,12 +4,13 @@
         <div class="card-body">
             <h5 class="text-center">DATOS DEL EMPLEO</h5>
             <hr>
-            <form action="/empleado/agregar/empleo{{di}}" method="POST">
+            <form action="/empleado/agregar/empleo" method="POST">
 
                 <div class="form-group">
+                    <label>DI Empleado</label>
                     <select class="custom-select" id="inlineFormCustomSelect" name="di">
                         {{#each empleado}}
-                        <option>{{di}}</option>
+                        <option value={{di}}>{{di}}</option>
                         {{/each}}
                     </select>
                 </div>
@@ -69,7 +70,7 @@
                         <option value=14>Departamento de preparacion pasta</option>
                     </select>
                 </div>
-                
+                <button type="submit" class="btn btn-block btn-primary">Asignar</button>
             </form>
         </div>
     </div>

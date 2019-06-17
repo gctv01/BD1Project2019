@@ -4,7 +4,7 @@ CREATE TABLE EMPLEADO(
     nombre VARCHAR(20) NOT NULL,
     apellido VARCHAR(20) NOT NULL,
     apellido2 VARCHAR(20) NOT NULL,
-    fecha_nacimiento date NOT NULL,
+    fecha_nacimiento TIMESTAMP NOT NULL,
     genero VARCHAR(1) NOT NULL CONSTRAINT check_genero check(genero in('M', 'F','T')),
     tipo_sangre VARCHAR(3) NOT NULL CONSTRAINT check_sangre check(tipo_sangre in('O+','A+','B+','AB+','O-','A-','B-','AB-')),
     titulo VARCHAR(1) NOT NULL CONSTRAINT check_titulo check(titulo in('B','Q','M','P','I','G')),
@@ -46,7 +46,7 @@ CREATE TABLE E_C(
 
 CREATE TABLE DETALLE_EXP(
     id SERIAL NOT NULL,
-    fecha DATE NOT NULL,
+    fecha TIMESTAMP NOT NULL,
     motivo VARCHAR(2) NOT NULL CONSTRAINT check_motivo check(motivo in('IN','BM','BA','AM','RE','HE')),
     fk_empleado INTEGER NOT NULL,
     descripcion VARCHAR(30),
@@ -71,12 +71,12 @@ CREATE TABLE ORGANIGRAMA(
 );
 
 CREATE TABLE EMPLEO(
-    fecha_inicio DATE NOT NULL,
+    fecha_inicio TIMESTAMP NOT NULL,
     sueldo NUMERIC(4,2) NOT NULL,
     cargo VARCHAR(1) NOT NULL CONSTRAINT check_cargo check(cargo in('S','G','O','E','M','I')),
     fk_empleado INTEGER NOT NULL,
     fk_organigrama INTEGER NOT NULL,
-    fecha_fin DATE,
+    fecha_fin TIMESTAMP,
 
     PRIMARY KEY(fecha_inicio,fk_empleado),
     FOREIGN KEY(fk_empleado) REFERENCES EMPLEADO(expediente),
@@ -84,11 +84,11 @@ CREATE TABLE EMPLEO(
 );
 
 CREATE TABLE TURNOS_HIST(
-    fecha_inicio DATE NOT NULL,
+    fecha_inicio TIMESTAMP NOT NULL,
     turno NUMERIC(1) NOT NULL CONSTRAINT check_turno check(turno in(1,2,3)),
-    fk_empleo DATE NOT NULL,
+    fk_empleo TIMESTAMP NOT NULL,
     fk_empleado INTEGER NOT NULL,
-    fecha_fin DATE,
+    fecha_fin TIMESTAMP,
 
     PRIMARY KEY(fecha_inicio,fk_empleo,fk_empleado),
     FOREIGN KEY(fk_empleo,fk_empleado) REFERENCES EMPLEO(fecha_inicio,fk_empleado)
@@ -96,7 +96,7 @@ CREATE TABLE TURNOS_HIST(
 
 CREATE TABLE REUNION(
     id SERIAL NOT NULL,
-    fecha DATE NOT NULL,
+    fecha TIMESTAMP NOT NULL,
     minuta VARCHAR(30) NOT NULL,
     fk_supervisor INTEGER NOT NULL,
 
@@ -105,7 +105,7 @@ CREATE TABLE REUNION(
 );
 
 CREATE TABLE INASISTENCIA(
-    fk_empleo DATE NOT NULL,
+    fk_empleo TIMESTAMP NOT NULL,
     fk_empleado INTEGER NOT NULL,
     fk_reunion INTEGER NOT NULL,
     fk_supervisor INTEGER NOT NULL,

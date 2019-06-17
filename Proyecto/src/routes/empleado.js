@@ -14,7 +14,7 @@ router.get("/empleado", async (req, res) => {
       + " WHEN 'I' THEN 'Ing.Industrial'"
       + " END) titulo,nombre2,"
       + "(SELECT emps.di from empleado as emps where emp.fk_supervisor = emps.expediente) di_supervisor,"
-      + "(SELECT sueldo FROM empleo WHERE expediente = fk_empleado AND fecha_fin IS NULL),"
+      + "(SELECT sueldo FROM empleo WHERE expediente = fk_empleado AND fecha_fin IS NULL) sueldo,"
       + "(CASE (SELECT cargo FROM empleo WHERE expediente = fk_empleado AND fecha_fin IS NULL)"
       + " WHEN 'S' THEN 'Secretaria'"
       + " WHEN 'G' THEN 'Gerente'"
@@ -63,11 +63,12 @@ router.get("/empleado/eliminar:di", async (req, res) => {
 
     await bd.query("DELETE FROM EMPLEADO WHERE di = $1", [di])
 
+    req.flash("exito", "Se elimino el empleado")
   } catch (err) {
     req.flash("error", "No se pudo eliminar un supervisor, elimine todas los empleados asociados")
     console.error(err.stack)
   } finally {
-    res.render("/empleado")
+    res.redirect("/empleado")
   }
 })
 
@@ -83,7 +84,7 @@ router.get("/empleado/modificar:di", async (req, res) => {
     res.render("empleado/modificar", { di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di_supervisor })
   } catch (err) {
     console.error(err.stack)
-    res.render("/empleado")
+    res.render("empleado")
   } finally {
 
   }
@@ -123,11 +124,9 @@ router.get("/empleado/agregar/empleo", async (req, res) => {
   }
 })
 
-router.post("/empleado/agregar/empleo:di", async (req, res) => {
+router.post("/empleado/agregar/empleo", async (req, res) => {
   try {
-    const di = req.params.di
-
-    let { sueldo, cargo, id_organigrama } = req.body
+    let {di, sueldo, cargo, id_organigrama } = req.body
 
     if (cargo == 'G' && id_organigrama > 3)
       throw "error incompatibilidad en los cargos"
@@ -140,10 +139,18 @@ router.post("/empleado/agregar/empleo:di", async (req, res) => {
     if (cargo == 'I')
       id_organigrama = 6
 
-    const text = "INSERT INTO EMPLEO (fecha_inicio,sueldo,cargo,fk_empleado,fk_organigrama,fecha_fin)"
+    let text = "UPDATE empleo SET"
+    + " fecha_fin = NOW()"
+    + " WHERE fk_empleado = (SELECT expediente FROM empleado WHERE di = $1) AND fecha_fin IS NULL"
+
+    let values = [di]
+
+    await bd.query(text, values)
+    ///
+    text = "INSERT INTO EMPLEO (fecha_inicio,sueldo,cargo,fk_empleado,fk_organigrama,fecha_fin)"
       + "VALUES (NOW(),$1,$2,(SELECT expediente FROM empleado WHERE di = $3),$4,null)"
 
-    const values = [sueldo, cargo, di, id_organigrama]
+    values = [sueldo, cargo, di, id_organigrama]
 
     await bd.query(text, values)
 
@@ -152,7 +159,7 @@ router.post("/empleado/agregar/empleo:di", async (req, res) => {
     req.flash("error", "No se pudo asignar el empleo")
     console.error(err.stack)
   } finally {
-
+    res.redirect("/empleado/agregar/empleo")
   }
 })
 
