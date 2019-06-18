@@ -62,17 +62,24 @@ router.get("/empleado/eliminar:di", async (req, res) => {
     const di = req.params.di
 
     //ELIMINANDO EMPLEOS
+    await bd.query("BEGIN")
     await bd.query("DELETE FROM empleo"
     + " WHERE fk_empleado = (SELECT expediente FROM empleado WHERE di = $1)", [di])
 
     //ELIMINANDO EMPLEADO
-    await bd.query("DELETE FROM empleado WHERE di = $1", [di])
+    await bd.query("DELETE FROM empleado WHERE di = $1", [di], async (e) =>{
+      if(e){
+        await bd.query("ROLLBACK")
+        throw new Error("No se pudo eliminar un supervisor, elimine todas los empleados asociados")
+      }
+    })
 
     req.flash("exito", "Se elimino el empleado")
   } catch (err) {
     req.flash("error", "No se pudo eliminar un supervisor, elimine todas los empleados asociados")
     console.error(err.stack)
   } finally {
+    await bd.query("COMMIT")
     res.redirect("/empleado")
   }
 })
@@ -162,15 +169,16 @@ router.post("/empleado/agregar/empleo", async (req, res) => {
     await bd.query(text, values)
 
     //ASIGNANDO SUPERVISOR AL EMPLEADO
-    text = "UPDATE empleado SET fk_supervisor ="
-    + " (SELECT s.expediente FROM empleado s"
-    + " WHERE (SELECT fk_organigrama FROM empleo"
-    + " WHERE expediente = fk_empleado AND fecha_fin IS NULL) ="
-    + " (SELECT fk_organigrama FROM empleo"
-    + " WHERE s.expediente = fk_empleado AND fecha_fin IS NULL) AND expediente != s.expediente)"
-    + " WHERE di = $1"
+    text = "UPDATE empleado e SET fk_supervisor ="
+    + " (SELECT s.expediente FROM empleado s, empleo eo "
+    + " WHERE eo.fk_empleado = s.expediente AND"
+    + " eo.fk_organigrama = $2 AND" 
+    + " eo.fecha_fin IS NULL AND"
+    + " s.fk_supervisor IS NULL AND"
+    + " s.expediente != e.expediente)"
+    + " WHERE e.di = $1"
 
-    values = [di]
+    values = [di, id_organigrama]
 
     await bd.query(text, values)
 
