@@ -61,7 +61,12 @@ router.get("/empleado/eliminar:di", async (req, res) => {
   try {
     const di = req.params.di
 
-    await bd.query("DELETE FROM EMPLEADO WHERE di = $1", [di])
+    //ELIMINANDO EMPLEOS
+    await bd.query("DELETE FROM empleo"
+    + " WHERE fk_empleado = (SELECT expediente FROM empleado WHERE di = $1)", [di])
+
+    //ELIMINANDO EMPLEADO
+    await bd.query("DELETE FROM empleado WHERE di = $1", [di])
 
     req.flash("exito", "Se elimino el empleado")
   } catch (err) {
@@ -139,6 +144,7 @@ router.post("/empleado/agregar/empleo", async (req, res) => {
     if (cargo == 'I')
       id_organigrama = 6
 
+    //AJUSTANDO FECHA FIN PARA EMPLEO
     let text = "UPDATE empleo SET"
     + " fecha_fin = NOW()"
     + " WHERE fk_empleado = (SELECT expediente FROM empleado WHERE di = $1) AND fecha_fin IS NULL"
@@ -146,11 +152,25 @@ router.post("/empleado/agregar/empleo", async (req, res) => {
     let values = [di]
 
     await bd.query(text, values)
-    ///
+
+    //INSERTANDO EMPLEO
     text = "INSERT INTO EMPLEO (fecha_inicio,sueldo,cargo,fk_empleado,fk_organigrama,fecha_fin)"
       + "VALUES (NOW(),$1,$2,(SELECT expediente FROM empleado WHERE di = $3),$4,null)"
 
     values = [sueldo, cargo, di, id_organigrama]
+
+    await bd.query(text, values)
+
+    //ASIGNANDO SUPERVISOR AL EMPLEADO
+    text = "UPDATE empleado SET fk_supervisor ="
+    + " (SELECT s.expediente FROM empleado s"
+    + " WHERE (SELECT fk_organigrama FROM empleo"
+    + " WHERE expediente = fk_empleado AND fecha_fin IS NULL) ="
+    + " (SELECT fk_organigrama FROM empleo"
+    + " WHERE s.expediente = fk_empleado AND fecha_fin IS NULL) AND expediente != s.expediente)"
+    + " WHERE di = $1"
+
+    values = [di]
 
     await bd.query(text, values)
 
