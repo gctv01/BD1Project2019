@@ -34,19 +34,35 @@ router.get("/empleado", async (req, res) => {
 })
 
 router.get("/empleado/agregar", async (req, res) => {
-  res.render("empleado/agregar")
+  try {
+
+    const rest = await bd.query("SELECT id,nombre,alergia,descripcion FROM cond_salud")
+    const salud = rest.rows
+
+    res.render("empleado/agregar", { salud })
+  } catch (err) {
+
+  } finally {
+
+  }
+
 })
 
 router.post("/empleado/agregar", async (req, res) => {
   try {
-    let { di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2 } = req.body;
+    let { salud, di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2 } = req.body;
 
-    let text = "INSERT INTO EMPLEADO (di,nombre,apellido,apellido2,fecha_nacimiento,genero,tipo_sangre,titulo,nombre2)"
-      + "VALUES ($1,UPPER($2),UPPER($3),UPPER($4),$5,$6,$7,$8,UPPER($9))"
+    await bd.query("INSERT INTO EMPLEADO (di,nombre,apellido,apellido2,fecha_nacimiento,genero,tipo_sangre,titulo,nombre2)"
+      + "VALUES ($1,UPPER($2),UPPER($3),UPPER($4),$5,$6,$7,$8,UPPER($9))", [di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2])
 
-    let values = [di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2]
+    salud.forEach(id => {
+      id = Number(id) 
+      console.log(id)
+    });
+    console.log(salud)
 
-    await bd.query(text, values)
+    await bd.query("INSERT INTO e_c (fk_empleado, fk_cond)"
+      + "VALUES ((SELECT expediente FROM empleado WHERE di = $1), $2)", [di, salud])
 
     req.flash("exito", "Se agrego el empleado")
   } catch (err) {
@@ -61,21 +77,23 @@ router.get("/empleado/eliminar:di", async (req, res) => {
   try {
     const di = req.params.di
 
-    //ELIMINANDO EMPLEOS
     await bd.query("BEGIN")
+
+    //ELIMINANDO TURNOS
+    await bd.query("DELETE FROM turnos_hist"
+      + " WHERE fk_empleo = (SELECT fecha_inicio FROM empleo"
+      + " WHERE fk_empleado = (SELECT expediente FROM empleado WHERE di = $1))", [di])
+
+    //ELIMINANDO EMPLEOS
     await bd.query("DELETE FROM empleo"
-    + " WHERE fk_empleado = (SELECT expediente FROM empleado WHERE di = $1)", [di])
+      + " WHERE fk_empleado = (SELECT expediente FROM empleado WHERE di = $1)", [di])
 
     //ELIMINANDO EMPLEADO
-    await bd.query("DELETE FROM empleado WHERE di = $1", [di], async (e) =>{
-      if(e){
-        await bd.query("ROLLBACK")
-        throw new Error("No se pudo eliminar un supervisor, elimine todas los empleados asociados")
-      }
-    })
+    await bd.query("DELETE FROM empleado WHERE di = $1", [di])
 
     req.flash("exito", "Se elimino el empleado")
   } catch (err) {
+    await bd.query("ROLLBACK")
     req.flash("error", "No se pudo eliminar un supervisor, elimine todas los empleados asociados")
     console.error(err.stack)
   } finally {
@@ -138,7 +156,7 @@ router.get("/empleado/agregar/empleo", async (req, res) => {
 
 router.post("/empleado/agregar/empleo", async (req, res) => {
   try {
-    let {di, sueldo, cargo, id_organigrama } = req.body
+    let { di, sueldo, cargo, id_organigrama } = req.body
 
     if (cargo == 'G' && id_organigrama > 3)
       throw "error incompatibilidad en los cargos"
@@ -153,8 +171,8 @@ router.post("/empleado/agregar/empleo", async (req, res) => {
 
     //AJUSTANDO FECHA FIN PARA EMPLEO
     let text = "UPDATE empleo SET"
-    + " fecha_fin = NOW()"
-    + " WHERE fk_empleado = (SELECT expediente FROM empleado WHERE di = $1) AND fecha_fin IS NULL"
+      + " fecha_fin = NOW()"
+      + " WHERE fk_empleado = (SELECT expediente FROM empleado WHERE di = $1) AND fecha_fin IS NULL"
 
     let values = [di]
 
@@ -170,13 +188,13 @@ router.post("/empleado/agregar/empleo", async (req, res) => {
 
     //ASIGNANDO SUPERVISOR AL EMPLEADO
     text = "UPDATE empleado e SET fk_supervisor ="
-    + " (SELECT s.expediente FROM empleado s, empleo eo "
-    + " WHERE eo.fk_empleado = s.expediente AND"
-    + " eo.fk_organigrama = $2 AND" 
-    + " eo.fecha_fin IS NULL AND"
-    + " s.fk_supervisor IS NULL AND"
-    + " s.expediente != e.expediente)"
-    + " WHERE e.di = $1"
+      + " (SELECT s.expediente FROM empleado s, empleo eo "
+      + " WHERE eo.fk_empleado = s.expediente AND"
+      + " eo.fk_organigrama = $2 AND"
+      + " eo.fecha_fin IS NULL AND"
+      + " s.fk_supervisor IS NULL AND"
+      + " s.expediente != e.expediente)"
+      + " WHERE e.di = $1"
 
     values = [di, id_organigrama]
 
@@ -188,6 +206,68 @@ router.post("/empleado/agregar/empleo", async (req, res) => {
     console.error(err.stack)
   } finally {
     res.redirect("/empleado/agregar/empleo")
+  }
+})
+
+router.get("/empleado/agregar/turno", async (req, res) => {
+  try {
+    const rest = await bd.query("SELECT di FROM empleado, empleo"
+      + " WHERE expediente = fk_empleado AND fecha_fin IS NULL AND fk_organigrama = 10")
+    const hornero = rest.rows
+    res.render("empleado/agregar/turno", { hornero })
+  } catch (err) {
+    res.render("index")
+    console.error(err.stack)
+  } finally {
+
+  }
+})
+
+router.post("/empleado/agregar/turno", async (req, res) => {
+  try {
+    const { di, turno } = req.body
+
+    await bd.query("BEGIN")
+
+    await bd.query("UPDATE turnos_hist SET"
+      + " fecha_fin = NOW()"
+      + " WHERE fk_empleado = (SELECT expediente FROM empleado WHERE di = $1) AND fecha_fin IS NULL", [di])
+
+    await bd.query("INSERT INTO turnos_hist (fecha_inicio, turno, fk_empleo, fk_empleado, fecha_fin)"
+      + " VALUES (NOW(),$2,"
+      + " (SELECT fecha_inicio FROM empleo"
+      + " WHERE fk_empleado = (SELECT expediente FROM empleado"
+      + " WHERE di = $1) AND fecha_fin IS NULL),"
+      + " (SELECT expediente FROM empleado"
+      + " WHERE di = $1), null)", [di, turno])
+
+    req.flash("exito", "Se asigno el turno")
+  } catch (err) {
+    await bd.query("ROLLBACK")
+    req.flash("error", "No se pudo asignar el turno")
+    console.error(err.stack)
+  } finally {
+    await bd.query("COMMIT")
+    res.redirect("/empleado/agregar/turno")
+  }
+})
+
+router.get("/empleado/agregar/salud", (req, res) => {
+  res.render("empleado/agregar/salud")
+})
+
+router.post("/empleado/agregar/salud", async (req, res) => {
+  try {
+    const { nombre, alergia, descripcion } = req.body
+
+    await bd.query("INSERT INTO cond_salud (nombre,alergia,descripcion)"
+      + "VALUES ($1,$2,$3)", [nombre, alergia, descripcion])
+
+    req.flash("exito", "Se agrego la consicion de salud")
+  } catch (err) {
+    req.flash("error", "No se agrego la condicion de salud")
+  } finally {
+    res.redirect("/empleado/agregar/salud")
   }
 })
 

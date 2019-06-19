@@ -1,0 +1,37 @@
+<div class="label text-center my-2 display-1">AGREGAR CONDICION DE SALUD</div>
+<div class="row mx-auto">
+    <div class="card mx-auto mt-2" style="width: 40rem;">
+        <div class="card-body">
+            <h5 class="text-center">DATOS DE LA CONDICION DE SALUD</h5>
+            <hr>
+            <form action="/empleado/agregar/salud" method="POST">
+
+                <div class="form-group">
+                    <label>Nombre de la condicion de salud</label>
+                    <input type="text" name="nombre" class="form-control" placeholder="Nombre de la condicion de salud">
+                </div>
+
+                <div class="form-group">
+                    <label>¿Es una alergia?</label>
+                    <br>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="as" name="alergia" class="custom-control-input" value=true>
+                        <label class="custom-control-label" for="as">Si</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="an" name="alergia" class="custom-control-input" value=false>
+                        <label class="custom-control-label" for="an">No</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Descripcion</label>
+                    <textarea class="form-control" id="d" name="descripcion" rows="3" placeholder="Descripcion"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-block btn-primary">Registrar</button>
+            </form>
+
+        </div>
+    </div>
+</div>
