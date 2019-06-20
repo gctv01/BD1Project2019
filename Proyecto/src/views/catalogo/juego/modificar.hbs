@@ -1,0 +1,43 @@
+<div class="label text-center my-2 display-1">AGREGAR JUEGO</div>
+<div class="row mx-auto">
+  <div class="card mx-auto mt-2" style="width: 40rem;">
+    <div class="card-body">
+        <h5 class="text-center">ID: {{id}}</h5>
+
+      <form action="/catalogo/modificar{{id}}" method="POST">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Nombre</label>
+            <input type="text" name="nombre" class="form-control" placeholder="nombre" value = {{nombre}}>
+          </div>
+        </div>        
+
+        <div class="form-group" value = {{cant_personas}}>
+          <label>Cantidad de Personas</label>
+          <br>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="c2" name="cant_personas" class="custom-control-input" value="2">
+            <label class="custom-control-label" for="c2">2</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="c4" name="cant_personas" class="custom-control-input" value="4">
+            <label class="custom-control-label" for="c4">4</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="c6" name="cant_personas" class="custom-control-input" value="6">
+            <label class="custom-control-label" for="c6">6</label>
+          </div>          
+        </div>
+
+
+        <div class="form-group">
+          <label>Descripcion</label>
+          <input type="text" name="descr" class="form-control" placeholder="Descripcion" values = {{descr}}>
+        </div>
+
+        <button type="submit" class="btn btn-block btn-primary">Modificar</button>
+      </form>
+
+    </div>
+  </div>
+</div>
