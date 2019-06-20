@@ -4,23 +4,16 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Nombre</th>
-                <th>Cantidad De Personas</th>
                 <th>Descripcion</th>
             </tr>
         </thead>
         <tbody>
-            {{#each juego}}
+            {{#each pieza}}
             <tr>
                 <td>{{id}}</td>
-                <td>{{nombre}}</td>
-                <td>{{cant_personas}}</td>
                 <td>{{descr}}</td>
-                <form action="/catalogo/eliminar{{id}}" method="GET">
-                    <td><button class="btn btn-danger">eliminar</button></td>
-                </form>
-                <form action="/catalogo/modificar{{id}}" method="GET">                   
-                    <td><button class="btn btn-warning">modificar</button></td>
+               <form action="/catalogo/agregar_P2{{id}}" method="GET">
+                    <td><button class="btn btn-primary">Agregar</button></td>
                 </form>
             </tr>
             {{/each}}
@@ -28,8 +21,6 @@
         <tfoot>
             <tr>
                 <th>ID</th>
-                <th>Nombre</th>
-                <th>Cantidad De Personas</th>
                 <th>Descripcion</th>
             </tr>
         </tfoot>

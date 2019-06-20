@@ -16,11 +16,8 @@
                 <td>{{nombre}}</td>
                 <td>{{cant_personas}}</td>
                 <td>{{descr}}</td>
-                <form action="/catalogo/eliminar{{id}}" method="GET">
-                    <td><button class="btn btn-danger">eliminar</button></td>
-                </form>
-                <form action="/catalogo/modificar{{id}}" method="GET">                   
-                    <td><button class="btn btn-warning">modificar</button></td>
+                <form action="/catalogo/agregarP2{{id}}" method="GET">
+                    <td><button class="btn btn-primary">Agregar Pieza</button></td>
                 </form>
             </tr>
             {{/each}}
