@@ -9,9 +9,8 @@ router.get("/catalogo/agregarJ", (req,res) => {
     res.render("catalogo/juego/agregarJ")
 })
 
-router.get("/catalogo/lista", (req,res) => {
-    res.render("catalogo/juego/lista")
-})
+
+
 
 
 router.get("/catalogo", async (req, res) => {
@@ -41,11 +40,38 @@ router.get("/catalogo", async (req, res) => {
       const resp = await bd.query("select id,nombre,cant_personas,descr"
         + " from juego ")
       const juego = resp.rows
-      console.log(juego)
-      res.render("catalogo/lista", { juego })
+      res.render("catalogo/juego/lista", { juego })
     } catch (err) {
       console.error(err.stack)
-      res.render("index")
+      res.render("catalogo/juego/lista")
+    }
+  })
+
+  router.get("/catalogo/agregarP", async (req, res) => {
+    try {
+      const resp = await bd.query("select id,nombre,cant_personas,descr"
+        + " from juego ")
+      const juego = resp.rows
+      res.render("catalogo/juego/agregarP", { juego })
+    } catch (err) {
+      console.error(err.stack)
+      res.render("catalogo/juego/agregarP")
+    }
+  })
+
+  router.get("/catalogo/agregarP2:id", async (req, res) => {
+    try {
+      const id = req.params.id
+      const resp1 = await bd.query(" SELECT id, id_Coleccion, id_Col_Mot, id_Molde, descr FROM pieza")
+      const resp = await bd.query("SELECT id, descr"
+        + " FROM juego jue WHERE jue.id = $1", [id])
+      const { descr } = resp.rows
+      const pieza = resp1.rows
+  
+      res.render("/catalogo/juego/agregarP2", { id , descr, pieza })
+    } catch (err) {
+      console.error(err.stack)
+      res.render("/catalogo/juego/agregarP2")
     }
   })
 
@@ -71,4 +97,60 @@ router.post("/agregarJ", async (req, res) => {
     }
   })
 
+  router.get("/catalogo/eliminar:id", async (req, res) => {
+    try {
+      const id = req.params.id
+  
+      await bd.query("DELETE FROM J_P"
+    + " WHERE id_Juego = $1", [id])
+      await bd.query("DELETE FROM Juego WHERE id = $1", [id])
+      console.log(id)
+  
+      req.flash("exito", "Se elimino el juego")
+    } catch (err) {
+      req.flash("error", "No se pudo eliminar el juego")
+      console.error(err.stack)
+    } finally {
+      res.redirect("/catalogo/lista")
+    }
+  }) 
+
+  router.get("/catalogo/modificar:id", async (req, res) => {
+    try {
+      const id = req.params.id
+  
+      const resp = await bd.query("SELECT nombre,cant_personas,descr"
+        + " FROM juego  WHERE id = $1", [id])
+      const { nombre,cant_personas,descr } = resp.rows[0]
+  
+      res.render("catalogo/juego/modificar", { id, nombre,cant_personas,descr })
+    } catch (err) {
+      console.error(err.stack)
+      res.render("/catalogo/lista")
+    } finally {
+  
+    }
+  })
+
+  router.post("/catalogo/modificar:id", async (req, res) => {
+    try {
+      const id = req.params.id
+      const { nombre, cant_personas, descr} = req.body
+  
+      const resp = await bd.query("UPDATE Juego SET nombre = $1, cant_personas = $2, descr = $3"
+        + " WHERE id = $4", [nombre, cant_personas, descr, id])
+  
+      req.flash("exito", "Juego modificado con exito")
+  
+    } catch (err) {
+  
+      req.flash("error", "No se pudo modificar el Juego")
+      console.error(err.stack)
+  
+    } finally {
+      res.redirect("/catalogo/lista")
+    }
+  })
+
+  
 module.exports = router
