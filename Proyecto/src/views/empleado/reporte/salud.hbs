@@ -1,0 +1,34 @@
+<div class="label text-center my-2 display-1">CONDICIONES DE SALUD</div>
+<div class="m-2 bg-white p-1">
+    <table id="example" class="table table-striped table-bordered table-hover" style="width:100%">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Alergia</th>
+                <th>Descripcion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each cond}}
+            <tr>
+                <td>{{nombre}}</td>
+                <td>{{alergia}}</td>
+                <td>{{descripcion}}</td>
+                <form action="/empleado/eliminar{{di}}" method="GET">
+                    <td><button class="btn btn-danger">eliminar</button></td>
+                </form>
+                <form action="/empleado/modificar{{di}}" method="GET">
+                    <td><button class="btn btn-warning">modificar</button></td>
+                </form>
+            </tr>
+            {{/each}}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Nombre</th>
+                <th>Alergia</th>
+                <th>Descripcion</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
