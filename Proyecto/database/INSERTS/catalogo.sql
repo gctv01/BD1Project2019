@@ -2,7 +2,7 @@
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (1, 'Bandeja', null, 'Rectangular', null, null, '44x22cm', null);
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (2, 'Plato', 'Llano', 'Cuadrado', null, null, '27x27cm', null);
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (3, 'Tetera', null, null, null, 6, null, null);
-insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (4, 'Taza', null, null, 'MpkaSp', null, null, null);
+insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (4, 'Taza', null, null, 'MokaSp', null, null, null);
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (5, 'Azucarero', null, null, null, 6, null, null);
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (6, 'Taza', null, null, 'CafeSp', null, null, null);
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (7, 'Bandeja', null, 'Ovalado', null, null, '44x22cm', null);
@@ -12,7 +12,7 @@ insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, vo
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (11, 'Azucarero', null, null, null, 6, null, null);
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (12, 'Lechera', null, null, null, 6, null, null);
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (13, 'Plato', 'Llano', 'Rectangular', null, null, '27x27cm', null);
-insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (14, 'Taza', null, null, 'MpkaSp', null, null, null);
+insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (14, 'Taza', null, null, 'MokaSp', null, null, null);
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (15, 'Bandeja', null, 'Ovalado', null, null  , '35x18cm', null);
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (16, 'Plato', 'Presenta', 'Redondo', null, null, '14x1cm', null);
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (17, 'Plato', 'Hondo', 'Cuadrado', null, null, '2x3cm', null);
@@ -22,10 +22,10 @@ insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, vo
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (21, 'Cazuela', null, null, null, null, '19x12cm', null);
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (22, 'Plato', 'Llano', 'Redondo', null, null, '24x12cm', null);
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (23, 'Ensaladera', null, null, null, null, '22x22cm', null);
-insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (24, 'Taza', null, null, 'MpkaSp', null, null, null);
+insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (24, 'Taza', null, null, 'MokaSp', null, null, null);
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (25, 'Cazuela', null, null, null, null, '7x6cm', null);
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (26, 'Plato', 'Postre', 'Redondo', null, null, '24x24cm', null);
-insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (27, 'Taza', null, null, 'CafeCP', null, null, null);
+insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (27, 'Taza', null, null, 'CafeCp', null, null, null);
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (28, 'Jarra', null, null, null, null, null, '31lt');
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (29, 'Cazuela', null, null, null, null, '15x15cm', null);
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (30, 'Ensaladera', null, null, null, null, '38x38cm', null);
