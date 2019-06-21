@@ -1,0 +1,48 @@
+<div class="label text-center my-2 display-1">INASISTENCIAS DE LA REUNION</div>
+<div class="row mx-auto">
+    <div class="card mx-auto mt-2" style="width: 40rem;">
+        <div class="card-body">
+            <h5 class="text-center">DATOS DE LA REUNION</h5>
+            <hr>
+            <form action="/empleado/inasistencia{{dis}}" method="POST">
+
+                <label>Empleados del supervisor: {{dis}}</label>
+                <div class="m-2 bg-white p-1">
+                    <table id="example" class="table table-striped table-bordered table-hover" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Checkbox</th>
+                                <th>Di</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each emp}}
+                            <tr>
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="expediente" type="checkbox"
+                                            value={{expediente}}>
+                                    </div>
+                                </td>
+                                <td>{{di}}</td>
+                                <td>{{nombre}}</td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Checkbox</th>
+                                <th>Di</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <button type="submit" class="btn btn-block btn-primary">Registrar</button>
+            </form>
+
+        </div>
+    </div>
+</div>

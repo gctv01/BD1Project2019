@@ -6,6 +6,8 @@
                 <th>Nombre</th>
                 <th>Alergia</th>
                 <th>Descripcion</th>
+                <th>Eliminar</th>
+                <th>Modificar</th>
             </tr>
         </thead>
         <tbody>
@@ -14,11 +16,11 @@
                 <td>{{nombre}}</td>
                 <td>{{alergia}}</td>
                 <td>{{descripcion}}</td>
-                <form action="/empleado/eliminar{{di}}" method="GET">
-                    <td><button class="btn btn-danger">eliminar</button></td>
+                <form action="/empleado/salud/eliminar{{id}}" method="GET">
+                    <td><button class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
                 </form>
-                <form action="/empleado/modificar{{di}}" method="GET">
-                    <td><button class="btn btn-warning">modificar</button></td>
+                <form action="/empleado/salud/modificar{{id}}" method="GET">
+                    <td><button class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
                 </form>
             </tr>
             {{/each}}
@@ -28,6 +30,8 @@
                 <th>Nombre</th>
                 <th>Alergia</th>
                 <th>Descripcion</th>
+                <th>Eliminar</th>
+                <th>Modificar</th>
             </tr>
         </tfoot>
     </table>

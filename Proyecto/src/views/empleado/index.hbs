@@ -15,6 +15,8 @@
                 <th>DI supervisor</th>
                 <th>Sueldo</th>
                 <th>Cargo</th>
+                <th>Eliminar</th>
+                <th>Modificar</th>
             </tr>
         </thead>
         <tbody>
@@ -33,10 +35,10 @@
                 <td>{{sueldo}}</td>
                 <td>{{cargo}}</td>
                 <form action="/empleado/eliminar{{di}}" method="GET">
-                    <td><button class="btn btn-danger">eliminar</button></td>
+                    <td><button class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
                 </form>
                 <form action="/empleado/modificar{{di}}" method="GET">
-                    <td><button class="btn btn-warning">modificar</button></td>
+                    <td><button class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
                 </form>
             </tr>
             {{/each}}
@@ -55,6 +57,8 @@
                 <th>DI supervisor</th>
                 <th>Sueldo</th>
                 <th>Cargo</th>
+                <th>Eliminar</th>
+                <th>Modificar</th>
             </tr>
         </tfoot>
     </table>

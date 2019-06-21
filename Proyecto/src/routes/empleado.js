@@ -84,6 +84,15 @@ router.get("/empleado/eliminar:di", async (req, res) => {
 
     await bd.query("BEGIN")
 
+    //ELIMINAR INASISTENCIAS
+    await bd.query("DELETE FROM inasistencia"
+      + " WHERE fk_empleado = (SELECT expediente FROM empleado WHERE di = $1) OR"
+      + " fk_supervisor = (SELECT expediente FROM empleado WHERE di = $1)", [di])
+
+    //ELIMINAR REUNION
+    await bd.query("DELETE FROM reunion"
+      + " WHERE fk_supervisor = (SELECT expediente FROM empleado WHERE di = $1)", [di])
+
     //ELIMINANDO E_C
     await bd.query("DELETE FROM e_c"
       + " WHERE fk_empleado = (SELECT expediente FROM empleado WHERE di = $1)", [di])
@@ -115,15 +124,18 @@ router.get("/empleado/modificar:di", async (req, res) => {
   try {
     const di = req.params.di
 
-    const resp = await bd.query("SELECT nombre,apellido,apellido2,fecha_nacimiento,genero,tipo_sangre,titulo,nombre2,"
+    let resp = await bd.query("SELECT nombre,apellido,apellido2,fecha_nacimiento,genero,tipo_sangre,titulo,nombre2,"
       + " (SELECT emps.di FROM empleado emps WHERE emp.fk_supervisor = emps.expediente) di_supervisor"
       + " FROM empleado emp WHERE emp.di = $1", [di])
     const { nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di_supervisor } = resp.rows[0]
 
-    res.render("empleado/modificar", { di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di_supervisor })
+    resp = await bd.query("SELECT id,nombre,alergia,descripcion FROM cond_salud")
+    const salud = resp.rows
+
+    res.render("empleado/modificar", { di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di_supervisor, salud })
   } catch (err) {
     console.error(err.stack)
-    res.render("empleado")
+    res.redirect("/")
   } finally {
 
   }
@@ -132,19 +144,33 @@ router.get("/empleado/modificar:di", async (req, res) => {
 router.post("/empleado/modificar:di", async (req, res) => {
   try {
     const di = req.params.di
-    const { nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2 } = req.body
+    const { salud, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2 } = req.body
+
+    await bd.query("BEGIN")
 
     const resp = await bd.query("UPDATE empleado SET nombre = UPPER($1),apellido = UPPER($2),apellido2 = UPPER($3),fecha_nacimiento = $4,genero = $5,tipo_sangre = $6,titulo = $7,nombre2 = UPPER($8)"
       + " WHERE di = $9", [nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di])
 
+    await bd.query("DELETE FROM e_c WHERE fk_empleado = (SELECT expediente FROM empleado WHERE di = $1)",[di])
+
+    if (salud != null)
+      if (typeof (salud) == "object")
+        salud.forEach(async id => {
+          await bd.query("INSERT INTO e_c (fk_empleado, fk_cond)"
+            + "VALUES ((SELECT expediente FROM empleado WHERE di = $1), $2)", [di, id])
+        })
+      else
+        await bd.query("INSERT INTO e_c (fk_empleado, fk_cond)"
+          + "VALUES ((SELECT expediente FROM empleado WHERE di = $1), $2)", [di, salud])
+
     req.flash("exito", "Empleado modificado con exito")
-
   } catch (err) {
-
+    await bd.query("ROLLBACK")
     req.flash("error", "No se pudo modificar el empleado")
     console.error(err.stack)
 
   } finally {
+    await bd.query("COMMIT")
     res.redirect("/empleado")
   }
 })
@@ -274,10 +300,9 @@ router.post("/empleado/agregar/salud", async (req, res) => {
 
 router.get("/empleado/salud", async (req, res) => {
   try {
-    const rest = await bd.query("SELECT nombre,(CASE alergia WHEN true THEN 'Si' ELSE 'No' END) alergia,"
-    + " descripcion FROM cond_salud")
+    const rest = await bd.query("SELECT id, nombre,(CASE alergia WHEN true THEN 'Si' ELSE 'No' END) alergia,"
+      + " descripcion FROM cond_salud")
     const cond = rest.rows
-    console.log(cond)
 
     res.render("empleado/reporte/salud", { cond })
   } catch (err) {
@@ -285,6 +310,141 @@ router.get("/empleado/salud", async (req, res) => {
     res.render("index")
   } finally {
 
+  }
+})
+
+router.get("/empleado/salud/eliminar:id", async (req, res) => {
+  try {
+    const id = req.params.id
+
+    await bd.query("BEGIN")
+
+    await bd.query("DELETE FROM e_c WHERE fk_cond = $1", [id])
+
+    await bd.query("DELETE FROM cond_salud WHERE id = $1", [id])
+
+    req.flash("exito", "Se elimino la condicion de salud")
+    res.redirect("/empleado/salud")
+  } catch (err) {
+    await bd.query("ROLLBACK")
+    req.flash("error", "No se elimino la condicion de salud")
+    console.error(err.stack)
+    res.render("index")
+  } finally {
+    await bd.query("COMMIT")
+  }
+})
+
+router.get("/empleado/salud/modificar:id", async (req, res) => {
+  try {
+    const id = req.params.id
+
+    res.render("empleado/modificar/salud", { id })
+  } catch (err) {
+    console.error(err.stack)
+    res.render("index")
+  } finally {
+  }
+})
+
+router.post("/empleado/salud/modificar:id", async (req, res) => {
+  try {
+    const id = req.params.id
+    const { nombre, alergia, descripcion } = req.body
+
+    await bd.query("UPDATE cond_salud SET nombre = UPPER($2), alergia = $3, descripcion = UPPER($4)"
+      + " WHERE id = $1", [id, nombre, alergia, descripcion])
+
+    req.flash("exito", "Se modifico la condicion de salud")
+    res.redirect("/empleado/salud")
+  } catch (err) {
+    req.flash("error", "No se modifico la condicion de salud")
+    console.error(err.stack)
+    res.redirect("/empleado/salud")
+  } finally {
+  }
+})
+
+router.get("/empleado/reunion/agregar", async (req, res) => {
+  try {
+    const rest = await bd.query("SELECT di FROM empleado WHERE fk_supervisor IS NULL")
+    const emps = rest.rows
+
+    res.render("empleado/agregar/reunion", { emps })
+  } catch (err) {
+    console.error(err.stack)
+    res.render("index")
+  } finally {
+  }
+})
+
+router.post("/empleado/reunion/agregar", async (req, res) => {
+  try {
+    const { di, minuta } = req.body
+    const dis = di
+
+    await bd.query("BEGIN")
+
+    await bd.query("INSERT INTO reunion (fecha,minuta,fk_supervisor)"
+      + " VALUES(NOW(),UPPER($2),(SELECT expediente FROM empleado e WHERE e.di = $1 AND e.fk_supervisor IS NULL))"
+      , [dis, minuta])
+
+    resp = await bd.query("SELECT e.expediente, e.di, e.nombre FROM empleado e"
+      + " WHERE e.fk_supervisor = (SELECT s.expediente FROM empleado s WHERE s.di = $1)", [dis])
+    emp = resp.rows
+
+    req.flash("exito", "Se agrego la reunion")
+    res.render("empleado/agregar/inasistencia", { dis, emp })
+  } catch (err) {
+    await bd.query("ROLLBACK")
+    console.error(err.stack)
+    req.flash("error", "No se agrego la reunion")
+    res.redirect("/empleado/reunion/agregar")
+  } finally {
+    await bd.query("COMMIT")
+  }
+})
+
+router.post("/empleado/inasistencia:dis", async (req, res) => {
+  try {
+    const dis = req.params.dis
+    const { expediente } = req.body
+
+    if (expediente != null)
+      if (typeof (expediente) == "object")
+        expediente.forEach(async exp => {
+          await bd.query("INSERT INTO inasistencia (fk_empleo, fk_empleado, fk_reunion, fk_supervisor)"
+            + "VALUES ((SELECT em.fecha_inicio FROM empleo em WHERE em.fk_empleado = $1 AND em.fecha_fin IS NULL),"
+            + "$1,(SELECT r.id FROM reunion r WHERE r.fk_supervisor = "
+            + "(SELECT emp.expediente FROM empleado emp WHERE emp.di = $2) AND r.fecha = "
+            + "(SELECT MAX(re.fecha) FROM reunion re WHERE re.fk_supervisor = (SELECT e.expediente FROM empleado e WHERE e.di = $2))),"
+            + "(SELECT s.expediente FROM empleado s WHERE s.di = $2))", [expediente, dis])
+        })
+      else
+        await bd.query("INSERT INTO inasistencia (fk_empleo, fk_empleado, fk_reunion, fk_supervisor)"
+          + "VALUES ((SELECT em.fecha_inicio FROM empleo em WHERE em.fk_empleado = $1 AND em.fecha_fin IS NULL),"
+          + "$1,(SELECT r.id FROM reunion r WHERE r.fk_supervisor = "
+          + "(SELECT emp.expediente FROM empleado emp WHERE emp.di = $2) AND r.fecha = "
+          + "(SELECT MAX(re.fecha) FROM reunion re WHERE re.fk_supervisor = (SELECT e.expediente FROM empleado e WHERE e.di = $2))),"
+          + "(SELECT s.expediente FROM empleado s WHERE s.di = $2))", [expediente, dis])
+
+    req.flash("exito", "Se agrego la reunion con sus inasistencias")
+  } catch (err) {
+    req.flash("error", "No se agregaron las inasistencias")
+    console.error(err.stack)
+  } finally {
+    res.redirect("/empleado/reunion/agregar")
+  }
+})
+
+router.get("/empleado/detalle/agregar", async (req, res) => {
+  di = req.params.di
+  try {
+    res.render("empleado/agregar/detalle")
+  } catch (err) {
+    console.error(err.stack)
+    res.render("index")
+  } finally {
   }
 })
 
