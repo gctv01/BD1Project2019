@@ -1,0 +1,30 @@
+<div class="label text-center my-2 display-1">AGREGAR MINUTOS DE RETRASO</div>
+<div class="row mx-auto">
+    <div class="card mx-auto mt-2" style="width: 40rem;">
+        <div class="card-body">
+            <h5 class="text-center">DATOS DEL RETRASO</h5>
+            <hr>
+            <form action="/empleado/detalle/retraso" method="POST">
+
+                <div class="form-group">
+                    <label>DI empleado</label>
+                    <input type="number" name="di" class="form-control" placeholder="DI">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Descripcion</label>
+                    <textarea class="form-control" id="d" name="descripcion" rows="3"
+                        placeholder="Descripcion"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Minutos de retraso</label>
+                    <input type="number" name="retraso" class="form-control" placeholder="Minutos de retraso">
+                </div>
+
+                <button type="submit" class="btn btn-block btn-primary">Registrar</button>
+            </form>
+
+        </div>
+    </div>
+</div>

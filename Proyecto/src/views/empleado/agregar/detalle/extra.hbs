@@ -1,0 +1,30 @@
+<div class="label text-center my-2 display-1">AGREGAR HORAS EXTRAS TRABAJADAS</div>
+<div class="row mx-auto">
+    <div class="card mx-auto mt-2" style="width: 40rem;">
+        <div class="card-body">
+            <h5 class="text-center">DATOS DEL HORAS EXTRAS</h5>
+            <hr>
+            <form action="/empleado/detalle/extra" method="POST">
+
+                <div class="form-group">
+                    <label>DI empleado</label>
+                    <input type="number" name="di" class="form-control" placeholder="DI">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Descripcion</label>
+                    <textarea class="form-control" id="d" name="descripcion" rows="3"
+                        placeholder="Descripcion"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Horas extras trabajadas</label>
+                    <input type="number" name="extra" class="form-control" placeholder="Horas extras trabajadas">
+                </div>
+
+                <button type="submit" class="btn btn-block btn-primary">Registrar</button>
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -19,7 +19,7 @@ CREATE TABLE COND_SALUD(
     id SERIAL NOT NULL,
     nombre VARCHAR(20) NOT NULL,
     alergia BOOLEAN NOT NULL,
-    descripcion VARCHAR(30),
+    descripcion VARCHAR(100),
 
     PRIMARY KEY(id)
 );
@@ -49,8 +49,8 @@ CREATE TABLE DETALLE_EXP(
     fecha TIMESTAMP NOT NULL,
     motivo VARCHAR(2) NOT NULL CONSTRAINT check_motivo check(motivo in('IN','BM','BA','AM','RE','HE')),
     fk_empleado INTEGER NOT NULL,
-    descripcion VARCHAR(30),
-    monto_bono NUMERIC(4,2),
+    descripcion VARCHAR(100),
+    monto_bono NUMERIC(11,2),
     horas_extras NUMERIC(4),
     retraso NUMERIC(4),
 
@@ -72,7 +72,7 @@ CREATE TABLE ORGANIGRAMA(
 
 CREATE TABLE EMPLEO(
     fecha_inicio TIMESTAMP NOT NULL,
-    sueldo NUMERIC(4,2) NOT NULL,
+    sueldo NUMERIC(11,2) NOT NULL,
     cargo VARCHAR(1) NOT NULL CONSTRAINT check_cargo check(cargo in('S','G','O','E','M','I')),
     fk_empleado INTEGER NOT NULL,
     fk_organigrama INTEGER NOT NULL,

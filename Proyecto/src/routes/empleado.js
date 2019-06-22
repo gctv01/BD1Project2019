@@ -84,6 +84,10 @@ router.get("/empleado/eliminar:di", async (req, res) => {
 
     await bd.query("BEGIN")
 
+    //ELIMINAR DETALLE_EXP
+    await bd.query("DELETE FROM detalle_exp"
+      + " WHERE fk_empleado = (SELECT expediente FROM empleado WHERE di = $1)", [di])
+
     //ELIMINAR INASISTENCIAS
     await bd.query("DELETE FROM inasistencia"
       + " WHERE fk_empleado = (SELECT expediente FROM empleado WHERE di = $1) OR"
@@ -151,7 +155,7 @@ router.post("/empleado/modificar:di", async (req, res) => {
     const resp = await bd.query("UPDATE empleado SET nombre = UPPER($1),apellido = UPPER($2),apellido2 = UPPER($3),fecha_nacimiento = $4,genero = $5,tipo_sangre = $6,titulo = $7,nombre2 = UPPER($8)"
       + " WHERE di = $9", [nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di])
 
-    await bd.query("DELETE FROM e_c WHERE fk_empleado = (SELECT expediente FROM empleado WHERE di = $1)",[di])
+    await bd.query("DELETE FROM e_c WHERE fk_empleado = (SELECT expediente FROM empleado WHERE di = $1)", [di])
 
     if (salud != null)
       if (typeof (salud) == "object")
@@ -437,8 +441,7 @@ router.post("/empleado/inasistencia:dis", async (req, res) => {
   }
 })
 
-router.get("/empleado/detalle/agregar", async (req, res) => {
-  di = req.params.di
+router.get("/empleado/detalle", async (req, res) => {
   try {
     res.render("empleado/agregar/detalle")
   } catch (err) {
@@ -447,5 +450,118 @@ router.get("/empleado/detalle/agregar", async (req, res) => {
   } finally {
   }
 })
+
+router.get("/empleado/detalle/inasistencia", async (req, res) => {
+  try {
+    res.render("empleado/agregar/detalle/inasistencia")
+  } catch (err) {
+    console.error(err.stack)
+    res.render("index")
+  } finally {
+  }
+})
+
+router.post("/empleado/detalle/inasistencia", async (req, res) => {
+  try {
+    const { di, descripcion } = req.body
+
+    await bd.query("INSERT INTO detalle_exp (fecha,motivo,descripcion,fk_empleado)"
+      + " VALUES(NOW(),'IN',UPPER($2),(SELECT expediente FROM empleado WHERE di = $1))", [di, descripcion])
+
+    req.flash("exito", "Se agrego la inasistencia")
+  } catch (err) {
+    req.flash("error", "No se agrego la inasistencia")
+    console.error(err.stack)
+  } finally {
+    res.redirect("/empleado/detalle/inasistencia")
+  }
+})
+
+router.get("/empleado/detalle/amonestacion", async (req, res) => {
+  try {
+    res.render("empleado/agregar/detalle/amonestacion")
+  } catch (err) {
+    console.error(err.stack)
+    res.render("index")
+  } finally {
+  }
+})
+
+router.post("/empleado/detalle/amonestacion", async (req, res) => {
+  try {
+    const { di, descripcion } = req.body
+
+    await bd.query("INSERT INTO detalle_exp (fecha,motivo,descripcion,fk_empleado)"
+      + " VALUES(NOW(),'AM',UPPER($2),(SELECT expediente FROM empleado WHERE di = $1))", [di, descripcion])
+
+    req.flash("exito", "Se agrego la amonestacion")
+  } catch (err) {
+    req.flash("error", "No se agrego la amonestacion")
+    console.error(err.stack)
+  } finally {
+    res.redirect("/empleado/detalle/amonestacion")
+  }
+})
+
+router.get("/empleado/detalle/retraso", async (req, res) => {
+  try {
+    res.render("empleado/agregar/detalle/retraso")
+  } catch (err) {
+    console.error(err.stack)
+    res.render("index")
+  } finally {
+  }
+})
+
+router.post("/empleado/detalle/retraso", async (req, res) => {
+  try {
+    const { di, descripcion, retraso } = req.body
+
+    if (retraso == "")
+      throw "error no se especificaron los minutos de retraso"
+
+    await bd.query("INSERT INTO detalle_exp (fecha,motivo,descripcion,fk_empleado,retraso)"
+      + " VALUES(NOW(),'RE',UPPER($2),(SELECT expediente FROM empleado WHERE di = $1),"
+      + " $3)", [di, descripcion, retraso])
+
+    req.flash("exito", "Se agregaron los minutos de retraso")
+  } catch (err) {
+    req.flash("error", "No se agregaron los minutos de retraso")
+    console.error(err.stack)
+  } finally {
+    res.redirect("/empleado/detalle/retraso")
+  }
+})
+
+router.get("/empleado/detalle/extra", async (req, res) => {
+  try {
+    res.render("empleado/agregar/detalle/extra")
+  } catch (err) {
+    console.error(err.stack)
+    res.render("index")
+  } finally {
+  }
+})
+
+router.post("/empleado/detalle/extra", async (req, res) => {
+  try {
+    const { di, descripcion, extra } = req.body
+
+    if (extra == "")
+      throw "error no se especificaron las horas extras trabajadas"
+
+    await bd.query("INSERT INTO detalle_exp (fecha,motivo,descripcion,fk_empleado,horas_extras)"
+      + " VALUES(NOW(),'HE',UPPER($2),(SELECT expediente FROM empleado WHERE di = $1),"
+      + " $3)", [di, descripcion, extra])
+
+    req.flash("exito", "Se agregaron las horas extras")
+  } catch (err) {
+    req.flash("error", "No se agregaron las horas extras")
+    console.error(err.stack)
+  } finally {
+    res.redirect("/empleado/detalle/extra")
+  }
+})
+
 
 module.exports = router

@@ -4,18 +4,12 @@
         <div class="card-head">
         </div>
         <div class="card-body">
-            <form action="/empleado/modificar" method="POST">
-                <div class="form-group">
-                    <label>DI del empleado</label>
-                    <input type="number" name="di" class="form-control" placeholder="DI">
-                </div>
-                <div class="btn-group-vertical btn-block">
-                    <a href="/empleado/detalle/inasistencia" class="btn btn-primary">Inasistencia</a>
-                    <a href="/empleado/agregar/empleo" class="btn btn-primary">Amonestacion</a>
-                    <a href="/empleado/agregar/turno" class="btn btn-primary">Horas de retraso</a>
-                    <a href="/empleado/agregar/salud" class="btn btn-primary">Horas extra trabajadas</a>
-                </div>
-            </form>
+            <div class="btn-group-vertical btn-block">
+                <a href="/empleado/detalle/inasistencia" class="btn btn-primary">Inasistencia</a>
+                <a href="/empleado/detalle/amonestacion" class="btn btn-primary">Amonestacion</a>
+                <a href="/empleado/detalle/retraso" class="btn btn-primary">Minutos de retraso</a>
+                <a href="/empleado/detalle/extra" class="btn btn-primary">Horas extra trabajadas</a>
+            </div>
         </div>
     </div>
 </div>
