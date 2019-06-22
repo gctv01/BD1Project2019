@@ -5,8 +5,18 @@ router.get("/catalogo", (req,res) => {
     res.render("catalogo/catalogo")
 })
 
-router.get("/catalogo/agregarJ", (req,res) => {
-    res.render("catalogo/juego/agregarJ")
+router.get("/catalogo/agregarJ", async (req,res) => {
+    try{
+
+      const resp = await bd.query("SELECT id,descr FROM pieza")
+      const pieza = resp.rows
+
+      res.render("catalogo/juego/agregarJ", {pieza})
+    }catch(err){
+
+    }finally{
+
+    }
 })
 
 
@@ -74,16 +84,18 @@ router.get("/catalogo", async (req, res) => {
 
 router.post("/agregarJ", async (req, res) => {
     try {
-      let { id, nombre, cant_personas, descr } = req.body;
+      let { idp, nombre, cant_personas, descr, cantidad } = req.body;
       
-      if (descr == "")
+      console.log(idp,nombre,cant_personas,descr,cantidad)
+
+      /*if (descr == "")
         descr = null
   
       const text = "INSERT INTO JUEGO (id,nombre,cant_personas,descr)"
         + "VALUES ($1,$2,$3,$4);"
       const values = [id,nombre,cant_personas,descr]
   
-      await bd.query(text, values)
+      await bd.query(text, values)*/
   
       req.flash("exito", "Se agrego el juego")
     } catch (err) {

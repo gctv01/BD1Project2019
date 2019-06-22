@@ -12,12 +12,6 @@
         </div>
 
         <div class="form-group">
-          <label>ID</label>
-          <input type="number" name="id" class="form-control" placeholder="ID">
-        </div>
-        
-
-        <div class="form-group">
           <label>Cantidad de Personas</label>
           <br>
           <div class="custom-control custom-radio custom-control-inline">
@@ -31,13 +25,54 @@
           <div class="custom-control custom-radio custom-control-inline">
             <input type="radio" id="c6" name="cant_personas" class="custom-control-input" value="6">
             <label class="custom-control-label" for="c6">6</label>
-          </div>          
+          </div>
         </div>
 
 
         <div class="form-group">
           <label>Descripcion</label>
           <input type="text" name="descr" class="form-control" placeholder="Descripcion">
+        </div>
+
+        <label>Piezas del juego</label>
+        <br>
+        <div class="m-2 bg-white p-1">
+          <table id="example" class="table table-striped table-bordered table-hover" style="width:100%">
+            <thead>
+              <tr>
+                <th>Checkbox</th>
+                <th>ID</th>
+                <th>Descripcion</th>
+                <th>Cantida</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each pieza}}
+              <tr>
+                <td>
+                  <div class="form-check">
+                    <input class="form-check-input" name="idp" type="checkbox" value={{id}}>
+                  </div>
+                </td>
+                <td>{{id}}</td>
+                <td>{{descr}}</td>
+                <th>
+                  <div class="form-group">
+                    <input type="number" name="cantidad" class="form-control" placeholder="Cantidad">
+                  </div>
+                </th>
+              </tr>
+              {{/each}}
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>Checkbox</th>
+                <th>ID</th>
+                <th>Descripcion</th>
+                <th>Cantida</th>
+              </tr>
+            </tfoot>
+          </table>
         </div>
 
         <button type="submit" class="btn btn-block btn-primary">Registrar</button>
