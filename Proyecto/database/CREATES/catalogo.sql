@@ -51,20 +51,18 @@ CREATE TABLE Pieza(
 
 CREATE TABLE J_P
 (
-    id SERIAL NOT NULL,
     id_Pieza INTEGER NOT NULL,
     id_Juego INTEGER NOT NULL,
     cantidad numeric NOT NULL,
-    CONSTRAINT J_P_pkey PRIMARY KEY (id, id_Pieza, id_Juego),
+    CONSTRAINT J_P_pkey PRIMARY KEY (id_Pieza, id_Juego),
     CONSTRAINT FK_Juego FOREIGN KEY (id_Juego) REFERENCES Juego (id),
     CONSTRAINT FK_Pieza FOREIGN KEY (id_Pieza) REFERENCES Pieza (id));
 
 CREATE TABLE C_M
 (
-    id SERIAL NOT NULL,
     id_Col_Mot INTEGER NOT NULL,
     id_Coleccion INTEGER NOT NULL,
-    CONSTRAINT C_M_pkey PRIMARY KEY (id, id_Col_Mot, id_Coleccion),
+    CONSTRAINT C_M_pkey PRIMARY KEY (id_Col_Mot, id_Coleccion),
     CONSTRAINT FK_Coleccion FOREIGN KEY (id_Coleccion) REFERENCES Coleccion (id), 
     CONSTRAINT FK_Motivo FOREIGN KEY (id_Col_Mot) REFERENCES Col_Mot (id));
 
