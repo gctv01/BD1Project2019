@@ -63,15 +63,12 @@ router.get("/catalogo", async (req, res) => {
     try {
       const id = req.params.id
       const resp1 = await bd.query(" SELECT id, id_Coleccion, id_Col_Mot, id_Molde, descr FROM pieza")
-      const resp = await bd.query("SELECT id, descr"
-        + " FROM juego jue WHERE jue.id = $1", [id])
-      const { descr } = resp.rows
       const pieza = resp1.rows
-  
-      res.render("/catalogo/juego/agregarP2", { id , descr, pieza })
+      const pid = pieza.id
+      res.render("catalogo/juego/agregarP2", { id , pieza, pid})
     } catch (err) {
       console.error(err.stack)
-      res.render("/catalogo/juego/agregarP2")
+      res.render("catalogo/juego/agregarP2")
     }
   })
 
@@ -126,7 +123,7 @@ router.post("/agregarJ", async (req, res) => {
       res.render("catalogo/juego/modificar", { id, nombre,cant_personas,descr })
     } catch (err) {
       console.error(err.stack)
-      res.render("/catalogo/lista")
+      res.render("catalogo/lista")
     } finally {
   
     }
@@ -149,6 +146,25 @@ router.post("/agregarJ", async (req, res) => {
   
     } finally {
       res.redirect("/catalogo/lista")
+    }
+  })
+
+  router.post("/catalogo/agregarP2:pid:id", async (req, res) => {
+    try {
+      const pid = req.params.pid
+      const id = req.params.id
+      const { cant } = req.body;     
+      const resp1 = await bd.query("SELECT id FROM J_P ORDER BY id DESC")
+      const cod = ((resp1.rowCount) + 1) 
+      const resp = await bd.query( "INSERT INTO J_P (id, id_Pieza, id_Juego, Cantidad)"
+        + "VALUES ($1,$2,$3,$4);", [cod,pid,id,cant])
+  
+      req.flash("exito", "Se agrego la pieza al juego")
+    } catch (err) {
+      req.flash("error", "No se pudo agregar")
+      console.error(err.stack)
+    } finally {
+      res.redirect("/catalogo/agregarP")
     }
   })
 
