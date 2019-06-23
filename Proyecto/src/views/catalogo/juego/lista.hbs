@@ -7,6 +7,7 @@
                 <th>Nombre</th>
                 <th>Cantidad De Personas</th>
                 <th>Descripcion</th>
+                <th>Piezas</th>
             </tr>
         </thead>
         <tbody>
@@ -16,12 +17,16 @@
                 <td>{{nombre}}</td>
                 <td>{{cant_personas}}</td>
                 <td>{{descr}}</td>
+                <form action="/catalogo/verPiezas{{id}}" method="GET">                   
+                    <td><button class="btn btn-primary">Ver Piezas</button></td>
+                </form>
                 <form action="/catalogo/eliminar{{id}}" method="GET">
                     <td><button class="btn btn-danger">eliminar</button></td>
                 </form>
                 <form action="/catalogo/modificar{{id}}" method="GET">                   
                     <td><button class="btn btn-warning">modificar</button></td>
                 </form>
+                
             </tr>
             {{/each}}
         </tbody>
@@ -31,6 +36,7 @@
                 <th>Nombre</th>
                 <th>Cantidad De Personas</th>
                 <th>Descripcion</th>
+                <th>Piezas</th>
             </tr>
         </tfoot>
     </table>
