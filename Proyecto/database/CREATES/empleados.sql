@@ -59,7 +59,7 @@ CREATE TABLE DETALLE_EXP(
 );
 
 CREATE TABLE ORGANIGRAMA(
-    id INTEGER NOT NULL,
+    id SERIAL NOT NULL,
     nombre VARCHAR(30) NOT NULL,
     tipo VARCHAR(1) NOT NULL CONSTRAINT check_tipo check(tipo in('G','S','D','A')),
     nivel NUMERIC(1) NOT NULL CONSTRAINT check_nivel check(nivel in(1,2,3,4)),
@@ -97,7 +97,7 @@ CREATE TABLE TURNOS_HIST(
 CREATE TABLE REUNION(
     id SERIAL NOT NULL,
     fecha TIMESTAMP NOT NULL,
-    minuta VARCHAR(30) NOT NULL,
+    minuta VARCHAR(100) NOT NULL,
     fk_supervisor INTEGER NOT NULL,
 
     PRIMARY KEY(id,fk_supervisor),

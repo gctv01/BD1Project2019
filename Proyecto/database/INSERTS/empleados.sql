@@ -11,6 +11,8 @@ insert into empleado (expediente, di, nombre, apellido, apellido2, fecha_nacimie
 insert into empleado (expediente, di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, fk_supervisor) values (9, 6225853, 'Shelden', 'Kerwood', 'Dederick', '3/22/1984', 'M', 'A+', 'Q', 'Wakefield', null);
 insert into empleado (expediente, di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, fk_supervisor) values (10, 14640126, 'Vi', 'Wink', 'Molen', '4/6/1984', 'F', 'A-', 'B', 'Victoria', 9);
 
+ALTER SEQUENCE empleado_expediente_seq RESTART WITH 11 INCREMENT BY 1;
+
 /*************************************************COND_SALUD*/
 
 insert into cond_salud (id, nombre, alergia, descripcion) values (1, 'et', true, 'Sed ante. Vivamus tortor. Duis mattis egestas metus.');
@@ -23,6 +25,8 @@ insert into cond_salud (id, nombre, alergia, descripcion) values (7, 'lorem', fa
 insert into cond_salud (id, nombre, alergia, descripcion) values (8, 'volutpat', false, 'Proin leo odio, porttitor id, consequat in, consequat ut, nulla.');
 insert into cond_salud (id, nombre, alergia, descripcion) values (9, 'condimentum', true, 'Curabitur in libero ut massa volutpat convallis.');
 insert into cond_salud (id, nombre, alergia, descripcion) values (10, 'massa', false, 'Aenean fermentum. Donec ut mauris eget massa tempor convallis.');
+
+ALTER SEQUENCE cond_salud_id_seq RESTART WITH 11 INCREMENT BY 1;
 
 /**************************************************E_C*/
 
@@ -49,6 +53,8 @@ insert into detalle_exp (id, fecha, motivo, fk_empleado, descripcion, monto_bono
 insert into detalle_exp (id, fecha, motivo, fk_empleado, descripcion, monto_bono, horas_extras, retraso) values (8, '10/14/1989', 'BM', 2, null, '7104521.79', null, null);
 insert into detalle_exp (id, fecha, motivo, fk_empleado, descripcion, monto_bono, horas_extras, retraso) values (9, '4/8/2006', 'BA', 7, null, '6125607.68', null, null);
 insert into detalle_exp (id, fecha, motivo, fk_empleado, descripcion, monto_bono, horas_extras, retraso) values (10, '3/25/1991', 'AM', 9, 'Sed ante. Vivamus tortor. Duis mattis egestas metus.', null, null, null);
+
+ALTER SEQUENCE detalle_exp_id_seq RESTART WITH 11 INCREMENT BY 1;
 
 /************************************************ORGANIGRAMAS*/
 
@@ -77,6 +83,8 @@ insert into organigrama (id,nombre,tipo,nivel,fk_superior,descripcion) values (1
 insert into organigrama (id,nombre,tipo,nivel,fk_superior,descripcion) values (13,'rotomoldeo','D',4,3,null);
 insert into organigrama (id,nombre,tipo,nivel,fk_superior,descripcion) values (14,'preparacion pasta','D',4,3,null);
 
+ALTER SEQUENCE organigrama_id_seq RESTART WITH 11 INCREMENT BY 1;
+
 /********************************************EMPLEO*/
 
 insert into empleo (fecha_inicio, sueldo, cargo, fk_empleado, fk_organigrama, fecha_fin) values ('6/28/2012', '2977400.31', 'G', 1, 1, null);
@@ -90,3 +98,43 @@ insert into empleo (fecha_inicio, sueldo, cargo, fk_empleado, fk_organigrama, fe
 insert into empleo (fecha_inicio, sueldo, cargo, fk_empleado, fk_organigrama, fecha_fin) values ('2/7/2005', '776010.81', 'O', 9, 10, null);
 insert into empleo (fecha_inicio, sueldo, cargo, fk_empleado, fk_organigrama, fecha_fin) values ('7/3/2002', '3694151.79', 'O', 10, 10, null);
 
+/********************************************TURNOS_HIST*/
+
+insert into turnos_hist (fecha_inicio, turno, fk_empleo, fk_empleado, fecha_fin) values ('1/19/1990', 1, '2/7/2005', 9, '2/8/1992');
+insert into turnos_hist (fecha_inicio, turno, fk_empleo, fk_empleado, fecha_fin) values ('2/8/1992', 2, '2/7/2005', 9, '2/25/1995');
+insert into turnos_hist (fecha_inicio, turno, fk_empleo, fk_empleado, fecha_fin) values ('2/25/1995', 3, '2/7/2005', 9, '10/22/1998');
+insert into turnos_hist (fecha_inicio, turno, fk_empleo, fk_empleado, fecha_fin) values ('10/22/1998', 1, '2/7/2005', 9, '9/28/2000');
+insert into turnos_hist (fecha_inicio, turno, fk_empleo, fk_empleado, fecha_fin) values ('9/28/2000', 2, '2/7/2005', 9, null);
+insert into turnos_hist (fecha_inicio, turno, fk_empleo, fk_empleado, fecha_fin) values ('2/20/1997', 1, '7/3/2002', 10, '8/15/2000');
+insert into turnos_hist (fecha_inicio, turno, fk_empleo, fk_empleado, fecha_fin) values ('8/15/2000', 2, '7/3/2002', 10, '4/3/2002');
+insert into turnos_hist (fecha_inicio, turno, fk_empleo, fk_empleado, fecha_fin) values ('4/3/2002', 3, '7/3/2002', 10, '6/21/2004');
+insert into turnos_hist (fecha_inicio, turno, fk_empleo, fk_empleado, fecha_fin) values ('6/21/2004', 1, '7/3/2002', 10, '12/27/2010');
+insert into turnos_hist (fecha_inicio, turno, fk_empleo, fk_empleado, fecha_fin) values ('12/27/2010', 2, '7/3/2002', 10, null);
+
+/*********************************************REUNION*/
+
+insert into reunion (id, fecha, minuta, fk_supervisor) values (1, '3/1/2019', 'Aliquam quis turpis eget elit sodales scelerisque.', 2);
+insert into reunion (id, fecha, minuta, fk_supervisor) values (2, '3/8/2019', 'Curabitur gravida nisi at nibh.', 2);
+insert into reunion (id, fecha, minuta, fk_supervisor) values (3, '3/15/2019', 'Curabitur in libero ut massa volutpat convallis.', 2);
+insert into reunion (id, fecha, minuta, fk_supervisor) values (4, '3/22/2019', 'Suspendisse potenti.', 2);
+insert into reunion (id, fecha, minuta, fk_supervisor) values (5, '3/29/2019', 'Vestibulum ac est lacinia nisi venenatis tristique.', 2);
+insert into reunion (id, fecha, minuta, fk_supervisor) values (6, '3/1/2019', 'Phasellus in felis.', 9);
+insert into reunion (id, fecha, minuta, fk_supervisor) values (7, '3/8/2019', 'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst.', 9);
+insert into reunion (id, fecha, minuta, fk_supervisor) values (8, '3/15/2019', 'Curabitur gravida nisi at nibh.', 9);
+insert into reunion (id, fecha, minuta, fk_supervisor) values (9, '3/22/2019', 'Pellentesque at nulla.', 9);
+insert into reunion (id, fecha, minuta, fk_supervisor) values (10, '3/29/2019', 'Integer ac leo.', 9);
+
+ALTER SEQUENCE reunion_id_seq RESTART WITH 11 INCREMENT BY 1;
+
+/*********************************************INASISTENCIA*/
+
+insert into inasistencia (fk_empleo, fk_empleado, fk_reunion, fk_supervisor) values ('12/13/2009', 3, 1, 2);
+insert into inasistencia (fk_empleo, fk_empleado, fk_reunion, fk_supervisor) values ('12/13/2009', 3, 2, 2);
+insert into inasistencia (fk_empleo, fk_empleado, fk_reunion, fk_supervisor) values ('12/13/2009', 3, 3, 2);
+insert into inasistencia (fk_empleo, fk_empleado, fk_reunion, fk_supervisor) values ('12/13/2009', 3, 4, 2);
+insert into inasistencia (fk_empleo, fk_empleado, fk_reunion, fk_supervisor) values ('12/13/2009', 3, 5, 2);
+insert into inasistencia (fk_empleo, fk_empleado, fk_reunion, fk_supervisor) values ('7/3/2002', 10, 6, 9);
+insert into inasistencia (fk_empleo, fk_empleado, fk_reunion, fk_supervisor) values ('7/3/2002', 10, 7, 9);
+insert into inasistencia (fk_empleo, fk_empleado, fk_reunion, fk_supervisor) values ('7/3/2002', 10, 8, 9);
+insert into inasistencia (fk_empleo, fk_empleado, fk_reunion, fk_supervisor) values ('7/3/2002', 10, 9, 9);
+insert into inasistencia (fk_empleo, fk_empleado, fk_reunion, fk_supervisor) values ('7/3/2002', 10, 10, 9);
