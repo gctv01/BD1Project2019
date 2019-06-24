@@ -1,0 +1,30 @@
+<div class="label text-center my-2 display-1">AGREGAR TELEFONO DE EMPLEADO</div>
+<div class="row mx-auto">
+    <div class="card mx-auto mt-2" style="width: 40rem;">
+        <div class="card-body">
+            <h5 class="text-center">DATOS DEL TELEFONO</h5>
+            <hr>
+            <form action="/empleado/agregar/telefono" method="POST">
+                <div class="form-group">
+                    <div class="form-group">
+                        <label>DI Empleado</label>
+                        <input type="number" name="di" class="form-control" placeholder="DI Empleado">
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label>Codigo</label>
+                            <input type="number" name="cod" class="form-control" placeholder="Codigo">
+                        </div>
+                        <div class="col">
+                            <label>Numero</label>
+                            <input type="number" name="num" class="form-control" placeholder="Numero">
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <button type="submit" class="btn btn-block btn-primary">Registrar</button>
+            </form>
+
+        </div>
+    </div>
+</div>

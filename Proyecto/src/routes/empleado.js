@@ -563,5 +563,33 @@ router.post("/empleado/detalle/extra", async (req, res) => {
   }
 })
 
+router.get("/empleado/agregar/telefono", async (req, res) => {
+  try{
+    res.render("empleado/agregar/telefono")
+  }catch(err){
+    res.render("index")
+  }finally{
+
+  }
+})
+
+router.post("/empleado/agregar/telefono", async (req, res) => {
+  try{
+    const {di, cod, num} = req.body
+
+    await bd.query("INSERT INTO telefono (cod,num,fk_empleado)"
+    + " VALUES($1,$2,(SELECT expediente FROM empleado WHERE di = $3))", [cod,num,di])
+
+    req.flash("exito", "Se agrego el numero de telefono")
+  }catch(err){
+    console.error(err.stack)
+    req.flash("error", "No se agrego el numero de telefono")
+  }finally{
+    res.redirect("/empleado/agregar/telefono")
+  }
+})
+
+router.post("/empleado/telefono/eliminar")
+
 
 module.exports = router

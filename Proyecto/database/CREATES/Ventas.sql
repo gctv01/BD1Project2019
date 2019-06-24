@@ -2,7 +2,7 @@
 (
     id SERIAL NOT NULL,
     nombre VARCHAR(20) NOT NULL,
-    pais VARCHAR(1) CONSTRAINT check_cargo check(cargo in('V','C','R','U')),
+    pais VARCHAR(1) CONSTRAINT check_pais check(pais in('V','C','R','U')),
     
     PRIMARY KEY (id)
 );

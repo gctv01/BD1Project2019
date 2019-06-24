@@ -33,17 +33,6 @@ CREATE TABLE E_C(
     FOREIGN KEY(fk_cond) REFERENCES COND_SALUD(id)
 );
 
-/*CREATE TABLE TELEFONO(
-    cod NUMERIC(4) NOT NULL,
-    num NUMERIC(4) NOT NULL,
-    fk_empleado INTEGER,
-    fk_cliente INTEGER,
-
-    PRIMARY KEY(cod,num),
-    FOREIGN KEY(fk_empleado) REFERENCES EMPLEADO(expediente),
-    FOREIGN KEY(fk_cliente) REFERENCES CLIENTE(id)
-);*/
-
 CREATE TABLE DETALLE_EXP(
     id SERIAL NOT NULL,
     fecha TIMESTAMP NOT NULL,
