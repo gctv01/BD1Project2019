@@ -1,0 +1,50 @@
+<div class="label text-center my-2 display-1">MODIFICAR COLECCION</div>
+<div class="row mx-auto">
+  <div class="card mx-auto mt-2" style="width: 40rem;">
+    <div class="card-body">
+        <h5 class="text-center">ID: {{id}}</h5>
+      <form action="/modificarC{{id}}" method="POST">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label>Descripcion</label>
+            <input type="text" name="descr" class="form-control" placeholder="Descripcion" value={{descr}}>
+          </div>
+        </div>
+
+        <div class="form-group" value={{categoria}}>
+          <label>Categoria</label>
+          <br>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="c1" name="categoria" class="custom-control-input" value="Clas_ele">
+            <label class="custom-control-label" for="c1">Clase Elegante</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="c2" name="categoria" class="custom-control-input" value="Moderna">
+            <label class="custom-control-label" for="c2">Moderna</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="c3" name="categoria" class="custom-control-input" value="Country">
+            <label class="custom-control-label" for="c3">Country</label>
+          </div>
+        </div>
+
+        <div class="form-group" value={{linea}}>
+          <label>Linea</label>
+          <br>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="l1" name="linea" class="custom-control-input" value="F">
+            <label class="custom-control-label" for="l1">Familiar</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="l2" name="linea" class="custom-control-input" value="I">
+            <label class="custom-control-label" for="l2">Institucional</label>
+          </div>
+        </div>
+        
+
+        <button type="submit" class="btn btn-block btn-primary">Modificar</button>
+      </form>
+
+    </div>
+  </div>
+</div>

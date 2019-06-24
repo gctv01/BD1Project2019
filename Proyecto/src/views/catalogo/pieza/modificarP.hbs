@@ -1,13 +1,13 @@
-<div class="label text-center my-2 display-1">AGREGAR PIEZA</div>
+<div class="label text-center my-2 display-1">MODIFICAR PIEZA</div>
 <div class="row mx-auto">
   <div class="card mx-auto mt-2" style="width: 60rem;">
     <div class="card-body">
-
-      <form action="/agregarP" method="POST">
+        <h5 class="text-center">ID: {{id}}</h5>
+      <form action="/modificarP{{id}}" method="POST">
         
         <div class="form-group">
           <label>Descripcion</label>
-          <input type="text" name="descr" class="form-control" placeholder="Descripcion">
+          <input type="text" name="descr" class="form-control" placeholder="Descripcion" value={{descr}}>
         </div>
 
         <label>Coleccion</label>
@@ -139,7 +139,7 @@
           </table>
         </div>
 
-        <button type="submit" class="btn btn-block btn-primary">Registrar</button>
+        <button type="submit" class="btn btn-block btn-primary">Modificar</button>
       </form>
 
     </div>

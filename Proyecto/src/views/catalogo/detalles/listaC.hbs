@@ -1,0 +1,38 @@
+<div class="label text-center my-2 display-1">COLECCION</div>
+<div class="m-2 bg-white p-1">
+    <table id="example" class="table table-striped table-bordered table-hover" style="width:100%">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Categoria</th>
+                <th>Linea</th>
+                <th>Descripcion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each coleccion}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{categoria}}</td>
+                <td>{{linea}}</td>
+                <td>{{descr}}</td>
+                <form action="/eliminarC{{id}}" method="GET">
+                    <td><button class="btn btn-danger">eliminar</button></td>
+                </form>
+                <form action="/modificarC{{id}}" method="GET">                   
+                    <td><button class="btn btn-warning">modificar</button></td>
+                </form>
+                
+            </tr>
+            {{/each}}
+        </tbody>
+        <tfoot>
+            <tr>
+              <th>ID</th>
+                <th>Categoria</th>
+                <th>Linea</th>
+                <th>Descripcion</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>

@@ -1,0 +1,158 @@
+<div class="label text-center my-2 display-1">MODIFICAR MOLDE</div>
+<div class="row mx-auto">
+  <div class="card mx-auto mt-2" style="width: 40rem;">
+    <div class="card-body">
+        <h5 class="text-center">ID: {{id}}</h5>
+         <form action="/modificarM{{id}}" method="POST">
+
+        <div class="form-group" value={{tipo}}>
+          <label>Tipo</label>
+          <br>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="t1" name="tipo" class="custom-control-input" value="Jarra">
+            <label class="custom-control-label" for="t1">Jarra</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="t2" name="tipo" class="custom-control-input" value="Taza">
+            <label class="custom-control-label" for="t2">Taza</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="t3" name="tipo" class="custom-control-input" value="Bandeja">
+            <label class="custom-control-label" for="t3">Bandeja</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="t4" name="tipo" class="custom-control-input" value="Ensaladera">
+            <label class="custom-control-label" for="t4">Ensaladera</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="t5" name="tipo" class="custom-control-input" value="Plato">
+            <label class="custom-control-label" for="t5">Plato</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="t6" name="tipo" class="custom-control-input" value="Tetera">
+            <label class="custom-control-label" for="t6">Tetera</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="t7" name="tipo" class="custom-control-input" value="Azucarera">
+            <label class="custom-control-label" for="t7">Azucarero</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="t8" name="tipo" class="custom-control-input" value="Lecchera">
+            <label class="custom-control-label" for="t8">Lechera</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="t9" name="tipo" class="custom-control-input" value="Cazuela">
+            <label class="custom-control-label" for="t9">Cazuela</label>
+          </div>
+        </div>
+
+        <div class="form-group" value={{tipo_plato}}>
+          <label>Tipo Plato</label>
+          <br>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="tp1" name="tipo_plato" class="custom-control-input" value="Llano">
+            <label class="custom-control-label" for="tp1">Llano</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="tp2" name="tipo_plato" class="custom-control-input" value="Hondo">
+            <label class="custom-control-label" for="tp2">Hondo</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="tp3" name="tipo_plato" class="custom-control-input" value="Postre">
+            <label class="custom-control-label" for="tp3">Postre</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="tp4" name="tipo_plato" class="custom-control-input" value="Presenta">
+            <label class="custom-control-label" for="tp4">Presenta</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="tp5" name="tipo_plato" class="custom-control-input" value="Tazamoka">
+            <label class="custom-control-label" for="tp5">Tazamoka</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="tp6" name="tipo_plato" class="custom-control-input" value="Pasta">
+            <label class="custom-control-label" for="tp6">Pasta</label>
+          </div>
+        </div>
+
+        <div class="form-group" value={{forma}}>
+          <label>Forma</label>
+          <br>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="f1" name="forma" class="custom-control-input" value="Redondo">
+            <label class="custom-control-label" for="f1">Redondo</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="f2" name="forma" class="custom-control-input" value="Ovalado">
+            <label class="custom-control-label" for="f2">Ovalado</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="f3" name="froma" class="custom-control-input" value="Cuadrado">
+            <label class="custom-control-label" for="f3">Cuadrado</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="f4" name="forma" class="custom-control-input" value="Rectangular">
+            <label class="custom-control-label" for="f4">Rectangular</label>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label>Tamano</label>
+          <input type="text" name="tamano" class="form-control" placeholder="NxNcm" value={{tamano}}>
+        </div>
+
+        <div class="form-group" value={{tipo_taza}}>
+          <label>Tipo Taza</label>
+          <br>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="tt1" name="tipo_taza" class="custom-control-input" value="CafeSp">
+            <label class="custom-control-label" for="tt1">CafeSp</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="tt2" name="tipo_taza" class="custom-control-input" value="CafeCp">
+            <label class="custom-control-label" for="tt2">CafeCp</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="tt3" name="tipo_taza" class="custom-control-input" value="TeSp">
+            <label class="custom-control-label" for="tt3">TeSp</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="tt4" name="tipo_taza" class="custom-control-input" value="TeCp">
+            <label class="custom-control-label" for="tt4">TeCp</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="tt5" name="tipo_taza" class="custom-control-input" value="MokaSp">
+            <label class="custom-control-label" for="tt5">MokaSp</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="tt6" name="tipo_taza" class="custom-control-input" value="MokaCp">
+            <label class="custom-control-label" for="tt6">MokaCp</label>
+          </div>
+        </div>
+
+          <div class="form-group">
+          <label>Volumen</label>
+          <input type="text" name="volumen" class="form-control" placeholder="Nlt" value={{volumen}}>
+        </div>
+
+        <div class="form-group" value={{cant_pers}}>
+          <label>Cantidad De Personas</label>
+          <br>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="c1" name="cant_pers" class="custom-control-input" value="2">
+            <label class="custom-control-label" for="c1">2</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="c2" name="cant_pers" class="custom-control-input" value="6">
+            <label class="custom-control-label" for="c2">6</label>
+          </div> 
+
+        </div>
+
+        <button type="submit" class="btn btn-block btn-primary">Modificar</button>
+      </form>
+
+    </div>
+  </div>
+</div>
