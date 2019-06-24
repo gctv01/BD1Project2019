@@ -1,0 +1,33 @@
+<div class="label text-center my-2 display-1">EMPLEADOS</div>
+<div class="m-2 bg-white p-1">
+    <table id="example" class="table table-striped table-bordered table-hover" style="width:100%">
+        <thead>
+            <tr>
+                <th>DI empleado</th>
+                <th>Codigo</th>
+                <th>Numero</th>
+                <th>Eliminar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each telefono}}
+            <tr>
+                <td>{{di}}</td>
+                <td>{{cod}}</td>
+                <td>{{num}}</td>
+                <form action="/empleado/telefono/eliminar?di={{di}}&cod={{cod}}&num={{num}}" method="POST">
+                    <td><button type="submit" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
+                </form>
+            </tr>
+            {{/each}}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>DI supervisor</th>
+                <th>Codigo</th>
+                <th>Numero</th>
+                <th>Eliminar</th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
