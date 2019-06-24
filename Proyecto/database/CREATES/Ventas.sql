@@ -1,57 +1,54 @@
-﻿CREATE TABLE EJGCliente
+﻿CREATE TABLE Cliente
 (
     id SERIAL NOT NULL,
-    nombre character varying NOT NULL,
-    pais character varying,
-    CONSTRAINT Cliente_pkey PRIMARY KEY (id),
-    CONSTRAINT Check_Pais CHECK (pais::text = ANY (ARRAY['VEN'::character varying, 'USA'::character varying, 'COL'::character varying, 'REPDOM'::character varying]::text[])) NOT VALID
-)
-
-CREATE TABLE EJGContrato
-(
-    numero SERIAL NOT NULL,
-    descuento character varying NOT NULL,
-    id_Cliente numeric NOT NULL,
-    CONSTRAINT Contrato_pkey PRIMARY KEY (numero),
-	CONSTRAINT FK_Cliente FOREIGN KEY (id_Cliente)
-        REFERENCES Cliente (id) 
-        
-   
-)
-
-
-CREATE TABLE EJGPedido
-(
-    numero SERIAL NOT NULL,
-    fecha_encargo date NOT NULL,
-    echa_entrega date NOT NULL,
-   fecha_emision date NOT NULL,
-    CONSTRAINT Pedido_pkey PRIMARY KEY (numero)
-	
-   
-)
-
-CREATE TABLE EJGFactura
-(
+    nombre VARCHAR(20) NOT NULL,
+    pais VARCHAR(1) CONSTRAINT check_cargo check(cargo in('V','C','R','U')),
     
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE Contrato
+(
+    numero SERIAL NOT NULL,
+    descuento NUMERIC(2) NOT NULL,
+    fk_cliente INTEGER NOT NULL,
+
+    PRIMARY KEY(numero),
+    FOREIGN KEY(fk_cliente) REFERENCES cliente(id)
+);
+
+
+CREATE TABLE Pedido
+(
+    numero SERIAL NOT NULL,
+    fecha_encargo DATE NOT NULL,
+    fecha_entrega DATE NOT NULL,
+    fk_cliente INTEGER NOT NULL,
+
+    PRIMARY KEY(numero),
+    FOREIGN KEY(fk_cliente) REFERENCES Cliente(id)
+);
+
+CREATE TABLE Factura
+(
     id SERIAL NOT NULL,
-    Fk_Pedido numeric NOT NULL,
-	monto_total numeric NOT NULL,
-    fechaemision date NOT NULL,
-    CONSTRAINT Factura_pkey PRIMARY KEY (id),
-    CONSTRAINT FK_Pedido FOREIGN KEY (Fk_Pedido)
-        REFERENCES Pedido (numero) 
+    fecha_emision DATE NOT NULL,
+    monto_total NUMERIC(11,2) NOT NULL,
+    fk_pedido INTEGER NOT NULL,
+
+    PRIMARY KEY(id),
+    FOREIGN KEY(fk_pedido) REFERENCES Pedido(numero)
+);
 
 CREATE TABLE Detalle
 (
-    
-    cantidad SERIAL NOT NULL,
-    id_Pieza numeric NOT NULL,
-	id_Juego integer NOT NULL,
-    CONSTRAINT Detalle_pkey PRIMARY KEY (id_Pieza, id_Juego),
-    CONSTRAINT FK_Juego FOREIGN KEY (id_Juego)
-        REFERENCES Juego (id) 
-	CONSTRAINT FK_Pieza FOREIGN KEY (id_Juego)
-        REFERENCES Pieza (id)
-        
-)
+    id SERIAL NOT NULL,
+    cantidad NUMERIC NOT NULL,
+    fk_pedido INTEGER NOT NULL,
+    fk_pieza INTEGER,
+    fk_juego INTEGER,
+
+    PRIMARY KEY(id,fk_pedido),
+    FOREIGN KEY(fk_pieza) REFERENCES pieza(id),
+    FOREIGN KEY(fk_juego) REFERENCES juego(id)
+);
