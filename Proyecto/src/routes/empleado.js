@@ -133,10 +133,13 @@ router.get("/empleado/modificar:di", async (req, res) => {
       + " FROM empleado emp WHERE emp.di = $1", [di])
     const { nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di_supervisor } = resp.rows[0]
 
+    resp = await bd.query("SELECT cod,num FROM telefono WHERE fk_empleado = (SELECT expediente FROM empleado WHERE di = $1)", [di])
+    const telefono = resp.rows
+
     resp = await bd.query("SELECT id,nombre,alergia,descripcion FROM cond_salud")
     const salud = resp.rows
 
-    res.render("empleado/modificar", { di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di_supervisor, salud })
+    res.render("empleado/modificar", { di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, di_supervisor, salud, telefono })
   } catch (err) {
     console.error(err.stack)
     res.redirect("/")
@@ -564,32 +567,65 @@ router.post("/empleado/detalle/extra", async (req, res) => {
 })
 
 router.get("/empleado/agregar/telefono", async (req, res) => {
-  try{
+  try {
     res.render("empleado/agregar/telefono")
-  }catch(err){
+  } catch (err) {
     res.render("index")
-  }finally{
+  } finally {
 
   }
 })
 
 router.post("/empleado/agregar/telefono", async (req, res) => {
-  try{
-    const {di, cod, num} = req.body
+  try {
+    const { di, cod, num } = req.body
+
+    const resp = await bd.query("SELECT expediente FROM empleado WHERE di = $1",[di])
+    if(resp.rowCount == 0)
+      throw "no existe el empleado"
 
     await bd.query("INSERT INTO telefono (cod,num,fk_empleado)"
-    + " VALUES($1,$2,(SELECT expediente FROM empleado WHERE di = $3))", [cod,num,di])
+      + " VALUES($1,$2,(SELECT expediente FROM empleado WHERE di = $3))", [cod, num, di])
 
     req.flash("exito", "Se agrego el numero de telefono")
-  }catch(err){
+  } catch (err) {
     console.error(err.stack)
     req.flash("error", "No se agrego el numero de telefono")
-  }finally{
+  } finally {
     res.redirect("/empleado/agregar/telefono")
   }
 })
 
-router.post("/empleado/telefono/eliminar")
+router.get("/empleado/telefono", async (req, res) => {
+  try {
+
+    const resp = await bd.query("SELECT di, cod, num FROM empleado, telefono"
+    + " WHERE fk_empleado = expediente")
+    const telefono = resp.rows
+
+    res.render("empleado/reporte/telefono",{telefono})
+  } catch (err) {
+    res.render("index")
+  } finally {
+
+  }
+})
+
+router.post("/empleado/telefono/eliminar", async (req,res) =>{
+  try{
+    const {di, cod, num} = req.query
+
+    await bd.query("DELETE FROM telefono WHERE fk_empleado=(SELECT expediente FROM empleado WHERE di = $1)"
+    + " AND cod=$2 AND num=$3", [di, cod ,num])
+
+    req.flash("exito", "Se elimino el telefono")
+  }catch(err){
+    req.flash("error", "No se elimino el telefono")
+    console.error(err.stack)
+  }finally{
+    res.redirect("/empleado/telefono")
+  }
+})
 
 
 module.exports = router

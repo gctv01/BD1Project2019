@@ -138,16 +138,3 @@ insert into inasistencia (fk_empleo, fk_empleado, fk_reunion, fk_supervisor) val
 insert into inasistencia (fk_empleo, fk_empleado, fk_reunion, fk_supervisor) values ('7/3/2002', 10, 8, 9);
 insert into inasistencia (fk_empleo, fk_empleado, fk_reunion, fk_supervisor) values ('7/3/2002', 10, 9, 9);
 insert into inasistencia (fk_empleo, fk_empleado, fk_reunion, fk_supervisor) values ('7/3/2002', 10, 10, 9);
-
-/**********************************************TELEFONO*/
-
-insert into telefono (cod, num, fk_empleado, fk_cliente) values (7153906, 3201312, 1, null);
-insert into telefono (cod, num, fk_empleado, fk_cliente) values (7775389, 7170227, 2, null);
-insert into telefono (cod, num, fk_empleado, fk_cliente) values (8205456, 5682538, 3, null);
-insert into telefono (cod, num, fk_empleado, fk_cliente) values (1632164, 2286619, 4, null);
-insert into telefono (cod, num, fk_empleado, fk_cliente) values (8996961, 8010326, 5, null);
-insert into telefono (cod, num, fk_empleado, fk_cliente) values (3782521, 6703955, null, 1);
-insert into telefono (cod, num, fk_empleado, fk_cliente) values (677607, 2111377, null, 2);
-insert into telefono (cod, num, fk_empleado, fk_cliente) values (6510057, 327423, null, 3);
-insert into telefono (cod, num, fk_empleado, fk_cliente) values (3440281, 9041321, null, 4);
-insert into telefono (cod, num, fk_empleado, fk_cliente) values (5587822, 8559810, null, 5);

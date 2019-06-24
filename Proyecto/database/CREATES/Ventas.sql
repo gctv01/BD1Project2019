@@ -52,3 +52,14 @@ CREATE TABLE Detalle
     FOREIGN KEY(fk_pieza) REFERENCES pieza(id),
     FOREIGN KEY(fk_juego) REFERENCES juego(id)
 );
+
+CREATE TABLE TELEFONO(
+    cod NUMERIC(7) NOT NULL,
+    num NUMERIC(7) NOT NULL,
+    fk_empleado INTEGER,
+    fk_cliente INTEGER,
+
+    PRIMARY KEY(cod,num),
+    FOREIGN KEY(fk_empleado) REFERENCES EMPLEADO(expediente),
+    FOREIGN KEY(fk_cliente) REFERENCES CLIENTE(id)
+);
