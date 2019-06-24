@@ -114,3 +114,14 @@ CREATE TABLE INASISTENCIA(
     FOREIGN KEY(fk_empleo,fk_empleado) REFERENCES EMPLEO(fecha_inicio,fk_empleado),
     FOREIGN KEY(fk_reunion,fk_supervisor) REFERENCES REUNION(id,fk_supervisor)
 );
+
+CREATE TABLE TELEFONO(
+    cod NUMERIC(7) NOT NULL,
+    num NUMERIC(7) NOT NULL,
+    fk_empleado INTEGER,
+    fk_cliente INTEGER,
+
+    PRIMARY KEY(cod,num),
+    FOREIGN KEY(fk_empleado) REFERENCES EMPLEADO(expediente),
+    FOREIGN KEY(fk_cliente) REFERENCES CLIENTE(id)
+);
