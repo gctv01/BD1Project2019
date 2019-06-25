@@ -358,7 +358,7 @@ router.get("/catalogo", async (req, res) => {
 
   router.get("/catalogo/listaH", async (req, res) => {
     try {
-      const resp = await bd.query("select TO_CHAR(fecha,'DD/MM/YYYY'), inflacion, precio_bs, id_pieza, TO_CHAR(fecha_fin,'DD/MM/YYYY') "
+      const resp = await bd.query("select fecha, inflacion, precio_bs, id_pieza, fecha_fin "
         + " from Hist_Pieza ")
       const historial = resp.rows
       res.render("catalogo/historial/listaH", { historial })
@@ -368,10 +368,58 @@ router.get("/catalogo", async (req, res) => {
     }
   })
 
+  router.get("/verPrecioF:id", async (req, res) => {
+    try {
+      const id = req.params.id
+      const resp = await bd.query("select fecha , inflacion, precio_bs, id_pieza, fecha_fin "
+        + " from Hist_Pieza WHERE id_pieza = $1 ", [id])
+      const historial = resp.rows
+      const resp1 = await bd.query("SELECT precio_bs as preciof FROM Hist_Pieza WHERE ((fecha_fin IS NULL) and (id_pieza = $1))", [id])
+      const {preciof}  = resp1.rows[0]
+      console.log(preciof)
+      res.render("catalogo/pieza/verPrecioF", { historial, preciof })
+    } catch (err) {
+      console.error(err.stack)
+      res.render("catalogo/pieza/verPrecioF")
+    }
+  })
+
+  router.get("/verPrecioF:id", async (req, res) => {
+    try {
+      const id = req.params.id
+      const resp = await bd.query("select fecha , inflacion, precio_bs, id_pieza, fecha_fin "
+        + " from Hist_Pieza WHERE id_pieza = $1 ", [id])
+      const historial = resp.rows
+      const resp1 = await bd.query("SELECT precio_bs as preciof FROM Hist_Pieza WHERE ((fecha_fin IS NULL) and (id_pieza = $1))", [id])
+      const {preciof}  = resp1.rows[0]
+      console.log(preciof)
+      res.render("catalogo/pieza/verPrecioF", { historial, preciof })
+    } catch (err) {
+      console.error(err.stack)
+      res.render("catalogo/pieza/verPrecioF")
+    }
+  })
+
+  router.get("/verPrecioI:id", async (req, res) => {
+    try {
+      const id = req.params.id
+      const resp = await bd.query("select fecha , inflacion, precio_bs, id_pieza, fecha_fin "
+        + " from Hist_Pieza WHERE id_pieza = $1 ", [id])
+      const historial = resp.rows
+      const resp1 = await bd.query("SELECT ((precio_bs)/(inflacion)) as preciof FROM Hist_Pieza WHERE ((fecha_fin IS NULL) and (id_pieza = $1))", [id])
+      const {preciof}  = resp1.rows[0]
+      console.log(preciof)
+      res.render("catalogo/pieza/verPrecioI", { historial, preciof })
+    } catch (err) {
+      console.error(err.stack)
+      res.render("catalogo/pieza/verPrecioI")
+    }
+  })
+
   router.get("/catalogo/agregarH", async (req,res) => {
     try{
 
-      const resp = await bd.query("SELECT inflacion, precio_bs, id_pieza, TO_CHAR(fecha,'DD/MM/YYYY') FROM Hist_Pieza")
+      const resp = await bd.query("SELECT inflacion, precio_bs, id_pieza, fecha FROM Hist_Pieza")
       const historial = resp.rows
       const resp1 = await bd.query("SELECT * FROM Pieza")
       const pieza = resp1.rows
@@ -385,17 +433,12 @@ router.get("/catalogo", async (req, res) => {
 
   router.post("/agregarH", async (req, res) => {
     try {
-      let {inflacion, precio_bs, id_pieza, fecha } = req.body;
-      const resp = await bd.query("SELECT fecha_fin FROM Hist_Pieza WHERE fecha = $1 ", [fecha])
-      const fechaf = resp.rows
-      console.log(fechaf)
-      //if (fechaf != null){
-      await bd.query("INSERT INTO Hist_Pieza (inflacion, precio_bs, id_pieza, fecha)"
-      + "VALUES ($1, $2, $3, $4)", [inflacion, precio_bs, id_pieza, fecha])
-      req.flash("exito", "Se agrego el historial")
-      //}
+      let {inflacion, precio_bs, id_pieza } = req.body;
+      await bd.query("Update Hist_Pieza Set fecha_fin = NOW() WHERE fecha_fin IS NULL and id_pieza = $1 ", [id_pieza])
+      await bd.query("Insert Into Hist_Pieza (inflacion, precio_bs,fecha, id_pieza ) values ($1, $2, NOW(), $3)", [inflacion, precio_bs, id_pieza])
+      req.flash("exito", "se agrego el historial")
     } catch (err) {
-      req.flash("error", "Se deben llenar los campos necesarios")
+      req.flash("error", "No se pudo agregar el historial")
       console.error(err.stack)
     } finally {
       res.redirect("/catalogo/agregarH")
