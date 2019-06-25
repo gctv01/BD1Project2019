@@ -358,9 +358,9 @@ router.get("/catalogo", async (req, res) => {
 
   router.get("/catalogo/listaH", async (req, res) => {
     try {
-      const resp = await bd.query("select *"
+      const resp = await bd.query("select TO_CHAR(fecha,'DD/MM/YYYY'), inflacion, precio_bs, id_pieza, TO_CHAR(fecha_fin,'DD/MM/YYYY') "
         + " from Hist_Pieza ")
-      const historial = resp.rows      
+      const historial = resp.rows
       res.render("catalogo/historial/listaH", { historial })
     } catch (err) {
       console.error(err.stack)
@@ -371,7 +371,7 @@ router.get("/catalogo", async (req, res) => {
   router.get("/catalogo/agregarH", async (req,res) => {
     try{
 
-      const resp = await bd.query("SELECT * FROM Hist_Pieza")
+      const resp = await bd.query("SELECT inflacion, precio_bs, id_pieza, TO_CHAR(fecha,'DD/MM/YYYY') FROM Hist_Pieza")
       const historial = resp.rows
       const resp1 = await bd.query("SELECT * FROM Pieza")
       const pieza = resp1.rows
@@ -390,8 +390,8 @@ router.get("/catalogo", async (req, res) => {
       const fechaf = resp.rows
       console.log(fechaf)
       //if (fechaf != null){
-      await bd.query("INSERT INTO Hist_Pieza (inflacion, precio_bs, id_pieza, fecha_fin, fecha)"
-      + "VALUES ($1, $2, $3, $4, $5)", [inflacion, precio_bs, id_pieza, fecha_fin, fecha])
+      await bd.query("INSERT INTO Hist_Pieza (inflacion, precio_bs, id_pieza, fecha)"
+      + "VALUES ($1, $2, $3, $4)", [inflacion, precio_bs, id_pieza, fecha])
       req.flash("exito", "Se agrego el historial")
       //}
     } catch (err) {
@@ -401,6 +401,20 @@ router.get("/catalogo", async (req, res) => {
       res.redirect("/catalogo/agregarH")
     }
   })
+
+  router.get("/eliminarH:fecha", async (req, res) => {
+    try {
+      const fecha = req.params.fecha
+      await bd.query("DELETE FROM Hist_Pieza WHERE fecha = $1", [fecha])
+  
+      req.flash("exito", "Se elimino el historial")
+    } catch (err) {
+      req.flash("error", "No se pudo eliminar el historial")
+      console.error(err.stack)
+    } finally {
+      res.redirect("/catalogo/listaH")
+    }
+  }) 
 
   router.get("/catalogo/listaPF", async (req, res) => {
     try {
