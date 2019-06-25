@@ -21,7 +21,9 @@
                 <form action="/modificarP{{id}}" method="GET">                   
                     <td><button class="btn btn-warning">modificar</button></td>
                 </form>
-                <td>{{precio_bs}}</td>
+                <form action="/verPrecioF{{id}}" method="GET">                   
+                    <td><button class="btn btn-primary">Ver Precio</button></td>
+                </form>
                  {{/each}}
                  
             </tr>

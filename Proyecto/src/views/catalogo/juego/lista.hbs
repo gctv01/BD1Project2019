@@ -8,6 +8,9 @@
                 <th>Cantidad De Personas</th>
                 <th>Descripcion</th>
                 <th>Piezas</th>
+                <th>Eliminar</th>
+                <th>Modificar</th>
+                <th>Precio</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +29,9 @@
                 <form action="/catalogo/modificar{{id}}" method="GET">                   
                     <td><button class="btn btn-warning">modificar</button></td>
                 </form>
+                <form action="/verPrecioF{{id}}" method="GET">                   
+                    <td><button class="btn btn-warning">ver precio</button></td>
+                </form>
                 
             </tr>
             {{/each}}
@@ -37,6 +43,9 @@
                 <th>Cantidad De Personas</th>
                 <th>Descripcion</th>
                 <th>Piezas</th>
+                <th>Eliminar</th>
+                <th>Modificar</th>
+                <th>Precio</th>
             </tr>
         </tfoot>
     </table>
