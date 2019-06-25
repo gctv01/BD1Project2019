@@ -193,17 +193,23 @@ insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, vo
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (44, 'Cazuela', null, null, null, null, '15x15cm', null);
 insert into Molde (id, tipo, tipo_plato, forma, tipo_taza, cant_pers, tamano, volumen) values (45, 'Lechera', null, null, null, 6, null, null);
 
+ALTER SEQUENCE molde_id_seq RESTART WITH 46 INCREMENT BY 1;
+
 Insert into Coleccion (id, categoria, linea, descr) values (1, 'Clas_ele', 'I', 'Coleccion Amanecer Institucional');
 Insert into Coleccion (id, categoria, linea, descr) values (2, 'Country', 'F', 'Coleccion Tarde Familiar');
 Insert into Coleccion (id, categoria, linea, descr) values (3, 'Moderna', 'F', 'Coleccion Noche Familiar');
 Insert into Coleccion (id, categoria, linea, descr) values (4, 'Country', 'I', 'Coleccion Zen Institucional');
 Insert into Coleccion (id, categoria, linea, descr) values (5, 'Moderna', 'I', 'Coleccion Tiempo Institucional');
 
+ALTER SEQUENCE coleccion_id_seq RESTART WITH 6 INCREMENT BY 1;
+
 Insert into Col_Mot (id, nombre, tipo, descr) values (1, 'Azul', 'Color','Color Azul' );
 Insert into Col_Mot (id, nombre, tipo, descr) values (2, 'Rojo', 'Color','Color Rojo' );
 Insert into Col_Mot (id, nombre, tipo, descr) values (3, 'Animales', 'Motivo','Motivo Animales' );
 Insert into Col_Mot (id, nombre, tipo, descr) values (4, 'Arboles', 'Motivo','Motivo Arboles' );
 Insert into Col_Mot (id, nombre, tipo, descr) values (5, 'Amarillo', 'Color','Color Amarillo' );
+
+ALTER SEQUENCE col_mot_id_seq RESTART WITH 6 INCREMENT BY 1;
 
 insert into Juego (id, cant_personas, nombre, descr) values (1, 2, 'Marron', 'Juego Marron 2 Personas');
 insert into Juego (id, cant_personas, nombre, descr) values (2, 4, 'Mar', 'Juego Mar 4 personas');
@@ -215,6 +221,8 @@ insert into Juego (id, cant_personas, nombre, descr) values (7, 2, 'Dorado', 'Ju
 insert into Juego (id, cant_personas, nombre, descr) values (8, 6, 'Postre', 'Juego Postre 6 personas');
 insert into Juego (id, cant_personas, nombre, descr) values (9, 4, 'Sala', 'Juego Sala 4 personas');
 insert into Juego (id, cant_personas, nombre, descr) values (10, 6, 'Cocina', 'Juego Cocina 6 personas');
+
+ALTER SEQUENCE juego_id_seq RESTART WITH 11 INCREMENT BY 1;
 
 insert into Pieza (id, id_Coleccion, id_Col_Mot, id_Molde, descr) values (1, 1, 1, 1, 'Bandeja Rectangular 44x22cm Coleccion 1' );
 insert into Pieza (id, id_Coleccion, id_Col_Mot, id_Molde, descr) values (2, 1, 1, 2, 'plato llano cuadrado 27x27cm Coleccion 1' );
@@ -271,6 +279,8 @@ insert into Pieza (id, id_Coleccion, id_Col_Mot, id_Molde, descr) values (53, 5,
 insert into Pieza (id, id_Coleccion, id_Col_Mot, id_Molde, descr) values (54, 5, 5, 28, 'jarra 3lts');
 insert into Pieza (id, id_Coleccion, id_Col_Mot, id_Molde, descr) values (55, 5, 5, 6, 'taza cafe sin plato');
 
+ALTER SEQUENCE pieza_id_seq RESTART WITH 56 INCREMENT BY 1;
+
 insert into J_P (id_Pieza, id_Juego, cantidad) values (6, 1, 0);
 insert into J_P (id_Pieza, id_Juego, cantidad) values (7, 1, 1);
 insert into J_P (id_Pieza, id_Juego, cantidad) values (8, 1, 1);
@@ -309,7 +319,16 @@ Insert into C_M (id_Col_Mot, id_Coleccion) values (3,3);
 Insert into C_M (id_Col_Mot, id_Coleccion) values (4,4);
 Insert into C_M (id_Col_Mot, id_Coleccion) values (5,5);
 
-Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza) values ('01-01-2019', 15000, 10, 1);
+Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('03-06-2019', 15000, 10, 1, null);
+Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('03-03-2019', 1500, 5, 2, '03-06-2019');
+Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('01-01-2017', 26000, 0, 3, '01-04-2017');
+Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('01-01-2016', 100, 25, 4, '01-04-2016');
+Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('01-01-2015', 6500, 60, 5, '01-01-2015');
+Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('09-05-2019', 7896, 3, 6, null);
+Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('01-01-2019', 11445, 18, 7, '01-04-2019');
+Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('05-07-2018', 65880, 1, 8, '05-10-2018');
+Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('01-09-2017', 1212, 9, 9, '01-12-2017');
+Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('03-04-2015', 14789, 23, 10, '03-07-2015');
 
 /******************************************************************************************************/
 /**************************************************VENTAS**********************************************/

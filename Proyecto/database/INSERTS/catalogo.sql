@@ -171,14 +171,14 @@ Insert into C_M (id_Col_Mot, id_Coleccion) values (3,3);
 Insert into C_M (id_Col_Mot, id_Coleccion) values (4,4);
 Insert into C_M (id_Col_Mot, id_Coleccion) values (5,5);
 
-Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('23-06-2019', 15000, 10, 1, null);
-Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('23-03-2019', 1500, 5, 2, '23-06-2019');
+Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('03-06-2019', 15000, 10, 1, null);
+Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('03-03-2019', 1500, 5, 2, '03-06-2019');
 Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('01-01-2017', 26000, 0, 3, '01-04-2017');
 Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('01-01-2016', 100, 25, 4, '01-04-2016');
 Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('01-01-2015', 6500, 60, 5, '01-01-2015');
-Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('19-05-2019', 7896, 3, 6, null);
+Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('09-05-2019', 7896, 3, 6, null);
 Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('01-01-2019', 11445, 18, 7, '01-04-2019');
-Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('15-07-2018', 65880, 1, 8, '15-10-2018');
-Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('11-09-2017', 1212, 9, 9, '11-12-2017');
-Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('30-04-2015', 14789, 23, 10, '30-07-2015');
+Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('05-07-2018', 65880, 1, 8, '05-10-2018');
+Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('01-09-2017', 1212, 9, 9, '01-12-2017');
+Insert into Hist_Pieza (fecha, precio_Bs, inflacion, id_Pieza, fecha_fin) values ('03-04-2015', 14789, 23, 10, '03-07-2015');
 

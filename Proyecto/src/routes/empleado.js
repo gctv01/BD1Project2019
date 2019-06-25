@@ -36,7 +36,7 @@ router.get("/empleado", async (req, res) => {
 router.get("/empleado/agregar", async (req, res) => {
   try {
 
-    const rest = await bd.query("SELECT id,nombre,alergia,descripcion FROM cond_salud")
+    const rest = await bd.query("SELECT id,nombre,(CASE alergia WHEN true THEN 'Si' ELSE 'No' END) alergia,descripcion FROM cond_salud")
     const salud = rest.rows
 
     res.render("empleado/agregar", { salud })

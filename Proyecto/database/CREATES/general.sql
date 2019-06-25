@@ -178,19 +178,17 @@ CREATE TABLE C_M
     id_Coleccion INTEGER NOT NULL,
     CONSTRAINT C_M_pkey PRIMARY KEY (id_Col_Mot, id_Coleccion),
     CONSTRAINT FK_Coleccion FOREIGN KEY (id_Coleccion) REFERENCES Coleccion (id), 
-    CONSTRAINT FK_Motivo FOREIGN KEY (id_Col_Mot) REFERENCES Col_Mot (id)
-);
+    CONSTRAINT FK_Motivo FOREIGN KEY (id_Col_Mot) REFERENCES Col_Mot (id));
 
 CREATE TABLE Hist_Pieza
 (
-    fecha date NOT NULL,
+    fecha TIMESTAMP NOT NULL,
     precio_Bs numeric NOT NULL,
     inflacion numeric NOT NULL,
     id_Pieza INTEGER NOT NULL,
-    fecha_fin date,
+    fecha_fin TIMESTAMP,
     CONSTRAINT Hist_Pieza_pkey PRIMARY KEY (fecha, id_Pieza),
-    CONSTRAINT FKPieza FOREIGN KEY (id_Pieza)  REFERENCES Pieza (id)
-);
+    CONSTRAINT FKPieza FOREIGN KEY (id_Pieza)  REFERENCES Pieza (id));
 
 /******************************************************************************************************/
 /**************************************************VENTAS**********************************************/

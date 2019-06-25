@@ -40,6 +40,9 @@ router.get("/catalogo/agregarCM", async (req,res) => {
 router.post("/agregarCM", async (req, res) => {
   try {
     let {nombre, tipo, idc, descr } = req.body;
+
+    await bd.query("BEGIN")
+
     const resp = await bd.query("INSERT INTO Col_Mot (nombre, tipo, descr)"
     + "VALUES ($1, $2, $3)", [nombre, tipo, descr])
     const resp1 = await bd.query("SELECT * FROM Col_Mot ORDER BY id DESC") 
@@ -50,9 +53,11 @@ router.post("/agregarCM", async (req, res) => {
     
     req.flash("exito", "Se agrego el Color-Motivo")
   } catch (err) {
+    await bd.query("ROLLBACK")
     req.flash("error", "Se deben llenar los campos necesarios")
     console.error(err.stack)
   } finally {
+    await bd.query("COMMIT")
     res.redirect("/catalogo/agregarCM")
   }
 })
@@ -179,15 +184,20 @@ router.post("/modificarM:id", async (req, res) => {
 router.get("/eliminarCM:id", async (req, res) => {
   try{
     const id = req.params.id
+
+    await bd.query("BEGIN")
+
     await bd.query("DELETE FROM C_M "
     + " WHERE id_Col_Mot = $1", [id])
     await bd.query("DELETE FROM Col_Mot "
     + "WHERE id = $1", [id])
     req.flash("exito", "Se elimino el Color-Motivo")
   } catch (err) {
+    await bd.query("ROLLBACK")
     req.flash("error", "No se pudo eliminar el Color-Motivo")
     console.error(err.stack)
   } finally {
+    await bd.query("COMMIT")
     res.redirect("/catalogo/listaCM")
   }
   })
@@ -212,6 +222,9 @@ router.post("/modificarCM:id", async (req, res) => {
   try {
     const id = req.params.id
     let {descr, idc, nombre, tipo} = req.body
+
+    await bd.query("BEGIN")
+
     await bd.query("UPDATE Col_Mot SET nombre = $1, descr = $2, tipo = $3"
     + "WHERE id = $4", [nombre, descr, tipo, id])
     await bd.query("DELETE FROM C_M WHERE id_Col_Mot = $1", [id])
@@ -219,9 +232,11 @@ router.post("/modificarCM:id", async (req, res) => {
     + "VALUES ($1, $2)", [id, idc]) 
     req.flash("exito", "Se modifico el Color-Motivo")
   } catch (err) {
+    await bd.query("ROLLBACK")
     req.flash("error", "Se deben llenar los campos necesarios")
     console.error(err.stack)
   } finally {
+    await bd.query("COMMIT")
     res.redirect("catalogo/listaCM")
   }
 })
@@ -434,13 +449,18 @@ router.get("/catalogo", async (req, res) => {
   router.post("/agregarH", async (req, res) => {
     try {
       let {inflacion, precio_bs, id_pieza } = req.body;
+
+      await bd.query("BEGIN")
+
       await bd.query("Update Hist_Pieza Set fecha_fin = NOW() WHERE fecha_fin IS NULL and id_pieza = $1 ", [id_pieza])
       await bd.query("Insert Into Hist_Pieza (inflacion, precio_bs,fecha, id_pieza ) values ($1, $2, NOW(), $3)", [inflacion, precio_bs, id_pieza])
       req.flash("exito", "se agrego el historial")
     } catch (err) {
+      await bd.query("ROLLBACK")
       req.flash("error", "No se pudo agregar el historial")
       console.error(err.stack)
     } finally {
+      await bd.query("COMMIT")
       res.redirect("/catalogo/agregarH")
     }
   })
@@ -660,6 +680,8 @@ router.get("/catalogo", async (req, res) => {
     try {
       id = req.params.id
       let { nombre, cant_personas, descr, cantidad, idp} = req.body;
+
+      await bd.query("BEGIN")
   
       const resp = await bd.query("UPDATE Juego SET nombre = $1, cant_personas = $2, descr = $3"
         + " WHERE id = $4", [nombre, cant_personas, descr, id])
@@ -676,22 +698,23 @@ router.get("/catalogo", async (req, res) => {
         if (typeof (idp) == "object")
           idp.forEach(async id => {
             await bd.query("INSERT INTO j_p (id_pieza,id_juego,cantidad)"
-              + " VALUES($1,(SELECT MAX(id) FROM juego),$2)", [parseInt(id, 10), cant[parseInt(id - 1)]])
+              + " VALUES($1,(SELECT MAX(id) FROM juego),$2)", [id, cant[idp.indexOf(id)]])
           })
         else
           await bd.query("INSERT INTO j_p (id_pieza,id_juego,cantidad)"
-            + " VALUES($1,(SELECT MAX(id) FROM juego),$2)", [parseInt(idp, 10), cant[0]])
+            + " VALUES($1,(SELECT MAX(id) FROM juego),$2)", [idp, cant[0]])
       else
           throw "se debe agregar por lo menos una pieza al juego"
   
       req.flash("exito", "Juego modificado con exito")
   
     } catch (err) {
-  
+      await bd.query("ROLLBACK")
       req.flash("error", "No se pudo modificar el Juego")
       console.error(err.stack)
   
     } finally {
+      await bd.query("COMMIT")
       res.redirect("/catalogo/lista")
     }
   })
