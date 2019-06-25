@@ -1,0 +1,62 @@
+<div class="label text-center my-2 display-1">AGREGAR HISTORIAL</div>
+<div class="row mx-auto">
+  <div class="card mx-auto mt-2" style="width: 40rem;">
+    <div class="card-body">
+
+      <form action="/agregarH" method="POST">
+        <div class="form-group">
+          <label>Fecha</label>
+          <input type="date" name="fecha" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label>Precio Bolivares</label>
+          <input type="number" name="precio_bs" class="form-control" placeholder="Precio Bs">
+        </div>
+
+        <div class="form-group">
+          <label>Inflacion</label>
+          <input type="number" name="inflacion" class="form-control" placeholder="Inflacion">
+        </div>        
+        
+          <label>Piezas del juego</label>
+        <br>
+        <div class="m-2 bg-white p-1">
+          <table id="myTable" class="table table-striped table-bordered table-hover" style="width:100%">
+            <thead>
+              <tr>
+                <th>Checkbox</th>
+                <th>ID</th>
+                <th>Descripcion</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each pieza}}
+              <tr>
+                <td>
+                  <div class="form-check">
+                    <input class="form-check-input" name="idp" type="checkbox" value={{id}}>
+                  </div>
+                </td>
+                <td>{{id}}</td>
+                <td>{{descr}}</td>
+              </tr>
+              {{/each}}
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>Checkbox</th>
+                <th>ID</th>
+                <th>Descripcion</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+
+        <button type="submit" class="btn btn-block btn-primary">Registrar</button>
+      </form>
+
+    </div>
+  </div>
+</div>
