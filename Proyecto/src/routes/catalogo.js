@@ -356,15 +356,81 @@ router.get("/catalogo", async (req, res) => {
     }
   })
 
-  router.get("/catalogo/listaP", async (req, res) => {
+  router.get("/catalogo/listaH", async (req, res) => {
     try {
       const resp = await bd.query("select *"
-        + " from pieza ")
-      const pieza = resp.rows
-      res.render("catalogo/pieza/listaP", { pieza})
+        + " from Hist_Pieza ")
+      const historial = resp.rows      
+      res.render("catalogo/historial/listaH", { historial })
     } catch (err) {
       console.error(err.stack)
-      res.render("catalogo/pieza/listaP")
+      res.render("catalogo/historial/listaH")
+    }
+  })
+
+  router.get("/catalogo/agregarH", async (req,res) => {
+    try{
+
+      const resp = await bd.query("SELECT * FROM Hist_Pieza")
+      const historial = resp.rows
+      const resp1 = await bd.query("SELECT * FROM Pieza")
+      const pieza = resp1.rows
+      res.render("catalogo/historial/agregarH", {historial, pieza})
+    }catch(err){
+
+    }finally{
+
+    }
+})
+
+  router.post("/agregarH", async (req, res) => {
+    try {
+      let {inflacion, precio_bs, id_pieza, fecha } = req.body;
+      const resp = await bd.query("SELECT fecha_fin FROM Hist_Pieza WHERE fecha = $1 ", [fecha])
+      const fechaf = resp.rows
+      console.log(fechaf)
+      //if (fechaf != null){
+      await bd.query("INSERT INTO Hist_Pieza (inflacion, precio_bs, id_pieza, fecha_fin, fecha)"
+      + "VALUES ($1, $2, $3, $4, $5)", [inflacion, precio_bs, id_pieza, fecha_fin, fecha])
+      req.flash("exito", "Se agrego el historial")
+      //}
+    } catch (err) {
+      req.flash("error", "Se deben llenar los campos necesarios")
+      console.error(err.stack)
+    } finally {
+      res.redirect("/catalogo/agregarH")
+    }
+  })
+
+  router.get("/catalogo/listaPF", async (req, res) => {
+    try {
+      const resp = await bd.query("select p.* from pieza p, Coleccion c  WHERE  (c.id = p.id_Coleccion) and (c.linea = 'F') ")
+      const pieza = resp.rows
+     /* const resp2 = await bd.query("select p.id from pieza p, Coleccion c  WHERE  (c.id = p.id_Coleccion) and (c.linea = 'F') ")
+      const id = resp2.rows
+      const resp1 = await bd.query("SELECT precio_bs FROM Hist_Pieza WHERE id_pieza = $1", [id])
+      const precio_bs = resp1.rows
+      console.log(precio_bs, id)*/
+      res.render("catalogo/pieza/listaPF", { pieza})
+    } catch (err) {
+      console.error(err.stack)
+      res.render("catalogo/pieza/listaPF")
+    }
+  })
+
+  router.get("/catalogo/listaPI", async (req, res) => {
+    try {
+      const resp = await bd.query("select p.* from pieza p, Coleccion c  WHERE  (c.id = p.id_Coleccion) and (c.linea = 'I') ")
+      const pieza = resp.rows
+     /* const resp2 = await bd.query("select p.id from pieza p, Coleccion c  WHERE  (c.id = p.id_Coleccion) and (c.linea = 'I') ")
+      const id = resp2.rows
+      const resp1 = await bd.query("SELECT precio_bs FROM Hist_Pieza WHERE id_pieza = $1", [id])
+      const precio_bs = resp1.rows
+      console.log(precio_bs, id)*/
+      res.render("catalogo/pieza/listaPI", { pieza })
+    } catch (err) {
+      console.error(err.stack)
+      res.render("catalogo/pieza/listaPI")
     }
   })
 
@@ -442,7 +508,9 @@ router.get("/catalogo", async (req, res) => {
     }
   }) 
 
-  router.get("/eliminarP:id", async (req, res) => {
+  
+
+  router.get("/eliminarPF:id", async (req, res) => {
     try{
       const id = req.params.id
       await bd.query("DELETE FROM J_P "
@@ -454,9 +522,25 @@ router.get("/catalogo", async (req, res) => {
       req.flash("error", "No se pudo eliminar la pieza")
       console.error(err.stack)
     } finally {
-      res.redirect("/catalogo/listaP")
+      res.redirect("/catalogo/listaPF")
     }
     })
+
+    router.get("/eliminarPI:id", async (req, res) => {
+      try{
+        const id = req.params.id
+        await bd.query("DELETE FROM J_P "
+        + " WHERE id_Pieza = $1", [id])
+        await bd.query("DELETE FROM Pieza "
+        + "WHERE id = $1", [id])
+        req.flash("exito", "Se elimino la pieza")
+      } catch (err) {
+        req.flash("error", "No se pudo eliminar la pieza")
+        console.error(err.stack)
+      } finally {
+        res.redirect("/catalogo/listaPI")
+      }
+      })
 
     router.post("/modificarP:id", async (req, res) => {
       try {
@@ -469,9 +553,11 @@ router.get("/catalogo", async (req, res) => {
         req.flash("error", "Se deben llenar los campos necesarios")
         console.error(err.stack)
       } finally {
-        res.redirect("/catalogo/listaP")
+        res.redirect("/catalogo")
       }
     })
+
+    
 
     router.get("/modificarP:id", async (req,res) => {
       try{
