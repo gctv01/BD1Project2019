@@ -1,0 +1,28 @@
+<div class="label text-center my-2 display-1">AGREGAR CONTRATO</div>
+<div class="row mx-auto">
+    <div class="card mx-auto mt-2" style="width: 40rem;">
+        <div class="card-body">
+            <h5 class="text-center">DATOS DEL CONTRATO</h5>
+            <hr>
+            <form action="/ventas/agregar/contrato" method="POST">
+                <div class="form-group">
+                    <label>ID Cliente</label>
+                    <select class="custom-select" id="inlineFormCustomSelect" name="id">
+                        {{#each cliente}}
+                        <option value={{id}}>{{id}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Descuento</label>
+                    <input type="number" name="descuento" class="form-control" placeholder="Descuento">
+                </div>
+
+                <hr>
+                <button type="submit" class="btn btn-block btn-primary">Registrar</button>
+            </form>
+
+        </div>
+    </div>
+</div>

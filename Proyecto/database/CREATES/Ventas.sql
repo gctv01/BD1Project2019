@@ -13,7 +13,7 @@ CREATE TABLE Contrato
     descuento NUMERIC(2) NOT NULL,
     fk_cliente INTEGER NOT NULL,
 
-    PRIMARY KEY(numero),
+    PRIMARY KEY(numero,fk_cliente),
     FOREIGN KEY(fk_cliente) REFERENCES cliente(id)
 );
 

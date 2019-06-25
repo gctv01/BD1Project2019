@@ -5,7 +5,6 @@ DROP TABLE IF EXISTS
     empleo,
     organigrama,
     detalle_exp,
-    telefono,
     e_c,
     cond_salud,
     empleado
@@ -27,5 +26,6 @@ DROP TABLE IF EXISTS
     contrato,
     detalle,
     factura,
-    pedido
+    pedido,
+    telefono,
 CASCADE;

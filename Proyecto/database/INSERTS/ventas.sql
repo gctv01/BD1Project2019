@@ -1,6 +1,6 @@
-insert into Cliente (id, nombre, pais) values (1, 'Arliene', 'U');
-insert into Cliente (id, nombre, pais) values (2, 'Llewellyn', 'U');
-insert into Cliente (id, nombre, pais) values (3, 'Melloney', 'U');
+insert into Cliente (id, nombre, pais) values (1, 'Arliene', 'V');
+insert into Cliente (id, nombre, pais) values (2, 'Llewellyn', 'V');
+insert into Cliente (id, nombre, pais) values (3, 'Melloney', 'V');
 insert into Cliente (id, nombre, pais) values (4, 'Prue', 'U');
 insert into Cliente (id, nombre, pais) values (5, 'Joseph', 'U');
 insert into Cliente (id, nombre, pais) values (6, 'Constantine', 'U');
@@ -8,6 +8,8 @@ insert into Cliente (id, nombre, pais) values (7, 'Jo-ann', 'C');
 insert into Cliente (id, nombre, pais) values (8, 'Morrie', 'C');
 insert into Cliente (id, nombre, pais) values (9, 'Sherwood', 'C');
 insert into Cliente (id, nombre, pais) values (10, 'Hilliary', 'R');
+
+ALTER SEQUENCE cliente_id_seq RESTART WITH 11 INCREMENT BY 1;
 
 insert into Contrato (numero, descuento, fk_cliente) values (1, 86, 1);
 insert into Contrato (numero, descuento, fk_cliente) values (2, 78, 2);
@@ -20,6 +22,8 @@ insert into Contrato (numero, descuento, fk_cliente) values (8, 70, 8);
 insert into Contrato (numero, descuento, fk_cliente) values (9, 79, 9);
 insert into Contrato (numero, descuento, fk_cliente) values (10, 15, 10);
 
+ALTER SEQUENCE contrato_numero_seq RESTART WITH 11 INCREMENT BY 1;
+
 insert into Pedido (numero, fecha_encargo, fecha_entrega, fk_cliente) values (1, '2019-05-23', '2019-08-13', 1);
 insert into Pedido (numero, fecha_encargo, fecha_entrega, fk_cliente) values (2, '2019-05-03', '2019-06-26', 2);
 insert into Pedido (numero, fecha_encargo, fecha_entrega, fk_cliente) values (3, '2019-05-03', '2019-08-16', 3);
@@ -30,6 +34,8 @@ insert into Pedido (numero, fecha_encargo, fecha_entrega, fk_cliente) values (7,
 insert into Pedido (numero, fecha_encargo, fecha_entrega, fk_cliente) values (8, '2019-05-29', '2019-07-04', 8);
 insert into Pedido (numero, fecha_encargo, fecha_entrega, fk_cliente) values (9, '2019-06-06', '2019-08-18', 9);
 insert into Pedido (numero, fecha_encargo, fecha_entrega, fk_cliente) values (10, '2019-04-30', '2019-08-22', 10);
+
+ALTER SEQUENCE pedido_numero_seq RESTART WITH 11 INCREMENT BY 1;
 
 insert into Factura (id, fecha_emision, monto_total, fk_pedido) values (1, '2019-06-02', 7347.01, 1);
 insert into Factura (id, fecha_emision, monto_total, fk_pedido) values (2, '2019-05-05', 343.01, 2);
@@ -42,6 +48,8 @@ insert into Factura (id, fecha_emision, monto_total, fk_pedido) values (8, '2019
 insert into Factura (id, fecha_emision, monto_total, fk_pedido) values (9, '2019-04-25', 8254.38, 9);
 insert into Factura (id, fecha_emision, monto_total, fk_pedido) values (10, '2019-06-22', 4535.12, 10);
 
+ALTER SEQUENCE factura_id_seq RESTART WITH 11 INCREMENT BY 1;
+
 insert into Detalle (id, cantidad, fk_pedido, fk_pieza, fk_juego) values (1, 3, 1, NULL, 1);
 insert into Detalle (id, cantidad, fk_pedido, fk_pieza, fk_juego) values (2, 16, 2, NULL, 2);
 insert into Detalle (id, cantidad, fk_pedido, fk_pieza, fk_juego) values (3, 6, 3, NULL, 3);
@@ -52,6 +60,8 @@ insert into Detalle (id, cantidad, fk_pedido, fk_pieza, fk_juego) values (7, 17,
 insert into Detalle (id, cantidad, fk_pedido, fk_pieza, fk_juego) values (8, 14, 8, 8, NULL);
 insert into Detalle (id, cantidad, fk_pedido, fk_pieza, fk_juego) values (9, 12, 9, 9, NULL);
 insert into Detalle (id, cantidad, fk_pedido, fk_pieza, fk_juego) values (10, 13, 10, 10, NULL);
+
+ALTER SEQUENCE detalle_id_seq RESTART WITH 11 INCREMENT BY 1;
 
 /**********************************************TELEFONO*/
 
