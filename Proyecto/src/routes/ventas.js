@@ -82,17 +82,25 @@ router.post("/ventas/agregar/pedido/inst", async (req, res) => {
 
         let canp = new Array()
 
-        cp.forEach(can => {
-            if (can != "")
-                canp.push(parseInt(can, 10))
-        })
+        if (cp)
+            if (typeof (cp) == "object")
+                cp.forEach(can => {
+                    if (can != "")
+                        canp.push(parseInt(can, 10))
+                })
+            else
+                canp.push(parseInt(cp, 10))
 
         let canj = new Array()
 
-        cj.forEach(can => {
-            if (can != "")
-                canj.push(parseInt(can, 10))
-        })
+        if (cj)
+            if (typeof (cj) == "object")
+                cj.forEach(can => {
+                    if (can != "")
+                        canj.push(parseInt(can, 10))
+                })
+            else
+                canj.push(parseInt(cj, 10))
 
         await bd.query("BEGIN")
 
@@ -102,16 +110,37 @@ router.post("/ventas/agregar/pedido/inst", async (req, res) => {
         if (!idp && !idj)
             throw "el pedido debe tener por lo menos un juego o una pieza"
 
+        let pp = 0
+        let resp
+
         if (idp)
             if (typeof (idp) == "object") {
                 idp.forEach(async idps => {
                     await bd.query("INSERT INTO detalle (cantidad,fk_pedido,fk_pieza)"
                         + " VALUES($1,(SELECT MAX(numero) FROM pedido),$2)", [canp[idp.indexOf(idps)], idps])
+
+                    resp = await bd.query("SELECT precio_bs FROM hist_pieza WHERE id_pieza = $1 AND fecha_fin IS NULL", [idps])
+                    let { precio_bs } = resp.rows[0]
+                    pp = pp + precio_bs * canp[idp.indexOf(idps)]
+
+                    if (idp.length == idp.indexOf(idps) + 1)
+                        await bd.query("INSERT INTO factura(fecha_emision,fk_pedido,monto_total)"
+                            + " VALUES(current_date,(SELECT MAX(numero) FROM pedido),"
+                            + " $1)", [pp])
                 })
             }
-            else
+            else {
                 await bd.query("INSERT INTO detalle (cantidad,fk_pedido,fk_pieza)"
                     + " VALUES($1,(SELECT MAX(numero) FROM pedido),$2)", [canp[0], idp])
+
+                resp = await bd.query("SELECT precio_bs FROM hist_pieza WHERE id_pieza = $1 AND fecha_fin IS NULL", [idp])
+                let { precio_bs } = resp.rows[0]
+                pp = precio_bs * canp[0]
+
+                await bd.query("INSERT INTO factura(fecha_emision,fk_pedido,monto_total)"
+                    + " VALUES(current_date,(SELECT MAX(numero) FROM pedido),"
+                    + " $1)", [pp])
+            }
 
         if (idj)
             if (typeof (idj) == "object") {
@@ -123,6 +152,21 @@ router.post("/ventas/agregar/pedido/inst", async (req, res) => {
             else
                 await bd.query("INSERT INTO detalle (cantidad,fk_pedido,fk_juego)"
                     + " VALUES($1,(SELECT MAX(numero) FROM pedido),$2)", [canj[0], idj])
+
+        /* let resp = bd.query("SELECT SUM(hp.precio_bs) pp FROM detalle d, pieza p, hist_pieza hp"
+             + " WHERE d.fk_pedido = (SELECT MAX(numero) FROM pedido) AND"
+             + " d.fk_pieza = hp.id_pieza AND hp.fecha_fin IS NULL")
+ 
+         const pp = resp.rows
+ 
+         resp = bd.query("SELECT SUM(hp.precio_bs*jp.cantidad*d.cantidad) FROM detalle d, pieza p,juego j,j_p jp, hist_pieza hp"
+             + " WHERE d.fk_pedido = (SELECT MAX(numero) FROM pedido) AND"
+             + " d.fk_juego = jp.id_juego AND jp.id_pieza = hp.id_pieza AND hp.fecha_fin IS NULL")
+ 
+         const pj = resp.rows
+ 
+         const t = pp + pj
+         console.log(pp)*/
 
         req.flash("exito", "Se agrego el pedido")
     } catch (err) {
@@ -163,17 +207,25 @@ router.post("/ventas/agregar/pedido/fami", async (req, res) => {
 
         let canp = new Array()
 
-        cp.forEach(can => {
-            if (can != "")
-                canp.push(parseInt(can, 10))
-        })
+        if (cp)
+            if (typeof (cp) == "object")
+                cp.forEach(can => {
+                    if (can != "")
+                        canp.push(parseInt(can, 10))
+                })
+            else
+                canp.push(parseInt(cp, 10))
 
         let canj = new Array()
 
-        cj.forEach(can => {
-            if (can != "")
-                canj.push(parseInt(can, 10))
-        })
+        if (cj)
+            if (typeof (cj) == "object")
+                cj.forEach(can => {
+                    if (can != "")
+                        canj.push(parseInt(can, 10))
+                })
+            else
+                canj.push(parseInt(cj, 10))
 
         await bd.query("BEGIN")
 
@@ -183,16 +235,37 @@ router.post("/ventas/agregar/pedido/fami", async (req, res) => {
         if (!idp && !idj)
             throw "el pedido debe tener por lo menos un juego o una pieza"
 
+        let pp = 0
+        let resp
+
         if (idp)
             if (typeof (idp) == "object") {
                 idp.forEach(async idps => {
                     await bd.query("INSERT INTO detalle (cantidad,fk_pedido,fk_pieza)"
                         + " VALUES($1,(SELECT MAX(numero) FROM pedido),$2)", [canp[idp.indexOf(idps)], idps])
+
+                    resp = await bd.query("SELECT precio_bs FROM hist_pieza WHERE id_pieza = $1 AND fecha_fin IS NULL", [idps])
+                    let { precio_bs } = resp.rows[0]
+                    pp = pp + precio_bs * canp[idp.indexOf(idps)]
+
+                    if (idp.length == idp.indexOf(idps) + 1)
+                        await bd.query("INSERT INTO factura(fecha_emision,fk_pedido,monto_total)"
+                            + " VALUES(current_date,(SELECT MAX(numero) FROM pedido),"
+                            + " $1)", [pp])
                 })
             }
-            else
+            else {
                 await bd.query("INSERT INTO detalle (cantidad,fk_pedido,fk_pieza)"
                     + " VALUES($1,(SELECT MAX(numero) FROM pedido),$2)", [canp[0], idp])
+
+                resp = await bd.query("SELECT precio_bs FROM hist_pieza WHERE id_pieza = $1 AND fecha_fin IS NULL", [idp])
+                let { precio_bs } = resp.rows[0]
+                pp = precio_bs * canp[0]
+
+                await bd.query("INSERT INTO factura(fecha_emision,fk_pedido,monto_total)"
+                    + " VALUES(current_date,(SELECT MAX(numero) FROM pedido),"
+                    + " $1)", [pp])
+            }
 
         if (idj)
             if (typeof (idj) == "object") {
@@ -205,24 +278,6 @@ router.post("/ventas/agregar/pedido/fami", async (req, res) => {
                 await bd.query("INSERT INTO detalle (cantidad,fk_pedido,fk_juego)"
                     + " VALUES($1,(SELECT MAX(numero) FROM pedido),$2)", [canj[0], idj])
 
-        let resp = bd.query("SELECT SUM(hp.precio) FROM detalle d, pieza p, hist_pieza hp"
-        + " WHERE d.fk_pedido = (SELECT MAX(numero) FROM pedido) AND"
-        + " d.fk_pieza = hp.id_pieza AND hp.fecha_fin IS NULL")
-
-        const pp = resp.rows
-
-        resp = bd.query("SELECT SUM(hp.precio*jp.cantidad*d.cantidad) FROM detalle d, pieza p,juego j,j_p jp, hist_pieza hp"
-        + " WHERE d.fk_pedido = (SELECT MAX(numero) FROM pedido) AND"
-        + " d.fk_juego = jp.id_juego AND jp.id_pieza = hp.id_pieza AND hp.fecha_fin IS NULL")
-
-        const pj = resp.rows
-
-        const t = pp + pj
-            
-        await bd.query("INSERT INTO factura(fecha_emision,fk_pedido,monto_total)"
-        + " VALUES(current_date,(SELECT MAX(numero) FROM pedido),"
-        + " $1)",[t])
-        
 
         req.flash("exito", "Se agrego el pedido")
     } catch (err) {
