@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node src",
     "dev": "nodemon src",
+    "web": "node src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
