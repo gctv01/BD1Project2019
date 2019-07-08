@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="expediente" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f736a598-17b5-4726-a8d3-ae3333a4ae4e">
+	<property name="ireport.zoom" value="0.8264462809917359"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT expediente,di,nombre,nombre2,apellido,apellido2,
+	TO_CHAR(fecha_nacimiento,'DD-MM-YYYY') fecha_nacimiento,
+	(CASE genero
+	WHEN 'M' THEN 'Masculino'
+	WHEN 'F' THEN 'Femenino'
+	WHEN 'T' THEN 'Transgenero'
+	END) genero,
+	tipo_sangre,
+	(CASE titulo
+    WHEN 'B' THEN 'Bachiller'
+    WHEN 'Q' THEN 'Ing.Quimico'
+    WHEN 'M' THEN 'Ing.Mecanico'
+    WHEN 'P' THEN 'Ing.Planta'
+    WHEN 'G' THEN 'Geologo'
+    WHEN 'I' THEN 'Ing.Industrial'
+    END) titulo,
+	fk_supervisor
+	FROM empleado]]>
+	</queryString>
+	<field name="expediente" class="java.lang.Integer"/>
+	<field name="di" class="java.math.BigDecimal"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="nombre2" class="java.lang.String"/>
+	<field name="apellido" class="java.lang.String"/>
+	<field name="apellido2" class="java.lang.String"/>
+	<field name="fecha_nacimiento" class="java.lang.String"/>
+	<field name="genero" class="java.lang.String"/>
+	<field name="tipo_sangre" class="java.lang.String"/>
+	<field name="titulo" class="java.lang.String"/>
+	<field name="fk_supervisor" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="59" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="19" width="97" height="20" uuid="6dccb094-1aa8-45e6-9aa0-4de64fac93a1"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{expediente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="97" y="19" width="97" height="20" uuid="5d8ebc29-c853-4a58-aaa6-a79183342172"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{di}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="194" y="19" width="97" height="20" uuid="f91988b1-9e2a-414c-9146-888f643002ee"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="291" y="19" width="97" height="20" uuid="e81faf68-40a6-42f0-b7a0-a6e3065c5dda"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{nombre2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="388" y="19" width="97" height="20" uuid="d5fb61ab-926a-48a4-97eb-9c0724788b5a"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="485" y="19" width="97" height="20" uuid="8c4cf881-ccca-4493-b3f4-78b43280eec0"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{apellido2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="582" y="19" width="97" height="20" uuid="5d7191a4-cd05-4805-a450-1e4843235701"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{fecha_nacimiento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="679" y="19" width="97" height="20" uuid="d4fc0df5-5182-4f1d-b971-d2318b95c93f"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{genero}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="59" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
