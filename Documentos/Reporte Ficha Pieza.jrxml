@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Reporte Ficha Pieza" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8881e768-5973-4b41-8258-d0640f3d31ff">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT m.Forma, cm.Nombre, m.Tamano, h.Precio_Bs, p.id, p.descr, m.volumen
+FROM Molde m, Col_Mot cm, Hist_Pieza h, Pieza p
+WHERE (m.id = p.id_molde) and (cm.id = p.id_Col_Mot) and (h.id_pieza = p.id) and (h.fecha_fin is NULL)]]>
+	</queryString>
+	<field name="forma" class="java.lang.String"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="tamano" class="java.lang.String"/>
+	<field name="precio_bs" class="java.math.BigDecimal"/>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="descr" class="java.lang.String"/>
+	<field name="volumen" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="1" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="220" splitType="Stretch">
+			<rectangle>
+				<reportElement x="262" y="34" width="253" height="165" forecolor="#0066FF" uuid="7b1ea819-330f-48d5-804e-d74507d67da6"/>
+				<graphicElement>
+					<pen lineWidth="4.0" lineStyle="Double"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="276" y="47" width="138" height="20" forecolor="#FF3333" uuid="d09351e3-12d8-4f28-bbb9-38a784875002"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[Material:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="67" width="138" height="20" forecolor="#FF3333" uuid="768ae1e8-c712-41c9-aeba-ff7d7cfa04f2"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[Forma:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="87" width="138" height="20" forecolor="#FF3333" uuid="b15437dd-7cc4-4c50-a7e5-f852a9d22d95"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[Color/Motivo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="107" width="138" height="20" forecolor="#FF3333" uuid="0ed483d6-a619-404a-b58b-58e59e8146aa"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[Uso de Microondas:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="304" y="167" width="100" height="20" forecolor="#0066FF" uuid="dca2dd69-4308-49a4-a82f-da408ce2c240"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{precio_bs}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="414" y="47" width="87" height="20" uuid="02a1b77c-e56b-4f38-b203-cec6cae0e97a"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[Porcelana]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="414" y="67" width="87" height="20" uuid="1e6065dd-a064-44d4-bb84-5d2c14a27a1b"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{forma}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="414" y="87" width="87" height="20" uuid="4c307718-6852-410a-a9da-44d2cc8b6113"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="414" y="107" width="87" height="20" uuid="8e3b6dfd-9a65-4851-9616-c6dce127c4f0"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[Si]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="167" width="100" height="20" forecolor="#0066FF" uuid="6dde5a59-5348-4253-a71b-ebd1697b1bfd"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[Bs.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="304" y="0" width="86" height="34" forecolor="#0000CC" uuid="01db5874-de17-4b0f-bccd-426d1da6c2c7"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descr} ]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="391" y="0" width="13" height="34" forecolor="#0000CC" uuid="5777aa0e-a710-4cf8-8fa9-2ecf44409912"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="20"/>
+				</textElement>
+				<text><![CDATA[-]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="404" y="0" width="54" height="34" forecolor="#0000CC" uuid="0f280add-e1fa-4223-abe7-db76b0dfc5c4"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="276" y="127" width="138" height="20" forecolor="#FF3333" uuid="075f3fd8-b824-46e8-8e6f-df8893baeac8"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[Tamano:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="414" y="127" width="87" height="20" uuid="9047f550-0523-4e77-87cc-cb275e694bee"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tamano}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="276" y="147" width="138" height="20" forecolor="#FF3333" uuid="ae5cb140-bd85-4d83-a2b9-935f964eee77"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[Volumen:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="415" y="147" width="86" height="20" uuid="651e0959-34eb-45b5-959a-63d799536d32"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{volumen}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
