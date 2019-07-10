@@ -11,7 +11,18 @@ insert into empleado (expediente, di, nombre, apellido, apellido2, fecha_nacimie
 insert into empleado (expediente, di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, fk_supervisor) values (9, 6225853, 'Shelden', 'Kerwood', 'Dederick', '3/22/1984', 'M', 'A+', 'Q', 'Wakefield', null);
 insert into empleado (expediente, di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, fk_supervisor) values (10, 14640126, 'Vi', 'Wink', 'Molen', '4/6/1984', 'F', 'A-', 'B', 'Victoria', 9);
 
-ALTER SEQUENCE empleado_expediente_seq RESTART WITH 11 INCREMENT BY 1;
+insert into empleado (expediente, di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, fk_supervisor) values (11, 236521, 'lia', 'des', 'lagman', '12/31/1974', 'F', 'O+', 'M', 'Aniette', 2);
+insert into empleado (expediente, di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, fk_supervisor) values (12, 214530, 'vie', 'rgher', 'hay', '3/17/1979', 'M', 'A-', 'G', null, 2);
+insert into empleado (expediente, di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, fk_supervisor) values (13, 228453, 'nah', 'oyer', 'Gdsal', '3/5/1992', 'F', 'O+', 'B', 'arron', 2);
+insert into empleado (expediente, di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, fk_supervisor) values (14, 22732, 'die', 'cDade', 'Nebigin', '12/20/1972', 'M', 'A+', 'P', 'mmy', 2);
+insert into empleado (expediente, di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, fk_supervisor) values (15, 234124, 'hody', 'elcher', 'Wall', '6/7/1964', 'F', 'O+', 'I', 'ale', 2);
+insert into empleado (expediente, di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, fk_supervisor) values (16, 107414, 'nna', 'Geown', 'Mhi', '10/2/1973', 'F', 'AB-', 'P', null, 9);
+insert into empleado (expediente, di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, fk_supervisor) values (17, 50153, 'rid', 'ssalli', 'Ble', '7/2/1976', 'F', 'AB+', 'M', 'llana', 9);
+insert into empleado (expediente, di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, fk_supervisor) values (18, 99256, 'tan', 'nette', 'Bst', '1/12/1977', 'M', 'A+', 'I', 'vid', 9);
+insert into empleado (expediente, di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, fk_supervisor) values (19, 62253, 'lden', 'wood', 'Derick', '3/22/1984', 'M', 'A+', 'Q', 'kefield', 9);
+insert into empleado (expediente, di, nombre, apellido, apellido2, fecha_nacimiento, genero, tipo_sangre, titulo, nombre2, fk_supervisor) values (20, 140126, 'poVi', 'ink', 'Men', '4/6/1984', 'F', 'A-', 'B', 'Viria', 9);
+
+ALTER SEQUENCE empleado_expediente_seq RESTART WITH 21 INCREMENT BY 1;
 
 /*************************************************COND_SALUD*/
 
@@ -54,7 +65,18 @@ insert into detalle_exp (id, fecha, motivo, fk_empleado, descripcion, monto_bono
 insert into detalle_exp (id, fecha, motivo, fk_empleado, descripcion, monto_bono, horas_extras, retraso) values (9, '4/8/2006', 'BA', 7, null, '6125607.68', null, null);
 insert into detalle_exp (id, fecha, motivo, fk_empleado, descripcion, monto_bono, horas_extras, retraso) values (10, '3/25/1991', 'AM', 9, 'Sed ante. Vivamus tortor. Duis mattis egestas metus.', null, null, null);
 
-ALTER SEQUENCE detalle_exp_id_seq RESTART WITH 11 INCREMENT BY 1;
+insert into detalle_exp (id, fecha, motivo, fk_empleado, descripcion, monto_bono, horas_extras, retraso) values (1, '7/7/1995', 'RE', 9, 'In hac habitasse platea dictumst.', null, null, 3);
+insert into detalle_exp (id, fecha, motivo, fk_empleado, descripcion, monto_bono, horas_extras, retraso) values (2, '7/14/1995', 'RE', 5, 'Sed ante. Vivamus tortor. Duis mattis egestas metus.', null, null, 4);
+insert into detalle_exp (id, fecha, motivo, fk_empleado, descripcion, monto_bono, horas_extras, retraso) values (3, '7/23/2018', 'RE', 5, 'Etiam vel augue. Vestibulum rutrum rutrum neque.', null, null, 5);
+insert into detalle_exp (id, fecha, motivo, fk_empleado, descripcion, monto_bono, horas_extras, retraso) values (4, '2/16/2000', 'RE', 6, 'Proin eu mi.', null, null, 9);
+insert into detalle_exp (id, fecha, motivo, fk_empleado, descripcion, monto_bono, horas_extras, retraso) values (5, '3/10/2000', 'RE', 6, 'In quis justo. Maecenas rhoncus aliquam lacus.', null, null, 10);
+insert into detalle_exp (id, fecha, motivo, fk_empleado, descripcion, monto_bono, horas_extras, retraso) values (6, '11/13/1999', 'HE', 9, 'In sagittis dui vel nisl.', null, 7, null);
+insert into detalle_exp (id, fecha, motivo, fk_empleado, descripcion, monto_bono, horas_extras, retraso) values (7, '7/7/1995', 'HE', 5, 'Maecenas ut massa quis augue luctus tincidunt.', null, 9, null);
+insert into detalle_exp (id, fecha, motivo, fk_empleado, descripcion, monto_bono, horas_extras, retraso) values (8, '8/14/1995', 'HE', 9, null, '7104521.79', 4, null);
+insert into detalle_exp (id, fecha, motivo, fk_empleado, descripcion, monto_bono, horas_extras, retraso) values (9, '4/8/2006', 'HE', 10, null, '6125607.68', 6, null);
+insert into detalle_exp (id, fecha, motivo, fk_empleado, descripcion, monto_bono, horas_extras, retraso) values (10, '3/25/2006', 'HE', 10, 'Sed ante. Vivamus tortor. Duis mattis egestas metus.', null, 8, null);
+
+ALTER SEQUENCE detalle_exp_id_seq RESTART WITH 21 INCREMENT BY 1;
 
 /************************************************ORGANIGRAMAS*/
 

@@ -30,3 +30,14 @@ WHEN 'RE' THEN 'Minutos de retraso'
 WHEN 'HE' THEN 'Horas extras' END) motivo,
 fk_empleado,descripcion,monto_bono,horas_extras,retraso
 FROM detalle_exp ORDER BY fk_empleado
+
+/*horneros*/
+SELECT e.expediente, t.turno,EXTRACT(MONTH FROM d.fecha) mes,EXTRACT(YEAR FROM d.fecha) ano, d.retraso, d.horas_extras
+FROM empleado e, empleo em, detalle_exp d, turnos_hist t
+WHERE e.expediente = em.fk_empleado
+AND  em.cargo LIKE ('O')
+AND e.expediente = d.fk_empleado
+AND (d.retraso IS NOT NULL OR d.horas_extras IS NOT NULL)
+AND em.fecha_inicio = t.fk_empleo
+AND em.fk_empleado = t.fk_empleado
+AND d.fecha BETWEEN t.fecha_inicio AND t.fecha_fin
