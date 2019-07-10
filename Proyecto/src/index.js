@@ -41,6 +41,10 @@ app.use(require("./routes/empleado"))
 app.use(require("./routes/catalogo"))
 app.use(require("./routes/ventas"))
 
+app.use(require("./routes/rempleados"))
+//app.use(require("./routes/reportes/catalogo"))
+//app.use(require("./routes/reportes/ventas"))
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.listen(app.get("port"), () => {
