@@ -9,7 +9,7 @@ Select p.numero, p.fecha_encargo, p.fecha_entrega, j.nombre, c.nombre, i.id
 from Detalle d, Cliente c, Pedido p, Pedido e, pieza i, juego j
 where d.fk_pedido = p.numero and c.id = p.fk_cliente and j.id = d.fk_juego and i.id = fk_pieza
 
-Select c.id, SUM(h.precio_bs * h.inflacion) * COUNT(d.fk_pieza), h.fecha, c.linea
-from coleccion c, pieza p, juego j, detalle d, hist_pieza h
-where h.id_pieza = p.id and d.fk_pieza = p.id
+Select c.id, SUM(h.precio_bs) * SUM(h.inflacion) * COUNT(d.fk_pieza), h.fecha, c.linea
+from coleccion c, pieza p, juego j, detalle d, hist_pieza h, pedido e
+where h.id_pieza = p.id and d.fk_pieza = p.id and d.fk_pedido = e.numero and EXTRACT(YEAR FROM h.fecha) = EXTRACT(YEAR FROM e.fecha_encargo) and EXTRACT(MONTH FROM h.fecha) = EXTRACT(MONTH FROM e.fecha_encargo)
 group by c.linea, EXTRACT(YEAR FROM h.fecha), EXTRACT(MONTH FROM h.fecha), c.id, h.fecha
