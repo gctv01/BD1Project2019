@@ -207,6 +207,7 @@ CREATE TABLE Contrato
 (
     numero SERIAL NOT NULL,
     descuento NUMERIC(2) NOT NULL,
+    fecha_creacion date NOT NULL,
     fk_cliente INTEGER NOT NULL,
 
     PRIMARY KEY(numero,fk_cliente),

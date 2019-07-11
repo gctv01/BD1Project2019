@@ -347,16 +347,16 @@ insert into Cliente (id, nombre, pais) values (10, 'Hilliary', 'R');
 
 ALTER SEQUENCE cliente_id_seq RESTART WITH 11 INCREMENT BY 1;
 
-insert into Contrato (numero, descuento, fk_cliente) values (1, 86, 1);
-insert into Contrato (numero, descuento, fk_cliente) values (2, 78, 2);
-insert into Contrato (numero, descuento, fk_cliente) values (3, 68, 3);
-insert into Contrato (numero, descuento, fk_cliente) values (4, 83, 4);
-insert into Contrato (numero, descuento, fk_cliente) values (5, 17, 5);
-insert into Contrato (numero, descuento, fk_cliente) values (6, 64, 6);
-insert into Contrato (numero, descuento, fk_cliente) values (7, 67, 7);
-insert into Contrato (numero, descuento, fk_cliente) values (8, 70, 8);
-insert into Contrato (numero, descuento, fk_cliente) values (9, 79, 9);
-insert into Contrato (numero, descuento, fk_cliente) values (10, 15, 10);
+insert into Contrato (numero, descuento, fk_cliente, fecha_creacion) values (1, 86, 1, '2018-05-19');
+insert into Contrato (numero, descuento, fk_cliente, fecha_creacion) values (2, 78, 2, '2019-05-19');
+insert into Contrato (numero, descuento, fk_cliente, fecha_creacion) values (3, 68, 3, '2019-05-19');
+insert into Contrato (numero, descuento, fk_cliente, fecha_creacion) values (4, 83, 4, '2017-06-19');
+insert into Contrato (numero, descuento, fk_cliente, fecha_creacion) values (5, 17, 5, '2019-02-19');
+insert into Contrato (numero, descuento, fk_cliente, fecha_creacion) values (6, 64, 6, '2019-02-5');
+insert into Contrato (numero, descuento, fk_cliente, fecha_creacion) values (7, 67, 7, '2019-01-23');
+insert into Contrato (numero, descuento, fk_cliente, fecha_creacion) values (8, 70, 8, '2019-03-19');
+insert into Contrato (numero, descuento, fk_cliente, fecha_creacion) values (9, 79, 9, '2019-04-19');
+insert into Contrato (numero, descuento, fk_cliente, fecha_creacion) values (10, 15, 10, '2019-08-19');
 
 ALTER SEQUENCE contrato_numero_seq RESTART WITH 11 INCREMENT BY 1;
 
