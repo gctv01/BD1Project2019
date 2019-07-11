@@ -12,6 +12,7 @@ CREATE TABLE Contrato
     numero SERIAL NOT NULL,
     descuento NUMERIC(2) NOT NULL,
     fk_cliente INTEGER NOT NULL,
+    fecha DATE NOT NULL,
 
     PRIMARY KEY(numero,fk_cliente),
     FOREIGN KEY(fk_cliente) REFERENCES cliente(id)
