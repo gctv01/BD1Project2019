@@ -41,3 +41,12 @@ AND (d.retraso IS NOT NULL OR d.horas_extras IS NOT NULL)
 AND em.fecha_inicio = t.fk_empleo
 AND em.fk_empleado = t.fk_empleado
 AND d.fecha BETWEEN t.fecha_inicio AND t.fecha_fin
+
+/*minuta*/
+SELECT e.expediente, e.nombre, r.id, TO_CHAR(r.fecha,'DD-MM-YYYY') fecha,
+r.minuta FROM empleado e, reunion r
+WHERE r.fk_supervisor = e.expediente AND e.expediente = $1 ORDER BY r.fecha desc
+
+/*asistencia*/
+SELECT expediente, nombre, apellido FROM empleado
+WHERE fk_supervisor = $1

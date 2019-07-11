@@ -226,6 +226,40 @@ router.post("/reportes/empleados/casis", async (req, res) => {
   }
 })
 
+router.get("/reportes/empleados/minuta", async (req, res) => {
+
+  try {
+
+    const resp = await bd.query("SELECT s.expediente, s.di, s.nombre FROM empleado s"
+      + " WHERE EXISTS(SELECT e.expediente FROM empleado e WHERE e.fk_supervisor = s.expediente)")
+
+    sup = resp.rows
+
+    res.render("reportes/empleados/minuta", { sup })
+
+  } catch (err) {
+    console.error(err.stack)
+  }
+})
+
+router.post("/reportes/empleados/minuta", async (req, res) => {
+
+  try {
+    const { expediente } = req.body
+
+    const resp = await bd.query("SELECT e.expediente, e.nombre, r.id, TO_CHAR(r.fecha,'DD-MM-YYYY') fecha,"
+    + " r.minuta FROM empleado e, reunion r"
+      + " WHERE r.fk_supervisor = e.expediente AND e.expediente = $1 ORDER BY r.fecha desc", [expediente])
+
+    const info = resp.rows
+
+    redata(info, "S1xqxv6NbB", res);
+
+  } catch (err) {
+    console.error(err.stack)
+  }
+})
+
 function redata(info, tem, res) {
   const data = {
     template: { "shortid": tem },
