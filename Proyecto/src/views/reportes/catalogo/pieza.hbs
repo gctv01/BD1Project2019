@@ -1,0 +1,39 @@
+<div class="label text-center my-2 display-3">Pieza</div>
+<div class="row mx-auto">
+    <div class="card mx-auto mt-2" style="width: 40rem;">
+        <div class="card-body">
+            <form action="/reportes/catalogo/pieza" method="POST">
+
+                <div class="form-group">
+                    <label>Lineas</label>
+                    <select class="form-control" name="linea">
+                        <option value="I">Institucional</option>
+                        <option value="F">Familiar</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Categoria</label>
+                    <select class="form-control" name="categoria">
+                        <option value="Clas_ele">Elegante</option>
+                        <option value="Moderna">Moderna</option>
+                        <option value="Country">Country</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Color/Motivo</label>
+                    <select class="form-control" name="mot">
+                        {{#each mot}}
+                        <option value={{nombre}}>{{nombre}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <hr>
+                <button type="submit" class="btn btn-block btn-primary">Consultar</button>
+            </form>
+
+        </div>
+    </div>
+</div>
