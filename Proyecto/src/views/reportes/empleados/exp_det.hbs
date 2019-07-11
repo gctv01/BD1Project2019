@@ -1,0 +1,23 @@
+<div class="label text-center my-2 display-3">Expedientes detallado de empleados</div>
+<div class="row mx-auto">
+    <div class="card mx-auto mt-2" style="width: 40rem;">
+        <div class="card-body">
+            <form action="/reportes/empleados/exp_det" method="POST">
+
+                <div class="form-group">
+                    <label>Empleados</label>
+                    <select class="custom-select" id="inlineFormCustomSelect" name="expediente">
+                        <option>Todos</option>
+                        {{#each emp}}
+                        <option value={{expediente}}>{{di}} {{nombre}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <hr>
+                <button type="submit" class="btn btn-block btn-primary">Consultar</button>
+            </form>
+
+        </div>
+    </div>
+</div>

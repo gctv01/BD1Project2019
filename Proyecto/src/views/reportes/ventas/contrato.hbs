@@ -1,0 +1,23 @@
+<div class="label text-center my-2 display-3">Contratos vigentes</div>
+<div class="row mx-auto">
+    <div class="card mx-auto mt-2" style="width: 40rem;">
+        <div class="card-body">
+            <form action="/reportes/ventas/contrato" method="POST">
+
+                <div class="form-group">
+                    <label>Cliente</label>
+                    <select class="form-control" name="id">
+                        <option>Todos</option>
+                        {{#each cliente}}
+                        <option value={{id}}>{{id}} {{nombre}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <hr>
+                <button type="submit" class="btn btn-block btn-primary">Consultar</button>
+            </form>
+
+        </div>
+    </div>
+</div>
