@@ -42,8 +42,8 @@ app.use(require("./routes/catalogo"))
 app.use(require("./routes/ventas"))
 
 app.use(require("./routes/rempleados"))
-//app.use(require("./routes/reportes/catalogo"))
-//app.use(require("./routes/reportes/ventas"))
+app.use(require("./routes/rcatalogo"))
+//app.use(require("./routes/rventas"))
 
 app.use(express.static(path.join(__dirname, 'public')));
 
